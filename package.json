@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "node index.js",
+        "start": "node ./bin/www",
         "nodeshift": "nodeshift"
     },
     "repository": {
@@ -30,8 +30,12 @@
         "prettier-eslint": "^8.8.1"
     },
     "dependencies": {
-        "ejs": "^2.5.7",
+        "body-parser": "^1.18.2",
+        "cookie-parser": "^1.4.3",
+        "debug": "^3.1.0",
         "express": "^4.16.2",
-        "morgan": "^1.9.0"
+        "hbs": "^4.0.1",
+        "morgan": "^1.9.0",
+        "serve-favicon": "^2.4.5"
     }
 }

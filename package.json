@@ -11,6 +11,15 @@
         "type": "git",
         "url": "git+https://github.com/ChrisALee/Infant-Nutrition.git"
     },
+    "files": [
+        "package.json",
+        "index.js",
+        "routes",
+        "public",
+        "bin",
+        "views",
+        "README.md"
+    ],
     "author": "",
     "license": "ISC",
     "bugs": {

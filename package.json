@@ -4,10 +4,11 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "npm run build && npm run serve",
+        "start": "npm install --only=dev && npm run build && npm run serve",
         "local-start": "npm run local-build && npm run serve",
         "build": "npm run build-ts && npm run copy-static-assets",
-        "local-build": "npm run build-ts && npm run tslint && npm run copy-static-assets",
+        "local-build":
+            "npm run build-ts && npm run tslint && npm run copy-static-assets",
         "serve": "node dist/server.js",
         "build-ts": "tsc",
         "watch-ts": "tsc -w",
@@ -50,7 +51,8 @@
         "ts-node": "^5.0.0",
         "tslint": "^5.9.1",
         "tslint-config-airbnb": "^5.7.0",
-        "tslint-config-prettier": "^1.9.0"
+        "tslint-config-prettier": "^1.9.0",
+        "typescript": "^2.7.2"
     },
     "dependencies": {
         "body-parser": "^1.18.2",
@@ -62,7 +64,6 @@
         "knex": "^0.14.4",
         "morgan": "^1.9.0",
         "pg": "^7.4.1",
-        "serve-favicon": "^2.4.5",
-        "typescript": "^2.7.2"
+        "serve-favicon": "^2.4.5"
     }
 }

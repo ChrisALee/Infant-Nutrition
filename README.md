@@ -56,7 +56,7 @@ This will automatically pull an updated NodeJS image and build the source code i
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://github.com/chrisalee/CONTRIBUTING.md) for details on our code style, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code style, and the process for submitting pull requests to us.
 
 ## Authors
 
@@ -65,8 +65,8 @@ Please read [CONTRIBUTING.md](https://github.com/chrisalee/CONTRIBUTING.md) for 
 * **Scott Krawcyzk** - 
 * **Carrie Storch** - 
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/chrisalee/infant-nutrition/contributors) who participated in this project.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details

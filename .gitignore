@@ -19,6 +19,8 @@ typings/
 .env
 
 # IDEs
+.idea
+*.iml
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
@@ -27,3 +29,14 @@ typings/
 
 # nodeshift
 tmp/
+
+pids
+logs
+results
+
+# Ignore built ts files
+dist/**/*
+
+# OS metadata
+.DS_Store
+Thumbs.db

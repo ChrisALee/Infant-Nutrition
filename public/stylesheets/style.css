@@ -1,8 +1,51 @@
 body {
-    padding: 50px;
-    font: 14px 'Lucida Grande', Helvetica, Arial, sans-serif;
+    height: 100%;
+    width: 100%;
 }
 
-a {
-    color: #00b7ff;
+h1 {
+    text-align: center;
+}
+
+#intro {
+    margin-top: 5%;
+    width: 90%;
+    margin-left: 5%;
+    font-size: 18px;
+}
+
+#stages {
+    margin-top: 5%;
+    margin-left: 5%;
+    width: 90%;
+    height: 33%;
+    position: absolute;
+    border-color: red;
+    border-style: dotted;
+}
+
+tr {
+    border-color: green;
+    border-style: dashed;
+    margin-left: 5%;
+    width: 90%;
+    height: 85%;
+}
+
+.devStage {
+    width: 12.5%;
+    /*margin-left: 0;*/
+    text-align: center;
+    border-style: solid;
+    border-color: blue;
+    border-width: 2px;
+    transition: width 0.75s, font-size 0.75s;
+}
+
+.devStage:hover {
+    height: 100%;
+    width: 17.5%;
+    font-size: 22px;
+    background-color: grey;
+    color: white;
 }

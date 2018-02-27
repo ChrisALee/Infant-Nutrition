@@ -1,0 +1,14 @@
+language: node_js
+cache:
+    directories:
+        - node_modules
+notifications:
+    email: false
+node_js:
+    - stable
+before_script:
+    - npm prune
+script:
+    - npm install
+    - oc login -u $OC_USER -p $OC_PASS
+    - npm run nodeshift

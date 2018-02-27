@@ -4,11 +4,10 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "npm install --only=dev && npm run build && npm run serve",
+        "start": "npm run build && npm run serve",
         "local-start": "npm run local-build && npm run serve",
         "build": "npm run build-ts && npm run copy-static-assets",
-        "local-build":
-            "npm run build-ts && npm run tslint && npm run copy-static-assets",
+        "local-build": "npm run build-ts && npm run tslint && npm run copy-static-assets",
         "serve": "node dist/server.js",
         "build-ts": "tsc",
         "watch-ts": "tsc -w",
@@ -17,7 +16,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/ChrisALee/Infant-Nutrition.git"
+        "url": "git+https://github.com/ChrisALee/infant-nutrition.git"
     },
     "files": [
         "src",
@@ -34,6 +33,13 @@
     },
     "homepage": "https://github.com/ChrisALee/Infant-Nutrition#readme",
     "devDependencies": {
+        "prettier": "^1.10.2",
+        "ts-node": "^5.0.0",
+        "tslint": "^5.9.1",
+        "tslint-config-airbnb": "^5.7.0",
+        "tslint-config-prettier": "^1.9.0"
+    },
+    "dependencies": {
         "@types/body-parser": "^1.16.8",
         "@types/cookie-parser": "^1.4.1",
         "@types/debug": "0.0.30",
@@ -46,15 +52,7 @@
         "@types/pg": "^7.4.4",
         "@types/serve-favicon": "^2.2.30",
         "@types/shelljs": "^0.7.8",
-        "prettier": "^1.10.2",
         "shelljs": "^0.8.1",
-        "ts-node": "^5.0.0",
-        "tslint": "^5.9.1",
-        "tslint-config-airbnb": "^5.7.0",
-        "tslint-config-prettier": "^1.9.0",
-        "typescript": "^2.7.2"
-    },
-    "dependencies": {
         "body-parser": "^1.18.2",
         "cookie-parser": "^1.4.3",
         "debug": "^3.1.0",
@@ -64,6 +62,7 @@
         "knex": "^0.14.4",
         "morgan": "^1.9.0",
         "pg": "^7.4.1",
-        "serve-favicon": "^2.4.5"
+        "serve-favicon": "^2.4.5",
+        "typescript": "^2.7.2"
     }
 }

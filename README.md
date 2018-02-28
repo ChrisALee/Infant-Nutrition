@@ -62,8 +62,8 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code style, an
 
 * **Christopher Lee** - [ChrisALee](https://github.com/chrisalee)
 * **Sufi Khaksari** - [skhaksari](https://github.com/skhaksari)
-* **Scott Krawcyzk** - 
-* **Carrie Storch** - 
+* **Scott Krawcyzk** - [czyk14](https://github.com/czyk14)
+* **Carrie Storch** - [carriems](https://github.com/carriems)
 
 See also the list of [contributors](https://github.com/chrisalee/infant-nutrition/contributors) who participated in this project.
 

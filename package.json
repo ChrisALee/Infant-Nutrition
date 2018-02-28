@@ -4,15 +4,11 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "npm run build && npm run serve",
-        "local-start": "npm run local-build && npm run serve",
-        "build": "npm run build-ts && npm run copy-static-assets",
-        "local-build": "npm run build-ts && npm run tslint && npm run copy-static-assets",
-        "serve": "node dist/server.js",
-        "build-ts": "tsc",
-        "watch-ts": "tsc -w",
-        "tslint": "tslint -c tslint.json -p tsconfig.json",
-        "copy-static-assets": "node copyStaticAssets.js"
+        "start": "node index.js",
+        "start:watch": "nodemon",
+        "prestart:prod": "tsc",
+        "start:prod": "node dist/main.js",
+        "tslint": "tslint -c tslint.json -p tsconfig.json"
     },
     "repository": {
         "type": "git",
@@ -33,6 +29,7 @@
     },
     "homepage": "https://github.com/ChrisALee/Infant-Nutrition#readme",
     "devDependencies": {
+        "nodemon": "^1.17.1",
         "prettier": "^1.10.2",
         "ts-node": "^5.0.0",
         "tslint": "^5.9.1",

@@ -1,29 +1,57 @@
-const express = require('express');
-const http = require('http');
-const massive = require('massive');
-require('dotenv').config();
+import Knex from './knex';
+import * as Hapi from 'hapi';
 
-const app = express();
-
-massive({
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    database: process.env.DB,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-}).then(instance => {
-    app.set('db', instance);
-
-    app.get('/', (req, res) => {
-        req.app
-            .get('db')
-            .feed_items.find({
-                'rating >': 0,
-            })
-            .then(items => {
-                res.json(items);
-            });
-    });
-
-    http.createServer(app).listen(3000);
+const server: any = new Hapi.Server({
+    host: 'localhost',
+    port: 3000,
 });
+
+server.register(require('hapi-auth-jwt'), err => {
+    server.auth.strategy('token', 'jwt', {
+        key: process.env.JWT_KEY,
+
+        verifyOptions: {
+            algorithms: ['HS256'],
+        },
+    });
+});
+
+// --------------
+// Routes
+// --------------
+
+server.route({
+    path: '/birds',
+    method: 'GET',
+    handler: async (request, h) => {
+        try {
+            const results = await Knex('birds')
+                .where({
+                    isPublic: true,
+                })
+                .select('name', 'species', 'picture_url');
+            if (!results || results.length === 0) {
+                return {
+                    error: true,
+                    errMessage: 'no public bird found',
+                };
+            }
+            return {
+                dataCount: results.length,
+                data: results,
+            };
+        } catch (err) {
+            console.log(err);
+            return 'err';
+        }
+    },
+});
+startServer();
+async function startServer() {
+    try {
+        await server.start(); // boots your server
+    } catch (err) {
+        console.log(err);
+    }
+    console.log('Now Visit: http://localhost:' + server.info.port);
+}

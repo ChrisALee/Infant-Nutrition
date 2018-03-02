@@ -1,0 +1,21 @@
+{
+  "name": "cloudapps-nuxtjs",
+  "version": "1.0.0",
+  "description": "My dandy Nuxt.js project",
+  "author": "Christopher Lee",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.0.1",
+    "@nuxtjs/proxy": "^1.1.4",
+    "nuxt": "^1.0.0"
+  },
+  "devDependencies": {
+    "cross-env": "^5.0.1"
+  }
+}

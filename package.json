@@ -1,51 +1,24 @@
 {
     "name": "infant-nutrition",
-    "version": "0.0.1",
-    "description": "",
-    "main": "index.js",
+    "version": "0.0.0",
     "scripts": {
-        "start": "node index.js",
-        "start:watch": "nodemon",
-        "prestart:prod": "tsc",
-        "start:prod": "node dist/main.js",
-        "tslint": "tslint -c tslint.json -p tsconfig.json"
+        "postinstall": "run-p install:api install:client",
+        "install:api": "cd api && npm install",
+        "install:client": "cd client && npm install",
+
+        "start": "run-p start:api start:client",
+        "start:api": "npm run start --prefix api",
+        "start:client": "npm run start --prefix client",
+
+        "build": "cd client && npm run build && cd ..",
+
+        "dev": "run-p dev:api dev:client",
+        "dev:api": "npm run start:watch --prefix api",
+        "dev:client": "npm run dev --prefix client"
     },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/ChrisALee/infant-nutrition.git"
-    },
-    "files": [
-        "src",
-        "copyStaticAssets.js",
-        "tsconfig.json",
-        "tslint.json",
-        "views",
-        "package.json"
-    ],
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/ChrisALee/Infant-Nutrition/issues"
-    },
-    "homepage": "https://github.com/ChrisALee/Infant-Nutrition#readme",
+    "license": "MIT",
+    "homepage": "https://github.com/ChrisALee/infant-nutrition#readme",
     "devDependencies": {
-        "nodemon": "^1.17.1",
-        "prettier": "^1.10.2",
-        "ts-node": "^5.0.0",
-        "tslint": "^5.9.1",
-        "tslint-config-airbnb": "^5.7.0",
-        "tslint-config-prettier": "^1.9.0"
-    },
-    "dependencies": {
-        "@types/hapi": "^17.0.4",
-        "@types/knex": "^0.14.8",
-        "@types/node": "^9.4.6",
-        "@types/pg": "^7.4.4",
-        "dotenv": "^5.0.1",
-        "hapi": "^17.2.1",
-        "hapi-auth-jwt": "^4.0.0",
-        "knex": "^0.14.4",
-        "pg": "^7.4.1",
-        "typescript": "^2.7.2"
+        "npm-run-all": "^4.1.2"
     }
 }

@@ -1,0 +1,24 @@
+{
+    "name": "infant-nutrition",
+    "version": "0.0.0",
+    "scripts": {
+        "postinstall": "run-p install:api install:client",
+        "install:api": "cd api && npm install",
+        "install:client": "cd client && npm install",
+
+        "start": "run-p start:api start:client",
+        "start:api": "npm run start --prefix api",
+        "start:client": "npm run start --prefix client",
+
+        "build": "cd client && npm run build && cd ..",
+
+        "dev": "run-p dev:api dev:client",
+        "dev:api": "npm run start:watch --prefix api",
+        "dev:client": "npm run dev --prefix client"
+    },
+    "license": "MIT",
+    "homepage": "https://github.com/ChrisALee/infant-nutrition#readme",
+    "devDependencies": {
+        "npm-run-all": "^4.1.2"
+    }
+}

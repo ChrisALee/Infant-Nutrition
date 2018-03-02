@@ -3,7 +3,7 @@ import * as Hapi from 'hapi';
 
 const server: any = new Hapi.Server({
     host: 'localhost',
-    port: 3000,
+    port: 3001,
 });
 
 server.register(require('hapi-auth-jwt'), err => {

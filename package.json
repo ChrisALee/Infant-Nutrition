@@ -44,6 +44,7 @@
         "body-parser": "^1.18.2",
         "dotenv": "^5.0.1",
         "express": "^4.16.2",
+        "massive": "^4.7.0",
         "pg": "^7.4.1",
         "typescript": "^2.7.2"
     }

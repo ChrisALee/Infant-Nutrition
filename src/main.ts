@@ -1,15 +1,29 @@
-import { NestFactory } from '@nestjs/core';
-import * as express from 'express';
-import * as path from 'path';
-import { ApplicationModule } from './app.module';
+const express = require('express');
+const http = require('http');
+const massive = require('massive');
+require('dotenv').config();
 
-async function bootstrap() {
-    const app = await NestFactory.create(ApplicationModule);
+const app = express();
 
-    app.use(express.static(path.join(__dirname, 'public')));
-    app.set('views', __dirname + '/views');
-    app.set('view engine', 'hbs');
+massive({
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    database: process.env.DB,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+}).then(instance => {
+    app.set('db', instance);
 
-    await app.listen(8080);
-}
-bootstrap();
+    app.get('/', (req, res) => {
+        req.app
+            .get('db')
+            .feed_items.find({
+                'rating >': 0,
+            })
+            .then(items => {
+                res.json(items);
+            });
+    });
+
+    http.createServer(app).listen(3000);
+});

@@ -9,6 +9,9 @@
             ideas for new foods to try, tips for picky eaters and advice on how to wean your baby from breast milk or formula.
         </div>
 
+        <p>{{ name }}</p>
+        <p>{{ species }}</p>
+
         <table id="stages">
             <tr>
                 <td class="devStage">Newborn
@@ -29,6 +32,24 @@
         </table>
     </div>
 </template>
+
+<script>
+export default {
+    async asyncData({ app }) {
+        return app.$axios.get("birds").then(res => {
+            return {
+                species: res.data.data[0].species,
+                name: res.data.data[0].name
+            };
+        });
+
+        // TODO: need to figure out how to get async/await working
+        // let { data: { data: result } } = await app.$axios.get("/birds");
+        // console.log(result[0]);
+        // return { result };
+    }
+};
+</script>
 
 <style>
 h1 {

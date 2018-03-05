@@ -35,6 +35,7 @@ results
 # Ignore built ts files
 */dist/**/*
 */.nuxt
+*/.next
 
 # OS metadata
 .DS_Store

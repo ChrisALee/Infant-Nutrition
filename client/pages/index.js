@@ -21,7 +21,7 @@ export default class IndexPage extends React.Component {
 
                 <h1>Healthy Feeding guidelines for Infants</h1>
                 <div id="intro">
-                    &nbsp &nbsp &nbsp Your baby will go on an amazing food
+                    &nbsp; &nbsp; &nbsp; Your baby will go on an amazing food
                     journey during the first year of life. At the start of the
                     journey, breast milk or formula will be all that your baby
                     will need. Along the way, your baby will pass by several

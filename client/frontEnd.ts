@@ -19,6 +19,9 @@ function main(): void {
 
         stageName.innerHTML = selectedStage.innerHTML;
         stageInfo.innerHTML = info.innerHTML;
+        if (stageInfo.innerHTML == ""){
+            stageInfo.style.visibility = "hidden";
+        }
     }
 }
 

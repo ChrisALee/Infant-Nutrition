@@ -10,6 +10,11 @@ body{
 
 h1{
 	text-align: center;
+	font-family: 'Pacifico', cursive;
+}
+
+h3{
+	font-family: 'Pacifico', cursive;
 }
 
 #intro{
@@ -17,9 +22,10 @@ h1{
 	padding: 2.5%;
 	border-radius: 5px;
 	margin-top: 5%;
-	margin-left: 2.5%;
-	width: 90%;
+	margin-left: 7.5%;
+	width: 80%;
 	font-size: 18px;
+	font-family: 'Arima Madurai', cursive;
 }
 
 #stages{
@@ -34,25 +40,15 @@ h1{
 	position: absolute;
 }
 
-#inner{
-	width: inherit;
-	height: inherit;
-	margin: auto;
-	position: auto;
-	border-color: green;
-	border-style: solid;
-	overflow: visible;
-}
-
 .devStage{
 	background-color: white;
 	height: 80%;
 	width: 12.5%;
+	font-family: 'Arima Madurai', cursive;
 	text-align: center;
 	border-style: solid;
-	border-color: blue;
-	border-width: 2px;
-	border-radius: 12px;
+	border-color: transparent;
+	border-radius: 15px;
 	transition: background-color 1.25s, height .75s, width .75s, font-size .75s, padding .75s;
 	/**/
 	/*display: inline-block;
@@ -74,16 +70,18 @@ h1{
 	text-align: center;
 	position: auto;
 	margin-top: 27.5%;
+	font-family: 'Shrikhand', cursive;
 }
 
 #stageInfo{
 	position: auto;
-	margin-left: 10%;
+	margin-left: 7.5%;
 	margin-bottom: 10%;
 	padding: 2.5%;
 	width: 80%;
 	height: 40%;
 	text-align: left;
+	font-family: 'Arima Madurai', cursive;
 	/**/
 	background-color: white;
 	border-radius: 5px;

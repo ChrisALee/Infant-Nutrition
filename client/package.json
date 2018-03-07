@@ -5,11 +5,8 @@
     "private": true,
     "scripts": {
         "dev": "next",
-        "build": "next build",
-        "start": "next start",
-
-        "prestart:prod": "next build",
-        "start:prod": "next start"
+        "prestart": "next build",
+        "start": "next start"
     },
     "dependencies": {
         "isomorphic-unfetch": "^2.0.0",

@@ -51,7 +51,7 @@ server.route({
 
 // TODO: Use env var for host
 // Start the server
-(async function() {
+(async () => {
     try {
         await server.start(); // boots your server
     } catch (err) {

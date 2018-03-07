@@ -1,7 +1,8 @@
 function main() {
-    window.onclick = function (event) {
+    window.onclick = function(event) {
         var elmt = event.target;
         var num = parseInt(elmt.id);
+        console.log(num);
         if (0 <= num && num <= 6) {
             changeInfo(num);
         }

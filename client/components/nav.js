@@ -25,6 +25,10 @@ const Nav = () => (
                 margin: 0;
                 font-family: -apple-system, BlinkMacSystemFont, Avenir Next,
                     Avenir, Helvetica, sans-serif;
+                background-image: url("../static/Baby-Boy-Backgrounds-Baby-boy-desktop-wallpaper.png");
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                overflow: scroll;
             }
             nav {
                 text-align: center;

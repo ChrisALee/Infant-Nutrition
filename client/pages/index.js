@@ -5,12 +5,20 @@ import Nav from "../components/nav";
 
 export default class IndexPage extends React.Component {
     static async getInitialProps() {
-        const res = await fetch("http://localhost:3001/birds");
-        const json = await res.json();
-        return {
-            name: json.data[0].name,
-            species: json.data[0].species
-        };
+        try {
+            const res = await fetch("http://localhost:3001/birds");
+            const json = await res.json();
+            return {
+                name: json.data[0].name,
+                species: json.data[0].species
+            };
+        } catch (err) {
+            console.log(err);
+            return {
+                name: "",
+                species: ""
+            };
+        }
     }
 
     render() {

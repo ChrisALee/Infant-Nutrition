@@ -1,25 +1,27 @@
 import Knex from './knex';
 import * as Hapi from 'hapi';
 
+// TODO: Use env var for host/port
 const server: any = new Hapi.Server({
     host: 'localhost',
     port: 3001,
 });
 
-server.register(require('hapi-auth-jwt'), err => {
-    server.auth.strategy('token', 'jwt', {
-        key: process.env.JWT_KEY,
+// TODO: Code out auth and use async/await
+// server.register(require('hapi-auth-jwt'), err => {
+//     server.auth.strategy('token', 'jwt', {
+//         key: process.env.JWT_KEY,
 
-        verifyOptions: {
-            algorithms: ['HS256'],
-        },
-    });
-});
+//         verifyOptions: {
+//             algorithms: ['HS256'],
+//         },
+//     });
+// });
 
 // --------------
 // Routes
 // --------------
-
+// TODO: Separate into new folder
 server.route({
     path: '/birds',
     method: 'GET',
@@ -46,12 +48,14 @@ server.route({
         }
     },
 });
-startServer();
-async function startServer() {
+
+// TODO: Use env var for host
+// Start the server
+(async function() {
     try {
         await server.start(); // boots your server
     } catch (err) {
         console.log(err);
     }
     console.log('Now Visit: http://localhost:' + server.info.port);
-}
+})();

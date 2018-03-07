@@ -2,10 +2,19 @@ import Link from "next/link";
 import "isomorphic-unfetch";
 import Head from "../components/head";
 import Nav from "../components/nav";
+import BeginningToWalk from "../components/beginning-to-walk";
+import Crawler from "../components/crawler";
+import Headup from "../components/headup";
+import IndependentSitter from "../components/independent-sitter";
+import IndependentToddler from "../components/independent-toddler";
+import Newborn from "../components/newborn";
+import SupportedSitter from "../components/supported-sitter";
+import independentToddler from "../components/independent-toddler";
 
 export default class IndexPage extends React.Component {
     static async getInitialProps() {
         try {
+            // TODO: Use env var for url
             const res = await fetch("http://localhost:3001/birds");
             const json = await res.json();
             return {
@@ -19,6 +28,16 @@ export default class IndexPage extends React.Component {
                 species: ""
             };
         }
+    }
+
+    state = {
+        babyStageClicked: ""
+    };
+
+    handleClick(e) {
+        this.setState({
+            babyStageClicked: e.target.id
+        });
     }
 
     render() {
@@ -50,80 +69,141 @@ export default class IndexPage extends React.Component {
                     <p>{this.props.species}</p>
                 </div>
 
-                <table id="stages">
+                <table id="stages" onClick={this.handleClick.bind(this)}>
                     <tr>
-                        <td className="devStage">
-                            Newborn
-                            <br />(0-1 month)
+                        <td id="0" className="devStage">
+                            Newborn<br />(0-1 month)
                         </td>
-                        <td className="devStage">
-                            Head Up
-                            <br />(1-6 months)
+                        <td id="1" className="devStage">
+                            Head Up<br />(1-6 months)
                         </td>
-                        <td className="devStage">
-                            Supported Sitter
-                            <br />(~6 months)
+                        <td id="2" className="devStage">
+                            Supported Sitter<br />(~6 months)
                         </td>
-                        <td className="devStage">
-                            Independent Sitter
-                            <br />(6-8 months)
+                        <td id="3" className="devStage">
+                            Independent Sitter<br />(6-8 months)
                         </td>
-                        <td className="devStage">
-                            Crawler
-                            <br />(8-10 months)
+                        <td id="4" className="devStage">
+                            Crawler<br />(8-10 months)
                         </td>
-                        <td className="devStage">
-                            Begining to Walk
-                            <br />(10-12 months)
+                        <td id="5" className="devStage">
+                            Beginning to Walk<br />(10-12 months)
                         </td>
-                        <td className="devStage">
-                            Indepentent Toddler
-                            <br />(12-24 months)
+                        <td id="6" className="devStage">
+                            Independent Toddler<br />(12-24 months)
                         </td>
                     </tr>
                 </table>
 
+                {this.state.babyStageClicked ? (
+                    <div>
+                        <h2 id="stageName" />
+                        <div id="stageInfo">
+                            {
+                                {
+                                    "0": <Newborn />,
+                                    "1": <Headup />,
+                                    "2": <SupportedSitter />,
+                                    "3": <IndependentSitter />,
+                                    "4": <Crawler />,
+                                    "5": <BeginningToWalk />,
+                                    "6": <IndependentToddler />
+                                }[this.state.babyStageClicked]
+                            }
+                        </div>
+                    </div>
+                ) : (
+                    <div />
+                )}
+
                 <style jsx>{`
                     h1 {
                         text-align: center;
+                        font-family: "Pacifico", cursive;
                     }
+
+                    h3 {
+                        font-family: "Pacifico", cursive;
+                    }
+
                     #intro {
+                        background-color: white;
+                        padding: 2.5%;
+                        border-radius: 5px;
                         margin-top: 5%;
-                        width: 90%;
-                        margin-left: 5%;
+                        margin-left: 7.5%;
+                        width: 80%;
                         font-size: 18px;
+                        font-family: "Arima Madurai", cursive;
                     }
+
                     #stages {
                         margin-top: 5%;
                         margin-left: 5%;
                         width: 90%;
-                        height: 33%;
+                        height: 33.33%;
+                        /**/
+                        /* border-color: red;
+	border-style: dotted; */
+                        /**/
                         position: absolute;
-                        border-color: red;
-                        border-style: dotted;
                     }
-                    tr {
-                        border-color: green;
-                        border-style: dashed;
-                        margin-left: 5%;
-                        width: 90%;
-                        height: 85%;
-                    }
+
                     .devStage {
+                        background-color: white;
+                        height: 80%;
                         width: 12.5%;
-                        /*margin-left: 0;*/
+                        font-family: "Arima Madurai", cursive;
                         text-align: center;
                         border-style: solid;
-                        border-color: blue;
-                        border-width: 2px;
-                        transition: width 0.75s, font-size 0.75s;
+                        border-color: transparent;
+                        border-radius: 15px;
+                        transition: background-color 1.25s, height 0.75s,
+                            width 0.75s, font-size 0.75s, padding 0.75s;
+                        /**/
+                        /*display: inline-block;
+	margin-left: 1%;*/
+                        position: auto;
+                        overflow: visible;
                     }
+
                     .devStage:hover {
                         height: 100%;
-                        width: 17.5%;
+                        width: 20%;
                         font-size: 22px;
+                        padding-bottom: 15%;
                         background-color: grey;
                         color: white;
+                    }
+
+                    #stageName {
+                        text-align: center;
+                        position: auto;
+                        margin-top: 27.5%;
+                        font-family: "Shrikhand", cursive;
+                    }
+
+                    #stageInfo {
+                        position: auto;
+                        margin-left: 7.5%;
+                        margin-bottom: 10%;
+                        padding: 2.5%;
+                        width: 80%;
+                        height: 40%;
+                        text-align: left;
+                        font-family: "Arima Madurai", cursive;
+                        /**/
+                        background-color: white;
+                        border-radius: 5px;
+                        transition: height 0.75s;
+                    }
+
+                    .hidden {
+                        visibility: visible;
+                        width: 0px;
+                        height: 0px;
+                        font-size: 0%;
+                        position: absolute;
                     }
                 `}</style>
             </div>

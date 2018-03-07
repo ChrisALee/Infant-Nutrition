@@ -1,0 +1,101 @@
+body{
+	height: 100%;
+	width: 100%;
+	/*https://barterhutt.com/baby-boy-backgrounds-baby-boy-desktop-wallpaper/*/
+	background-image: url("Baby-Boy-Backgrounds-Baby-boy-desktop-wallpaper.png");
+	background-repeat: no-repeat;
+    background-attachment: fixed;
+	overflow: scroll;
+}
+
+h1{
+	text-align: center;
+}
+
+#intro{
+	background-color: white;
+	padding: 2.5%;
+	border-radius: 5px;
+	margin-top: 5%;
+	margin-left: 2.5%;
+	width: 90%;
+	font-size: 18px;
+}
+
+#stages{
+	margin-top: 5%;
+	margin-left: 5%;
+	width: 90%;
+	height: 33.33%;
+	/**/
+	/* border-color: red;
+	border-style: dotted; */
+	/**/
+	position: absolute;
+}
+
+#inner{
+	width: inherit;
+	height: inherit;
+	margin: auto;
+	position: auto;
+	border-color: green;
+	border-style: solid;
+	overflow: visible;
+}
+
+.devStage{
+	background-color: white;
+	height: 80%;
+	width: 12.5%;
+	text-align: center;
+	border-style: solid;
+	border-color: blue;
+	border-width: 2px;
+	border-radius: 12px;
+	transition: background-color 1.25s, height .75s, width .75s, font-size .75s, padding .75s;
+	/**/
+	/*display: inline-block;
+	margin-left: 1%;*/
+	position: auto;
+	overflow: visible;
+}
+
+.devStage:hover{
+	height:100%;
+	width:20%;
+	font-size: 22px;
+	padding-bottom: 15%;
+	background-color: grey;
+	color: white;
+}
+
+#stageName{
+	text-align: center;
+	position: auto;
+	margin-top: 27.5%;
+}
+
+#stageInfo{
+	position: auto;
+	margin-left: 10%;
+	margin-bottom: 10%;
+	padding: 2.5%;
+	width: 80%;
+	height: 40%;
+	text-align: left;
+	/**/
+	background-color: white;
+	border-radius: 5px;
+	visibility: hidden;
+	transition: height .75s;
+}
+
+.hidden{
+	visibility: visible;
+	width:0px;
+	height:0px;
+	font-size: 0%;
+	position: absolute;
+}
+

@@ -9,7 +9,6 @@ import IndependentSitter from "../components/independent-sitter";
 import IndependentToddler from "../components/independent-toddler";
 import Newborn from "../components/newborn";
 import SupportedSitter from "../components/supported-sitter";
-import independentToddler from "../components/independent-toddler";
 
 export default class IndexPage extends React.Component {
     static async getInitialProps() {
@@ -97,7 +96,19 @@ export default class IndexPage extends React.Component {
 
                 {this.state.babyStageClicked ? (
                     <div>
-                        <h2 id="stageName" />
+                        <h2 id="stageName">
+                            {
+                                {
+                                    "0": "Newborn",
+                                    "1": "Head Up",
+                                    "2": "Supported Sitter",
+                                    "3": "Independent Sitter",
+                                    "4": "Crawler",
+                                    "5": "Beginning to Walk",
+                                    "6": "IndependentToddler"
+                                }[this.state.babyStageClicked]
+                            }
+                        </h2>
                         <div id="stageInfo">
                             {
                                 {

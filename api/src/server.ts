@@ -2,7 +2,7 @@ import Knex from './knex';
 import * as Hapi from 'hapi';
 
 // TODO: Use env var for host/port
-const server: any = new Hapi.Server({
+const server: Hapi.Server = new Hapi.Server({
     host: 'localhost',
     port: 3001,
 });
@@ -23,9 +23,9 @@ const server: any = new Hapi.Server({
 // --------------
 // TODO: Separate into new folder
 server.route({
-    path: '/birds',
     method: 'GET',
-    handler: async (request, h) => {
+    path: '/birds',
+    handler: async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
         try {
             const results = await Knex('birds')
                 .where({

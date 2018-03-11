@@ -1,57 +1,45 @@
 import Knex from './knex';
 import * as Hapi from 'hapi';
 
-// TODO: Use env var for host/port
-const server: Hapi.Server = new Hapi.Server({
-    host: 'localhost',
-    port: 3001,
-});
+import routes from './routes';
 
-// TODO: Code out auth and use async/await
-// server.register(require('hapi-auth-jwt'), err => {
-//     server.auth.strategy('token', 'jwt', {
-//         key: process.env.JWT_KEY,
+// TODO: bring your own validation function
+const validate = async function(decoded, request, h) {
+    return { valid: true };
 
-//         verifyOptions: {
-//             algorithms: ['HS256'],
-//         },
-//     });
-// });
-
-// --------------
-// Routes
-// --------------
-// TODO: Separate into new folder
-server.route({
-    method: 'GET',
-    path: '/birds',
-    handler: async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
-        try {
-            const results = await Knex('birds')
-                .where({
-                    isPublic: true,
-                })
-                .select('name', 'species', 'picture_url');
-            if (!results || results.length === 0) {
-                return {
-                    error: true,
-                    errMessage: 'no public bird found',
-                };
-            }
-            return {
-                dataCount: results.length,
-                data: results,
-            };
-        } catch (err) {
-            console.log(err);
-            return 'err';
-        }
-    },
-});
+    // do your checks to see if the person is valid
+    // if (!people[decoded.id]) {
+    //   return { valid: false };
+    // }
+    // else {
+    //   return { valid: true };
+    // }
+};
 
 // TODO: Use env var for host
 // Start the server
 (async () => {
+    // TODO: Use env var for host/port
+    const server: Hapi.Server = new Hapi.Server({
+        host: 'localhost',
+        port: 3001,
+    });
+
+    await server.register(require('hapi-auth-jwt2'));
+
+    server.auth.strategy('jwt', 'jwt', {
+        key: 'NeverShareYourSecret', // Never Share your secret key
+        validate,
+        verifyOptions: { algorithms: ['HS256'] }, // pick a strong algorithm
+    });
+
+    server.auth.default('jwt');
+
+    routes.forEach(route => {
+        console.log(`attaching ${route.path}`);
+        server.route(route);
+    });
+
     try {
         await server.start(); // boots your server
     } catch (err) {

@@ -37,11 +37,13 @@
         "tslint-config-prettier": "^1.9.0"
     },
     "dependencies": {
+        "@types/bcrypt": "^1.0.0",
         "@types/hapi": "^17.0.4",
         "@types/hapi-auth-jwt2": "^8.0.0",
         "@types/knex": "^0.14.8",
         "@types/node": "^9.4.6",
         "@types/pg": "^7.4.4",
+        "bcrypt": "^1.0.3",
         "dotenv": "^5.0.1",
         "hapi": "^17.2.1",
         "hapi-auth-jwt2": "^8.0.0",

@@ -1,19 +1,19 @@
 import Knex from './knex';
+import * as Bcrypt from 'bcrypt';
 import * as Hapi from 'hapi';
 
 import routes from './routes';
 
 // TODO: bring your own validation function
-const validate = async function(decoded, request, h) {
-    return { valid: true };
+const validate = async (request, username, password) => {
+    if (!request.username) {
+        return { credentials: null, isValid: false };
+    }
 
-    // do your checks to see if the person is valid
-    // if (!people[decoded.id]) {
-    //   return { valid: false };
-    // }
-    // else {
-    //   return { valid: true };
-    // }
+    const isValid = await Bcrypt.compare(password, request.password);
+    const credentials = { id: request.id, name: request.name };
+
+    return { isValid, credentials };
 };
 
 // TODO: Use env var for host

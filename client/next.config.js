@@ -1,2 +1,2 @@
 const withTypescript = require('@zeit/next-typescript');
-module.exports = withTypescript(withCSS());
+module.exports = withTypescript();

@@ -21,7 +21,10 @@ export namespace Index {
     }
 }
 
-export class IndexPage extends React.Component<Index.Props, Index.State> {
+export default class IndexPage extends React.Component<
+    Index.Props,
+    Index.State
+> {
     static async getInitialProps(): Promise<any> {
         try {
             // TODO: Use env var for url

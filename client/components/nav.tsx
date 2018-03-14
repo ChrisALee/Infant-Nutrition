@@ -1,5 +1,4 @@
-import Head from "./head";
-import Link from "next/link";
+import Link from 'next/link';
 
 // const links = [
 //     { href: "https://github.com/segmentio/create-next-app", label: "Github" }
@@ -25,7 +24,7 @@ const Nav = () => (
                 margin: 0;
                 font-family: -apple-system, BlinkMacSystemFont, Avenir Next,
                     Avenir, Helvetica, sans-serif;
-                background-image: url("../static/Baby-Boy-Backgrounds-Baby-boy-desktop-wallpaper.png");
+                background-image: url('../static/Baby-Boy-Backgrounds-Baby-boy-desktop-wallpaper.png');
                 background-repeat: no-repeat;
                 background-attachment: fixed;
                 overflow: scroll;

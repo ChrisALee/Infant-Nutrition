@@ -147,11 +147,11 @@ exports.up = function(knex, Promise) {
 
             // Foreign Key
             quizResultsTable
-                .string('owner', 36)
+                .string('quiz_owner', 36)
                 .references('guid')
                 .inTable('quizzes');
             quizResultsTable
-                .string('owner', 36)
+                .string('user_owner', 36)
                 .references('guid')
                 .inTable('users');
 

@@ -4,6 +4,8 @@ import * as Hapi from 'hapi';
 
 import routes from './routes';
 
+require('dotenv').config();
+
 // TODO: bring your own validation function
 const validate = async (request, username, password) => {
     if (!request.username) {
@@ -16,13 +18,11 @@ const validate = async (request, username, password) => {
     return { isValid, credentials };
 };
 
-// TODO: Use env var for host
 // Start the server
 (async () => {
-    // TODO: Use env var for host/port
     const server: Hapi.Server = new Hapi.Server({
-        host: 'localhost',
-        port: 3001,
+        host: process.env.SERVER_HOST,
+        port: process.env.SERVER_PORT,
     });
 
     await server.register(require('hapi-auth-jwt2'));
@@ -45,5 +45,7 @@ const validate = async (request, username, password) => {
     } catch (err) {
         console.log(err);
     }
-    console.log('Now Visit: http://localhost:' + server.info.port);
+    console.log(
+        `Now Visit: http://${process.env.SERVER_HOST}:${server.info.port}`,
+    );
 })();

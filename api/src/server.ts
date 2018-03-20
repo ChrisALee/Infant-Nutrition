@@ -1,61 +1,51 @@
 import Knex from './knex';
+import * as Bcrypt from 'bcrypt';
 import * as Hapi from 'hapi';
 
-// TODO: Use env var for host/port
-const server: any = new Hapi.Server({
-    host: 'localhost',
-    port: 3001,
-});
+import routes from './routes';
 
-// TODO: Code out auth and use async/await
-// server.register(require('hapi-auth-jwt'), err => {
-//     server.auth.strategy('token', 'jwt', {
-//         key: process.env.JWT_KEY,
+require('dotenv').config();
 
-//         verifyOptions: {
-//             algorithms: ['HS256'],
-//         },
-//     });
-// });
+// TODO: bring your own validation function
+const validate = async (request, username, password) => {
+    if (!request.username) {
+        return { credentials: null, isValid: false };
+    }
 
-// --------------
-// Routes
-// --------------
-// TODO: Separate into new folder
-server.route({
-    path: '/birds',
-    method: 'GET',
-    handler: async (request, h) => {
-        try {
-            const results = await Knex('birds')
-                .where({
-                    isPublic: true,
-                })
-                .select('name', 'species', 'picture_url');
-            if (!results || results.length === 0) {
-                return {
-                    error: true,
-                    errMessage: 'no public bird found',
-                };
-            }
-            return {
-                dataCount: results.length,
-                data: results,
-            };
-        } catch (err) {
-            console.log(err);
-            return 'err';
-        }
-    },
-});
+    const isValid = await Bcrypt.compare(password, request.password);
+    const credentials = { id: request.id, name: request.name };
 
-// TODO: Use env var for host
+    return { isValid, credentials };
+};
+
 // Start the server
 (async () => {
+    const server: Hapi.Server = new Hapi.Server({
+        host: process.env.SERVER_HOST,
+        port: process.env.SERVER_PORT,
+    });
+
+    await server.register(require('hapi-auth-jwt2'));
+
+    server.auth.strategy('jwt', 'jwt', {
+        key: 'NeverShareYourSecret', // Never Share your secret key
+        validate,
+        verifyOptions: { algorithms: ['HS256'] }, // pick a strong algorithm
+    });
+
+    server.auth.default('jwt');
+
+    routes.forEach(route => {
+        console.log(`attaching ${route.path}`);
+        server.route(route);
+    });
+
     try {
         await server.start(); // boots your server
     } catch (err) {
         console.log(err);
     }
-    console.log('Now Visit: http://localhost:' + server.info.port);
+    console.log(
+        `Now Visit: http://${process.env.SERVER_HOST}:${server.info.port}`,
+    );
 })();

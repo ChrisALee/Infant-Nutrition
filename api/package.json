@@ -1,6 +1,6 @@
 {
     "name": "infant-nutrition",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "description": "",
     "main": "index.js",
     "scripts": {
@@ -45,12 +45,17 @@
         "@types/node-uuid": "0.0.28",
         "@types/pg": "^7.4.4",
         "bcrypt": "^1.0.3",
+        "blipp": "^3.0.0",
         "dotenv": "^5.0.1",
         "hapi": "^17.2.1",
         "hapi-auth-jwt2": "^8.0.0",
+        "hapi-swagger": "^9.1.1",
+        "inert": "^5.1.0",
+        "joi": "^13.1.2",
         "knex": "^0.14.4",
         "node-uuid": "^1.4.8",
         "pg": "^7.4.1",
-        "typescript": "^2.7.2"
+        "typescript": "^2.7.2",
+        "vision": "^5.3.2"
     }
 }

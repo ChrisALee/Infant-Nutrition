@@ -4,10 +4,9 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "node index.js",
         "start:watch": "nodemon",
-        "prestart:prod": "tsc",
-        "start:prod": "node dist/main.js",
+        "prestart": "tsc",
+        "start": "node dist/server.js",
         "tslint": "tslint -c tslint.json -p tsconfig.json"
     },
     "repository": {

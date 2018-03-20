@@ -40,3 +40,4 @@ results
 # OS metadata
 .DS_Store
 Thumbs.db
+api/.env.prod

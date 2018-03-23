@@ -128,7 +128,7 @@ const routes = [
         path: '/users/{userGuid}/babies',
         method: 'GET',
         config: {
-            auth: false,
+            auth: 'jwt',
             description: 'Get babies',
             notes:
                 'Returns baby items for the user with the userGuid passed in the path',
@@ -139,10 +139,14 @@ const routes = [
                         .required()
                         .description('the guid for the user'),
                 },
+                headers: Joi.object({
+                    authorization: Joi.string().required(),
+                }).unknown(),
             },
         },
         handler: async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
             try {
+                console.log(request.headers.authorization);
                 const { userGuid }: any = request.params;
 
                 const results = await Knex('babies')
@@ -169,7 +173,7 @@ const routes = [
         path: '/users/{userGuid}/babies',
         method: 'POST',
         config: {
-            auth: false,
+            auth: 'jwt',
             description: 'Post baby',
             notes:
                 'Adds a baby to the user specified with the userGuid passed in the path',
@@ -193,6 +197,9 @@ const routes = [
                         .required()
                         .description('the baby body json payload'),
                 },
+                headers: Joi.object({
+                    authorization: Joi.string().required(),
+                }).unknown(),
             },
         },
         handler: async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
@@ -334,7 +341,7 @@ const routes = [
         path: '/users/{userGuid}/quiz_results',
         method: 'GET',
         config: {
-            auth: false,
+            auth: 'jwt',
             description: 'Get quiz results',
             notes:
                 'Returns quiz result items for the user with the userGuid passed in the path',
@@ -345,6 +352,9 @@ const routes = [
                         .required()
                         .description('the guid for the user'),
                 },
+                headers: Joi.object({
+                    authorization: Joi.string().required(),
+                }).unknown(),
             },
         },
         handler: async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
@@ -376,7 +386,7 @@ const routes = [
         path: '/users/{userGuid}/quiz_results/quiz/{quizGuid}',
         method: 'POST',
         config: {
-            auth: false,
+            auth: 'jwt',
             description: 'Post quiz results',
             notes:
                 'Adds quiz result for the user with the userGuid and quiz with the quizGuid passed in the path',
@@ -402,6 +412,9 @@ const routes = [
                         .required()
                         .description('the quiz result body json payload'),
                 },
+                headers: Joi.object({
+                    authorization: Joi.string().required(),
+                }).unknown(),
             },
         },
         handler: async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
@@ -431,7 +444,7 @@ const routes = [
         path: '/users/{userGuid}/user_settings',
         method: 'GET',
         config: {
-            auth: false,
+            auth: 'jwt',
             description: 'Get user settings',
             notes:
                 'Returns user setting items for the user with the userGuid passed in the path',
@@ -442,6 +455,9 @@ const routes = [
                         .required()
                         .description('the guid for the user'),
                 },
+                headers: Joi.object({
+                    authorization: Joi.string().required(),
+                }).unknown(),
             },
         },
         handler: async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
@@ -472,7 +488,7 @@ const routes = [
         path: '/users/{userGuid}/user_settings',
         method: 'POST',
         config: {
-            auth: false,
+            auth: 'jwt',
             description: 'Post user settings',
             notes: 'Adds user settings for the user with the userGuid',
             tags: ['api'],
@@ -490,6 +506,9 @@ const routes = [
                         .required()
                         .description('the user setting body json payload'),
                 },
+                headers: Joi.object({
+                    authorization: Joi.string().required(),
+                }).unknown(),
             },
         },
         handler: async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
@@ -518,7 +537,7 @@ const routes = [
         path: '/users/{userGuid}/user_settings/{userSettingsGuid}',
         method: 'PUT',
         config: {
-            auth: false,
+            auth: 'jwt',
             description: 'Put user settings',
             notes: 'Updates user settings for the user with the userGuid',
             tags: ['api'],
@@ -539,6 +558,9 @@ const routes = [
                         .required()
                         .description('the user setting body json payload'),
                 },
+                headers: Joi.object({
+                    authorization: Joi.string().required(),
+                }).unknown(),
             },
             pre: [
                 {

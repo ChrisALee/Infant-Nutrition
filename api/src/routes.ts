@@ -8,6 +8,16 @@ import * as redis from 'redis';
 
 require('dotenv').config();
 
+const cookieOptions = {
+    ttl: 365 * 24 * 60 * 60 * 1000, // expires a year from today
+    encoding: 'none', // we already used JWT to encode
+    isSecure: false, // warm & fuzzy feelings
+    isHttpOnly: true, // prevent client alteration
+    clearInvalid: false, // remove invalid cookies
+    strictHeader: true, // don't allow violations of RFC 6265
+    path: '/', // set the cookie for all routes
+};
+
 // TODO: Replace 'any' with proper type
 const routes = [
     {
@@ -79,7 +89,8 @@ const routes = [
                 return h
                     .response({ text: 'Check Auth Header for your Token' })
                     .type('application/json')
-                    .header('Authorization', token);
+                    .header('Authorization', token)
+                    .state('token', token);
             } catch (err) {
                 console.log(err);
                 return err;
@@ -117,7 +128,9 @@ const routes = [
                 // create the session in Redis
                 await redisClient.set(session.guid, JSON.stringify(session));
 
-                return h.response({ text: 'You have been logged out' });
+                return h
+                    .response({ text: 'You have been logged out' })
+                    .unstate('token');
             } catch (err) {
                 console.log(err);
                 return err;

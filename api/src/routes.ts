@@ -1,10 +1,129 @@
 import Knex from './knex';
+import * as Bcrypt from 'bcrypt';
 import * as GUID from 'node-uuid';
 import * as Hapi from 'hapi';
 import * as Joi from 'joi';
+import * as JWT from 'jsonwebtoken';
+import * as redis from 'redis';
+
+require('dotenv').config();
 
 // TODO: Replace 'any' with proper type
 const routes = [
+    {
+        path: '/auth/login',
+        method: 'POST',
+        config: {
+            auth: false,
+            description: 'Login route',
+            notes: 'Authenticates user and returns JWT in Auth Header',
+            tags: ['api'],
+            validate: {
+                payload: {
+                    user: Joi.object()
+                        .keys({
+                            username: Joi.string().required(),
+                            password: Joi.string().required(),
+                        })
+                        .required()
+                        .description('the user body json payload'),
+                },
+            },
+        },
+        handler: async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
+            try {
+                const { user }: any = request.payload;
+
+                const results = await Knex('users')
+                    .where({
+                        username: user.username,
+                    })
+                    .first();
+
+                if (!results || results.length === 0) {
+                    return {
+                        error: true,
+                        errMessage: 'no user found',
+                    };
+                }
+
+                // TODO: Salt passwords in account creation
+                // This is just here for debugging purposes at the moment
+                const saltedPass = await Bcrypt.hash(results.password, 10);
+
+                const isValid = await Bcrypt.compare(user.password, saltedPass);
+
+                if (!isValid) {
+                    return 'wrong password';
+                }
+
+                const session = {
+                    valid: true,
+                    ...results,
+                };
+                // create the session in Redis
+                const redisClient = (request as any).redis.client;
+                try {
+                    await redisClient.set(
+                        session.guid,
+                        JSON.stringify(session),
+                    );
+                } catch (err) {
+                    // throw Boom.internal('Internal Redis error')
+                    throw err;
+                }
+
+                const token = JWT.sign(session, process.env.JWT_KEY);
+                console.log(token);
+
+                return h
+                    .response({ text: 'Check Auth Header for your Token' })
+                    .type('application/json')
+                    .header('Authorization', token);
+            } catch (err) {
+                console.log(err);
+                return err;
+            }
+        },
+    },
+    {
+        path: '/auth/logout',
+        method: 'POST',
+        config: {
+            auth: 'jwt',
+            description: 'Logout route',
+            notes: 'De-authenticates user and invalidates JWT',
+            tags: ['api'],
+            validate: {
+                headers: Joi.object({
+                    authorization: Joi.string().required(),
+                }).unknown(),
+            },
+        },
+        handler: async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
+            try {
+                const redisClient = (request as any).redis.client;
+
+                const redisResult = await redisClient.get(
+                    (request as any).auth.credentials.guid,
+                );
+
+                const session = JSON.parse(redisResult);
+                console.log(' - - - - - - SESSION - - - - - - - -');
+                console.log(session);
+                // update the session to no longer valid:
+                session.valid = false;
+                session.ended = new Date().getTime();
+                // create the session in Redis
+                await redisClient.set(session.guid, JSON.stringify(session));
+
+                return h.response({ text: 'You have been logged out' });
+            } catch (err) {
+                console.log(err);
+                return err;
+            }
+        },
+    },
     {
         path: '/users/{userGuid}/babies',
         method: 'GET',

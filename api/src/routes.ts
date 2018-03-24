@@ -27,7 +27,7 @@ const routes = [
             auth: false,
             description: 'Login route',
             notes: 'Authenticates user and returns JWT in Auth Header',
-            tags: ['api'],
+            tags: ['api', 'auth'],
             validate: {
                 payload: {
                     user: Joi.object()
@@ -57,11 +57,10 @@ const routes = [
                     };
                 }
 
-                // TODO: Salt passwords in account creation
-                // This is just here for debugging purposes at the moment
-                const saltedPass = await Bcrypt.hash(results.password, 10);
-
-                const isValid = await Bcrypt.compare(user.password, saltedPass);
+                const isValid = await Bcrypt.compare(
+                    user.password,
+                    results.password,
+                );
 
                 if (!isValid) {
                     return 'wrong password';
@@ -104,7 +103,7 @@ const routes = [
             auth: 'jwt',
             description: 'Logout route',
             notes: 'De-authenticates user and invalidates JWT',
-            tags: ['api'],
+            tags: ['api', 'auth'],
             validate: {
                 headers: Joi.object({
                     authorization: Joi.string().required(),
@@ -138,6 +137,79 @@ const routes = [
         },
     },
     {
+        path: '/auth/register',
+        method: 'POST',
+        config: {
+            auth: false,
+            description: 'Register route',
+            notes: 'Registers a new user and logs them in',
+            tags: ['api', 'auth'],
+            validate: {
+                payload: {
+                    user: Joi.object()
+                        .keys({
+                            username: Joi.string().required(),
+                            password: Joi.string().required(),
+                            name: Joi.string().required(),
+                            email: Joi.string().required(),
+                        })
+                        .required()
+                        .description('the user body json payload'),
+                },
+            },
+        },
+        handler: async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
+            try {
+                const { user }: any = request.payload;
+                const guid = GUID.v4();
+
+                const saltedPass = await Bcrypt.hash(user.password, 10);
+
+                const userWithGuidAndSalt = {
+                    ...user,
+                    password: saltedPass,
+                    guid,
+                };
+
+                await Knex('users').insert(userWithGuidAndSalt);
+
+                const results = await Knex('users')
+                    .where({
+                        username: user.username,
+                    })
+                    .first();
+
+                const session = {
+                    valid: true,
+                    ...results,
+                };
+                // create the session in Redis
+                const redisClient = (request as any).redis.client;
+                try {
+                    await redisClient.set(
+                        session.guid,
+                        JSON.stringify(session),
+                    );
+                } catch (err) {
+                    // throw Boom.internal('Internal Redis error')
+                    throw err;
+                }
+
+                const token = JWT.sign(session, process.env.JWT_KEY);
+                console.log(token);
+
+                return h
+                    .response({ text: 'Check Auth Header for your Token' })
+                    .type('application/json')
+                    .header('Authorization', token)
+                    .state('token', token);
+            } catch (err) {
+                console.log(err);
+                return err;
+            }
+        },
+    },
+    {
         path: '/users/{userGuid}/babies',
         method: 'GET',
         config: {
@@ -159,8 +231,15 @@ const routes = [
         },
         handler: async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
             try {
-                console.log(request.headers.authorization);
                 const { userGuid }: any = request.params;
+                const { authGuid }: any = request.auth.credentials;
+
+                if (authGuid !== userGuid) {
+                    return {
+                        error: true,
+                        errMessage: 'Invalid user',
+                    };
+                }
 
                 const results = await Knex('babies')
                     .where({
@@ -219,6 +298,15 @@ const routes = [
             try {
                 const { userGuid }: any = request.params;
                 const { baby }: any = request.payload;
+                const { authGuid }: any = request.auth.credentials;
+
+                if (authGuid !== userGuid) {
+                    return {
+                        error: true,
+                        errMessage: 'Invalid user',
+                    };
+                }
+
                 const guid = GUID.v4();
 
                 const insertOperation = await Knex('babies').insert({
@@ -373,6 +461,14 @@ const routes = [
         handler: async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
             try {
                 const { userGuid }: any = request.params;
+                const { authGuid }: any = request.auth.credentials;
+
+                if (authGuid !== userGuid) {
+                    return {
+                        error: true,
+                        errMessage: 'Invalid user',
+                    };
+                }
 
                 const results = await Knex('quiz_results')
                     .join('quizzes', 'quiz_results.quiz_owner', 'quizzes.guid')
@@ -434,6 +530,15 @@ const routes = [
             try {
                 const { quizGuid, userGuid }: any = request.params;
                 const { quiz_result }: any = request.payload;
+                const { authGuid }: any = request.auth.credentials;
+
+                if (authGuid !== userGuid) {
+                    return {
+                        error: true,
+                        errMessage: 'Invalid user',
+                    };
+                }
+
                 const guid = GUID.v4();
 
                 const insertOperation = await Knex('quiz_results').insert({
@@ -476,6 +581,14 @@ const routes = [
         handler: async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
             try {
                 const { userGuid }: any = request.params;
+                const { authGuid }: any = request.auth.credentials;
+
+                if (authGuid !== userGuid) {
+                    return {
+                        error: true,
+                        errMessage: 'Invalid user',
+                    };
+                }
 
                 const results = await Knex('user_settings')
                     .where({
@@ -528,6 +641,15 @@ const routes = [
             try {
                 const { userGuid }: any = request.params;
                 const { user_settings }: any = request.payload;
+                const { authGuid }: any = request.auth.credentials;
+
+                if (authGuid !== userGuid) {
+                    return {
+                        error: true,
+                        errMessage: 'Invalid user',
+                    };
+                }
+
                 const guid = GUID.v4();
 
                 const insertOperation = await Knex('quiz_results').insert({
@@ -604,6 +726,15 @@ const routes = [
             try {
                 const { userSettingsGuid }: any = request.params;
                 const { user_settings }: any = request.payload;
+                const { userGuid }: any = request.params;
+                const { authGuid }: any = request.auth.credentials;
+
+                if (authGuid !== userGuid) {
+                    return {
+                        error: true,
+                        errMessage: 'Invalid user',
+                    };
+                }
 
                 const insertOperation = await Knex('user_settings')
                     .where({

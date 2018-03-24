@@ -27,7 +27,7 @@ const routes = [
             auth: false,
             description: 'Login route',
             notes: 'Authenticates user and returns JWT in Auth Header',
-            tags: ['api'],
+            tags: ['api', 'auth'],
             validate: {
                 payload: {
                     user: Joi.object()
@@ -104,7 +104,7 @@ const routes = [
             auth: 'jwt',
             description: 'Logout route',
             notes: 'De-authenticates user and invalidates JWT',
-            tags: ['api'],
+            tags: ['api', 'auth'],
             validate: {
                 headers: Joi.object({
                     authorization: Joi.string().required(),

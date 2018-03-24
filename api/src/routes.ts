@@ -1,10 +1,12 @@
 import Knex from './knex';
 import * as Bcrypt from 'bcrypt';
-import * as GUID from 'node-uuid';
 import * as Hapi from 'hapi';
 import * as Joi from 'joi';
 import * as JWT from 'jsonwebtoken';
 import * as redis from 'redis';
+import nanoid = require('nanoid');
+import url = require('nanoid/url');
+import generate = require('nanoid/generate');
 
 require('dotenv').config();
 
@@ -68,7 +70,10 @@ const routes = [
 
                 const session = {
                     valid: true,
-                    ...results,
+                    guid: results.guid,
+                    username: results.username,
+                    name: results.username,
+                    email: results.email,
                 };
                 // create the session in Redis
                 const redisClient = (request as any).redis.client;
@@ -161,7 +166,7 @@ const routes = [
         handler: async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
             try {
                 const { user }: any = request.payload;
-                const guid = GUID.v4();
+                const guid = generate(url, 10);
 
                 const saltedPass = await Bcrypt.hash(user.password, 10);
 
@@ -173,15 +178,12 @@ const routes = [
 
                 await Knex('users').insert(userWithGuidAndSalt);
 
-                const results = await Knex('users')
-                    .where({
-                        username: user.username,
-                    })
-                    .first();
-
                 const session = {
                     valid: true,
-                    ...results,
+                    guid: userWithGuidAndSalt.guid,
+                    username: userWithGuidAndSalt.username,
+                    name: userWithGuidAndSalt.username,
+                    email: userWithGuidAndSalt.email,
                 };
                 // create the session in Redis
                 const redisClient = (request as any).redis.client;
@@ -307,7 +309,7 @@ const routes = [
                     };
                 }
 
-                const guid = GUID.v4();
+                const guid = generate(url, 10);
 
                 const insertOperation = await Knex('babies').insert({
                     owner: userGuid,
@@ -539,7 +541,7 @@ const routes = [
                     };
                 }
 
-                const guid = GUID.v4();
+                const guid = generate(url, 10);
 
                 const insertOperation = await Knex('quiz_results').insert({
                     user_owner: userGuid,
@@ -650,7 +652,7 @@ const routes = [
                     };
                 }
 
-                const guid = GUID.v4();
+                const guid = generate(url, 10);
 
                 const insertOperation = await Knex('quiz_results').insert({
                     owner: userGuid,

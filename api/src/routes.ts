@@ -1,10 +1,12 @@
 import Knex from './knex';
 import * as Bcrypt from 'bcrypt';
-import * as GUID from 'node-uuid';
 import * as Hapi from 'hapi';
 import * as Joi from 'joi';
 import * as JWT from 'jsonwebtoken';
 import * as redis from 'redis';
+import nanoid = require('nanoid');
+import url = require('nanoid/url');
+import generate = require('nanoid/generate');
 
 require('dotenv').config();
 
@@ -161,7 +163,7 @@ const routes = [
         handler: async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
             try {
                 const { user }: any = request.payload;
-                const guid = GUID.v4();
+                const guid = generate(url, 10);
 
                 const saltedPass = await Bcrypt.hash(user.password, 10);
 
@@ -307,7 +309,7 @@ const routes = [
                     };
                 }
 
-                const guid = GUID.v4();
+                const guid = generate(url, 10);
 
                 const insertOperation = await Knex('babies').insert({
                     owner: userGuid,
@@ -539,7 +541,7 @@ const routes = [
                     };
                 }
 
-                const guid = GUID.v4();
+                const guid = generate(url, 10);
 
                 const insertOperation = await Knex('quiz_results').insert({
                     user_owner: userGuid,
@@ -650,7 +652,7 @@ const routes = [
                     };
                 }
 
-                const guid = GUID.v4();
+                const guid = generate(url, 10);
 
                 const insertOperation = await Knex('quiz_results').insert({
                     owner: userGuid,

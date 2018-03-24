@@ -88,7 +88,6 @@ const routes = [
                 }
 
                 const token = JWT.sign(session, process.env.JWT_KEY);
-                console.log(token);
 
                 return h
                     .response({ text: 'Check Auth Header for your Token' })
@@ -109,11 +108,6 @@ const routes = [
             description: 'Logout route',
             notes: 'De-authenticates user and invalidates JWT',
             tags: ['api', 'auth'],
-            validate: {
-                headers: Joi.object({
-                    authorization: Joi.string().required(),
-                }).unknown(),
-            },
         },
         handler: async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
             try {
@@ -124,8 +118,6 @@ const routes = [
                 );
 
                 const session = JSON.parse(redisResult);
-                console.log(' - - - - - - SESSION - - - - - - - -');
-                console.log(session);
                 // update the session to no longer valid:
                 session.valid = false;
                 session.ended = new Date().getTime();
@@ -198,7 +190,6 @@ const routes = [
                 }
 
                 const token = JWT.sign(session, process.env.JWT_KEY);
-                console.log(token);
 
                 return h
                     .response({ text: 'Check Auth Header for your Token' })
@@ -226,9 +217,6 @@ const routes = [
                         .required()
                         .description('the guid for the user'),
                 },
-                headers: Joi.object({
-                    authorization: Joi.string().required(),
-                }).unknown(),
             },
         },
         handler: async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
@@ -291,9 +279,6 @@ const routes = [
                         .required()
                         .description('the baby body json payload'),
                 },
-                headers: Joi.object({
-                    authorization: Joi.string().required(),
-                }).unknown(),
             },
         },
         handler: async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
@@ -455,9 +440,6 @@ const routes = [
                         .required()
                         .description('the guid for the user'),
                 },
-                headers: Joi.object({
-                    authorization: Joi.string().required(),
-                }).unknown(),
             },
         },
         handler: async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
@@ -523,9 +505,6 @@ const routes = [
                         .required()
                         .description('the quiz result body json payload'),
                 },
-                headers: Joi.object({
-                    authorization: Joi.string().required(),
-                }).unknown(),
             },
         },
         handler: async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
@@ -575,9 +554,6 @@ const routes = [
                         .required()
                         .description('the guid for the user'),
                 },
-                headers: Joi.object({
-                    authorization: Joi.string().required(),
-                }).unknown(),
             },
         },
         handler: async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
@@ -634,9 +610,6 @@ const routes = [
                         .required()
                         .description('the user setting body json payload'),
                 },
-                headers: Joi.object({
-                    authorization: Joi.string().required(),
-                }).unknown(),
             },
         },
         handler: async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
@@ -695,9 +668,6 @@ const routes = [
                         .required()
                         .description('the user setting body json payload'),
                 },
-                headers: Joi.object({
-                    authorization: Joi.string().required(),
-                }).unknown(),
             },
             pre: [
                 {

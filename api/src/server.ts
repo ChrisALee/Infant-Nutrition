@@ -74,7 +74,7 @@ const validate = async (decoded, request, h) => {
 
     if (session.valid === true) {
         const credentials = {
-            guid: decoded.guid,
+            authGuid: decoded.guid,
             username: decoded.username,
         };
         return { credentials, isValid: true };

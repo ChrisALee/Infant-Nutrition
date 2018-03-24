@@ -231,8 +231,15 @@ const routes = [
         },
         handler: async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
             try {
-                console.log(request.headers.authorization);
                 const { userGuid }: any = request.params;
+                const { authGuid }: any = request.auth.credentials;
+
+                if (authGuid !== userGuid) {
+                    return {
+                        error: true,
+                        errMessage: 'Invalid user',
+                    };
+                }
 
                 const results = await Knex('babies')
                     .where({
@@ -291,6 +298,15 @@ const routes = [
             try {
                 const { userGuid }: any = request.params;
                 const { baby }: any = request.payload;
+                const { authGuid }: any = request.auth.credentials;
+
+                if (authGuid !== userGuid) {
+                    return {
+                        error: true,
+                        errMessage: 'Invalid user',
+                    };
+                }
+
                 const guid = GUID.v4();
 
                 const insertOperation = await Knex('babies').insert({
@@ -445,6 +461,14 @@ const routes = [
         handler: async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
             try {
                 const { userGuid }: any = request.params;
+                const { authGuid }: any = request.auth.credentials;
+
+                if (authGuid !== userGuid) {
+                    return {
+                        error: true,
+                        errMessage: 'Invalid user',
+                    };
+                }
 
                 const results = await Knex('quiz_results')
                     .join('quizzes', 'quiz_results.quiz_owner', 'quizzes.guid')
@@ -506,6 +530,15 @@ const routes = [
             try {
                 const { quizGuid, userGuid }: any = request.params;
                 const { quiz_result }: any = request.payload;
+                const { authGuid }: any = request.auth.credentials;
+
+                if (authGuid !== userGuid) {
+                    return {
+                        error: true,
+                        errMessage: 'Invalid user',
+                    };
+                }
+
                 const guid = GUID.v4();
 
                 const insertOperation = await Knex('quiz_results').insert({
@@ -548,6 +581,14 @@ const routes = [
         handler: async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
             try {
                 const { userGuid }: any = request.params;
+                const { authGuid }: any = request.auth.credentials;
+
+                if (authGuid !== userGuid) {
+                    return {
+                        error: true,
+                        errMessage: 'Invalid user',
+                    };
+                }
 
                 const results = await Knex('user_settings')
                     .where({
@@ -600,6 +641,15 @@ const routes = [
             try {
                 const { userGuid }: any = request.params;
                 const { user_settings }: any = request.payload;
+                const { authGuid }: any = request.auth.credentials;
+
+                if (authGuid !== userGuid) {
+                    return {
+                        error: true,
+                        errMessage: 'Invalid user',
+                    };
+                }
+
                 const guid = GUID.v4();
 
                 const insertOperation = await Knex('quiz_results').insert({
@@ -676,6 +726,15 @@ const routes = [
             try {
                 const { userSettingsGuid }: any = request.params;
                 const { user_settings }: any = request.payload;
+                const { userGuid }: any = request.params;
+                const { authGuid }: any = request.auth.credentials;
+
+                if (authGuid !== userGuid) {
+                    return {
+                        error: true,
+                        errMessage: 'Invalid user',
+                    };
+                }
 
                 const insertOperation = await Knex('user_settings')
                     .where({

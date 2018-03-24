@@ -70,7 +70,10 @@ const routes = [
 
                 const session = {
                     valid: true,
-                    ...results,
+                    guid: results.guid,
+                    username: results.username,
+                    name: results.username,
+                    email: results.email,
                 };
                 // create the session in Redis
                 const redisClient = (request as any).redis.client;
@@ -175,15 +178,12 @@ const routes = [
 
                 await Knex('users').insert(userWithGuidAndSalt);
 
-                const results = await Knex('users')
-                    .where({
-                        username: user.username,
-                    })
-                    .first();
-
                 const session = {
                     valid: true,
-                    ...results,
+                    guid: userWithGuidAndSalt.guid,
+                    username: userWithGuidAndSalt.username,
+                    name: userWithGuidAndSalt.username,
+                    email: userWithGuidAndSalt.email,
                 };
                 // create the session in Redis
                 const redisClient = (request as any).redis.client;

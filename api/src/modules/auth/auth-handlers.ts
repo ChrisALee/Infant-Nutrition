@@ -70,7 +70,7 @@ exports.logout = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
         const redisClient = (request as any).redis.client;
 
         const redisResult = await redisClient.get(
-            (request as any).auth.credentials.guid,
+            (request as any).auth.credentials.sessionGuid,
         );
 
         const session = JSON.parse(redisResult);

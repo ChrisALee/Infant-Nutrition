@@ -1,0 +1,49 @@
+image: node:latest
+
+stages:
+    - build
+    - test
+    - deploy
+
+before_script:
+    - npm -g config set user root
+    - echo "Installing root npm packages"
+    - npm install
+    - cd api
+    - echo "Installing API npm packages"
+    - npm install
+    - cd ../client
+    - echo "Installing client npm packages"
+    - npm install
+    - cd ..
+
+cache:
+    paths:
+        - node_modules/
+        - api/node_modules/
+        - client/node_modules/
+
+build:
+    stage: build 
+    script:
+        - echo "Building front end"
+        - echo "Building back end"
+        - echo "Running lint/prettier"
+
+test:
+    stage: test
+    script:
+        - echo "Running tests"
+
+deploy:
+    stage: deploy
+    environment: Production
+    only:
+        - master
+    script:
+        - echo "Logging into OpenShift"
+        - oc login --username $OC_USER --password $OC_PASS
+        - oc project $OC_PROJECT
+        - echo "Starting OpenShift builds"
+        - oc start-build $OC_API
+        - oc start-build $OC_CLIENT

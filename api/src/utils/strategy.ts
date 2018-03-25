@@ -32,6 +32,7 @@ exports.register = (server, options) => {
         if (session.valid === true) {
             const credentials = {
                 authGuid: session.userGuid,
+                sessionGuid: session.guid,
                 username: session.username,
                 email: session.email,
                 name: session.name,

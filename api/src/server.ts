@@ -1,4 +1,4 @@
-const Server = require('./app.ts');
+const Server = require('./app');
 
 const startServer = async () => {
     try {

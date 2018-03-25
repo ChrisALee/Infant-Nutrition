@@ -102,7 +102,7 @@ exports.registerUser = async (
         const userWithGuidAndSalt = {
             ...user,
             password: saltedPass,
-            userGuid,
+            guid: userGuid,
         };
 
         await Knex('users').insert(userWithGuidAndSalt);

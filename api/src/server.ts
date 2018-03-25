@@ -1,24 +1,10 @@
-import * as Hapi from 'hapi';
-import * as Glue from 'glue';
-import * as JWT from 'jsonwebtoken';
-
-const manifest = require('./utils/manifest');
-
-require('dotenv').config();
-
-const options = {
-    relativeTo: __dirname,
-};
+const Server = require('./app.ts');
 
 const startServer = async () => {
     try {
-        // load plugins from ./utils/manifest.ts
-        const server = await Glue.compose(manifest, options);
-
-        await server.start();
+        await Server.deployment(true);
     } catch (err) {
-        console.error(err);
-        process.exit(1);
+        throw err;
     }
 };
 

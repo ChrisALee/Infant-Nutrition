@@ -1,4 +1,4 @@
-const Pack = require('../../package');
+// const Pack = require('../../package');
 
 require('dotenv').config();
 
@@ -7,7 +7,7 @@ const swaggerOptions = {
         title: 'API documentation',
         description:
             'This is the documentation for the infant nutrition feeding API',
-        version: Pack.version,
+        // version: Pack.version,
     },
     securityDefinitions: {
         jwt: {

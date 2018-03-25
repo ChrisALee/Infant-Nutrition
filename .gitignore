@@ -7,6 +7,8 @@ npm-debug.log*
 node_modules/
 */node_modules/
 
+# Jest files
+coverage
 
 # Typescript v1 declaration files
 typings/

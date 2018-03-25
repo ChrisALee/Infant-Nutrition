@@ -95,24 +95,27 @@ exports.registerUser = async (
 ) => {
     try {
         const { user }: any = request.payload;
-        const guid = generate(url, 10);
+        const userGuid = generate(url, 10);
 
         const saltedPass = await Bcrypt.hash(user.password, 10);
 
         const userWithGuidAndSalt = {
             ...user,
             password: saltedPass,
-            guid,
+            userGuid,
         };
 
         await Knex('users').insert(userWithGuidAndSalt);
 
+        const guid = generate(url, 10);
+
         const session = {
             valid: true,
-            guid: userWithGuidAndSalt.guid,
+            userGuid: userWithGuidAndSalt.guid,
             username: userWithGuidAndSalt.username,
             name: userWithGuidAndSalt.username,
             email: userWithGuidAndSalt.email,
+            guid,
         };
         // create the session in Redis
         const redisClient = (request as any).redis.client;
@@ -123,7 +126,11 @@ exports.registerUser = async (
             throw err;
         }
 
-        const token = JWT.sign(session, process.env.JWT_KEY);
+        // TODO: set a good expiresIn for access token after refresh token
+        // is implemented
+        const token = JWT.sign({ guid: session.guid }, process.env.JWT_KEY, {
+            expiresIn: '30h',
+        });
 
         return h
             .response({ text: 'Check Auth Header for your Token' })

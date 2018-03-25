@@ -34,13 +34,13 @@ Then go to `localhost:8080` to see `CLIENT` or `localhost:3001/documentation` to
 
 NOTE: This requires environment variables to be set up for `API`
 
-For more information on how to set this up, check out the `API` [README.md](https://github.com/chrisalee/infant-nutrition/api/README.md)
+For more information on how to set this up, check out the `API` [README.md](api/README.md)
 
 ## Deployment to OpenShift
 
-To see how to deploy `CLIENT`, check out https://github.com/chrisalee/infant-nutrition/client/README.md
+To see how to deploy `CLIENT`, check out the [CLIENT README.md](client/README.md)
 
-To see how to deploy `API`, check out https://github.com/chrisalee/infant-nutrition/api/README.md
+To see how to deploy `API`, check out [API README.md](api/README.md)
 
 ## Contributing
 
@@ -52,8 +52,6 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code style, an
 * **Sufi Khaksari** - [skhaksari](https://github.com/skhaksari)
 * **Scott Krawcyzk** - [czyk14](https://github.com/czyk14)
 * **Carrie Storch** - [carriems](https://github.com/carriems)
-
-See also the list of [contributors](https://github.com/chrisalee/infant-nutrition/contributors) who participated in this project.
 
 ## License
 

@@ -71,8 +71,8 @@ This will automatically pull an updated NodeJS image and target the source code 
 ## Built With
 
 * [Node.js](https://nodejs.org/en/) - The JavaScript runtime used
-* [Hapi](https://expressjs.com/) - Web framework for Node.js
-* [Knex](https://handlebarsjs.com/) - Template engine
-* [Swagger]() - API documentation
+* [Hapi](https://hapijs.com/) - Web framework for Node.js
+* [Knex](http://knexjs.org/) - Template engine
+* [Swagger](https://swagger.io/) - API documentation
 * [TypeScript](https://www.typescriptlang.org/) - Superset of JavaScript that allows for types
 * [PostgreSQL](https://www.postgresql.org/) - SQL database

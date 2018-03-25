@@ -19,40 +19,28 @@ These instructions will get you a copy of the project up and running on your loc
 First fork and clone the repo
 
 Then:
-```
+```sh
 $ cd PATH/TO/PROJECT
 $ npm install
 ```
 
-To run locally:
-```
+This will install the dependencies in the master package, and then it'll also install the dependencies in `API` and `CLIENT`
+
+To run both `API` and `CLIENT` locally:
+```sh
 $ npm start
 ```
-Then go to `localhost:8080`
+Then go to `localhost:8080` to see `CLIENT` or `localhost:3001/documentation` to see `API`
+
+NOTE: This requires environment variables to be set up for `API`
+
+For more information on how to set this up, check out the `API` [README.md](https://github.com/chrisalee/infant-nutrition/api/README.md)
 
 ## Deployment to OpenShift
 
-First log in with your oc credentials:
+To see how to deploy `CLIENT`, check out https://github.com/chrisalee/infant-nutrition/client/README.md
 
-```
-$ oc login
-```
-
-Then simply run this command to deploy:
-
-```
-$ npm run nodeshift
-```
-
-This will automatically pull an updated NodeJS image and build the source code in this repo for OpenShift.
-
-## Built With
-
-* [Node.js](https://nodejs.org/en/) - The JavaScript runtime used
-* [Express](https://expressjs.com/) - Web framework for Node.js
-* [Handlebars](https://handlebarsjs.com/) - Template engine
-* [TypeScript](https://www.typescriptlang.org/) - Superset of JavaScript that allows for types
-* [PostgreSQL](https://www.postgresql.org/) - SQL database
+To see how to deploy `API`, check out https://github.com/chrisalee/infant-nutrition/api/README.md
 
 ## Contributing
 

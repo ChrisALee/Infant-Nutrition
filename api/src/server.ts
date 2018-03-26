@@ -1,8 +1,8 @@
-const Server = require('./app');
+import { deployment } from './app';
 
 const startServer = async () => {
     try {
-        await Server.deployment(true);
+        await deployment(true);
     } catch (err) {
         throw err;
     }

@@ -1,6 +1,6 @@
 import * as Joi from 'joi';
 
-exports.getQuestions = {
+export const getQuestions = {
     params: {
         quizGuid: Joi.string()
             .required()
@@ -8,7 +8,7 @@ exports.getQuestions = {
     },
 };
 
-exports.getAnswers = {
+export const getAnswers = {
     params: {
         quizGuid: Joi.string()
             .required()
@@ -16,7 +16,7 @@ exports.getAnswers = {
     },
 };
 
-exports.getResults = {
+export const getResults = {
     params: {
         userGuid: Joi.string()
             .required()
@@ -24,7 +24,7 @@ exports.getResults = {
     },
 };
 
-exports.postResults = {
+export const postResults = {
     params: {
         quizGuid: Joi.string()
             .required()

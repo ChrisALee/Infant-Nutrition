@@ -1,11 +1,12 @@
+import { deployment } from '../app.js';
+
 const NodeEnvironment = require('jest-environment-node');
-const TestServer = require('../app.js');
 
 class TestEnvironment extends NodeEnvironment {
     async setup() {
         try {
             await super.setup();
-            this.global.server = await TestServer.deployment();
+            this.global.server = await deployment(false);
         } catch (err) {
             throw err;
         }

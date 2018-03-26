@@ -1,5 +1,5 @@
-const userSettingsHandlers = require('./user-settings-handlers');
-const userSettingsValidators = require('./user-settings-validators');
+import * as userSettingsHandlers from './user-settings-handlers';
+import * as userSettingsValidators from './user-settings-validators';
 
 exports.register = (server, options) => {
     server.route({

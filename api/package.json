@@ -8,8 +8,7 @@
         "prestart": "tsc -p tsconfig.production.json",
         "start": "node dist/server.js",
         "pretest": "tsc",
-        "test":
-            "jest --forceExit --coverage --verbose --env=./dist/utils/test-environment.js",
+        "test": "jest --forceExit --coverage --verbose --env=./dist/utils/test-environment.js",
         "tslint": "tslint -c tslint.json -p tsconfig.json"
     },
     "repository": {

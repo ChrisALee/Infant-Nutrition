@@ -1,5 +1,5 @@
-const babyHandlers = require('./baby-handlers');
-const babyValidators = require('./baby-validators');
+import * as babyHandlers from './baby-handlers';
+import * as babyValidators from './baby-validators';
 
 exports.register = (server, options) => {
     server.route({

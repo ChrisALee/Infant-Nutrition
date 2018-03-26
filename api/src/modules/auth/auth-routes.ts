@@ -1,5 +1,5 @@
-const authHandlers = require('./auth-handlers');
-const authValidators = require('./auth-validators');
+import * as authHandlers from './auth-handlers';
+import * as authValidators from './auth-validators';
 
 exports.register = (server, options) => {
     server.route({
@@ -35,9 +35,9 @@ exports.register = (server, options) => {
             description: 'Register route',
             notes: 'Registers a new user and logs them in',
             tags: ['api', 'auth'],
-            validate: authValidators.registerUser,
+            validate: authValidators.register,
         },
-        handler: authHandlers.registerUser,
+        handler: authHandlers.register,
     });
 };
 

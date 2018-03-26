@@ -1,10 +1,13 @@
-import Knex from '../../utils/knex';
 import * as Hapi from 'hapi';
-import nanoid = require('nanoid');
-import url = require('nanoid/url');
 import generate = require('nanoid/generate');
+import url = require('nanoid/url');
 
-exports.getQuizzes = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
+import Knex from '../../utils/knex';
+
+export const getQuizzes = async (
+    request: Hapi.Request,
+    h: Hapi.ResponseToolkit,
+) => {
     try {
         const results = await Knex('quizzes').select('name', 'num_questions');
 
@@ -22,7 +25,7 @@ exports.getQuizzes = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
     }
 };
 
-exports.getQuestions = async (
+export const getQuestions = async (
     request: Hapi.Request,
     h: Hapi.ResponseToolkit,
 ) => {
@@ -49,7 +52,10 @@ exports.getQuestions = async (
     }
 };
 
-exports.getAnswers = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
+export const getAnswers = async (
+    request: Hapi.Request,
+    h: Hapi.ResponseToolkit,
+) => {
     try {
         const { questionGuid }: any = request.params;
 
@@ -73,7 +79,10 @@ exports.getAnswers = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
     }
 };
 
-exports.getResults = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
+export const getResults = async (
+    request: Hapi.Request,
+    h: Hapi.ResponseToolkit,
+) => {
     try {
         const { userGuid }: any = request.params;
         const { authGuid }: any = request.auth.credentials;
@@ -106,7 +115,7 @@ exports.getResults = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
     }
 };
 
-exports.postResults = async (
+export const postResults = async (
     request: Hapi.Request,
     h: Hapi.ResponseToolkit,
 ) => {

@@ -1,6 +1,6 @@
 import * as Joi from 'joi';
 
-exports.login = {
+export const login = {
     payload: {
         user: Joi.object()
             .keys({
@@ -12,7 +12,7 @@ exports.login = {
     },
 };
 
-exports.registerUser = {
+export const register = {
     payload: {
         user: Joi.object()
             .keys({

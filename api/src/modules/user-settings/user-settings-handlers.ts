@@ -1,10 +1,10 @@
-import Knex from '../../utils/knex';
 import * as Hapi from 'hapi';
-import nanoid = require('nanoid');
-import url = require('nanoid/url');
 import generate = require('nanoid/generate');
+import url = require('nanoid/url');
 
-exports.getUserSettings = async (
+import Knex from '../../utils/knex';
+
+export const getUserSettings = async (
     request: Hapi.Request,
     h: Hapi.ResponseToolkit,
 ) => {
@@ -39,7 +39,7 @@ exports.getUserSettings = async (
     }
 };
 
-exports.postUserSettings = async (
+export const postUserSettings = async (
     request: Hapi.Request,
     h: Hapi.ResponseToolkit,
 ) => {
@@ -73,7 +73,7 @@ exports.postUserSettings = async (
     }
 };
 
-exports.putUserSettings = async (
+export const putUserSettings = async (
     request: Hapi.Request,
     h: Hapi.ResponseToolkit,
 ) => {
@@ -107,7 +107,7 @@ exports.putUserSettings = async (
     }
 };
 
-exports.prePutUserSettings = async (
+export const prePutUserSettings = async (
     request: Hapi.Request,
     h: Hapi.ResponseToolkit,
 ) => {

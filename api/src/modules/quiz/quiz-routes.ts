@@ -1,5 +1,5 @@
-const quizHandlers = require('./quiz-handlers');
-const quizValidators = require('./quiz-validators');
+import * as quizHandlers from './quiz-handlers';
+import * as quizValidators from './quiz-validators';
 
 exports.register = (server, options) => {
     server.route({

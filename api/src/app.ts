@@ -2,7 +2,7 @@ import * as Glue from 'glue';
 
 const manifest = require('./utils/manifest');
 
-exports.deployment = async start => {
+export const deployment = async start => {
     try {
         const server = await Glue.compose(manifest, { relativeTo: __dirname });
 

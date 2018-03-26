@@ -1,12 +1,15 @@
-import Knex from '../../utils/knex';
 import * as Hapi from 'hapi';
-import nanoid = require('nanoid');
-import url = require('nanoid/url');
 import generate = require('nanoid/generate');
+import url = require('nanoid/url');
+
+import Knex from '../../utils/knex';
 
 require('dotenv').config();
 
-exports.getBabies = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
+export const getBabies = async (
+    request: Hapi.Request,
+    h: Hapi.ResponseToolkit,
+) => {
     try {
         const { userGuid }: any = request.params;
         const { authGuid }: any = request.auth.credentials;
@@ -38,7 +41,10 @@ exports.getBabies = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
     }
 };
 
-exports.postBaby = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
+export const postBaby = async (
+    request: Hapi.Request,
+    h: Hapi.ResponseToolkit,
+) => {
     try {
         const { userGuid }: any = request.params;
         const { baby }: any = request.payload;

@@ -1,13 +1,12 @@
-import Knex from '../../utils/knex';
 import * as Bcrypt from 'bcrypt';
 import * as Hapi from 'hapi';
 import * as JWT from 'jsonwebtoken';
-import * as redis from 'redis';
-import nanoid = require('nanoid');
-import url = require('nanoid/url');
 import generate = require('nanoid/generate');
+import url = require('nanoid/url');
 
-exports.login = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
+import Knex from '../../utils/knex';
+
+export const login = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
     try {
         const { user }: any = request.payload;
 
@@ -65,7 +64,10 @@ exports.login = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
     }
 };
 
-exports.logout = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
+export const logout = async (
+    request: Hapi.Request,
+    h: Hapi.ResponseToolkit,
+) => {
     try {
         const redisClient = (request as any).redis.client;
 
@@ -89,7 +91,7 @@ exports.logout = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
     }
 };
 
-exports.registerUser = async (
+export const register = async (
     request: Hapi.Request,
     h: Hapi.ResponseToolkit,
 ) => {

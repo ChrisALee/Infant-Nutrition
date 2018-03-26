@@ -1,6 +1,6 @@
 import * as Joi from 'joi';
 
-exports.getUserSettings = {
+export const getUserSettings = {
     params: {
         userGuid: Joi.string()
             .required()
@@ -8,7 +8,7 @@ exports.getUserSettings = {
     },
 };
 
-exports.postUserSettings = {
+export const postUserSettings = {
     params: {
         userGuid: Joi.string()
             .required()
@@ -24,7 +24,7 @@ exports.postUserSettings = {
     },
 };
 
-exports.putUserSettings = {
+export const putUserSettings = {
     params: {
         userSettingsGuid: Joi.string()
             .required()

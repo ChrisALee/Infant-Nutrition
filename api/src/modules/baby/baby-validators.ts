@@ -1,6 +1,6 @@
 import * as Joi from 'joi';
 
-exports.getBabies = {
+export const getBabies = {
     params: {
         userGuid: Joi.string()
             .required()
@@ -8,7 +8,7 @@ exports.getBabies = {
     },
 };
 
-exports.postBaby = {
+export const postBaby = {
     params: {
         userGuid: Joi.string()
             .required()

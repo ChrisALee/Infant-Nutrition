@@ -1,3 +1,4 @@
+import * as Boom from 'boom';
 import * as Hapi from 'hapi';
 import generate = require('nanoid/generate');
 import url = require('nanoid/url');
@@ -34,8 +35,8 @@ export const getUserSettings = async (
 
         return results;
     } catch (err) {
-        console.log(err);
-        return err;
+        request.log('api', err);
+        throw Boom.internal('Internal database error');
     }
 };
 
@@ -68,8 +69,8 @@ export const postUserSettings = async (
             message: 'successfully created user settings',
         };
     } catch (err) {
-        console.log(err);
-        return err;
+        request.log('api', err);
+        throw Boom.internal('Internal database error');
     }
 };
 
@@ -102,8 +103,8 @@ export const putUserSettings = async (
             message: 'successfully updated user settings',
         };
     } catch (err) {
-        console.log(err);
-        return err;
+        request.log('api', err);
+        throw Boom.internal('Internal database error');
     }
 };
 
@@ -111,19 +112,24 @@ export const prePutUserSettings = async (
     request: Hapi.Request,
     h: Hapi.ResponseToolkit,
 ) => {
-    const { userSettingsGuid } = request.params;
+    try {
+        const { userSettingsGuid } = request.params;
 
-    const results = await Knex('user_settings')
-        .where({
-            guid: userSettingsGuid,
-        })
-        .select('owner');
+        const results = await Knex('user_settings')
+            .where({
+                guid: userSettingsGuid,
+            })
+            .select('owner');
 
-    if (!results) {
-        return {
-            error: true,
-            errMessage: `the user_settings with id ${userSettingsGuid} was not found`,
-        };
+        if (!results) {
+            return {
+                error: true,
+                errMessage: `the user_settings with id ${userSettingsGuid} was not found`,
+            };
+        }
+        return 'success';
+    } catch (err) {
+        request.log('api', err);
+        throw Boom.internal('Internal database error');
     }
-    return 'success';
 };

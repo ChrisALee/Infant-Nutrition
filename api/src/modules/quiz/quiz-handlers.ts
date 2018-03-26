@@ -19,11 +19,10 @@ export const getQuizzes = async (
             };
         }
 
-        throw 'err';
-        // return results;
+        return results;
     } catch (err) {
         request.log('api', err);
-        throw Boom.internal();
+        throw Boom.internal('Internal database error');
     }
 };
 
@@ -49,7 +48,8 @@ export const getQuestions = async (
 
         return results;
     } catch (err) {
-        throw Boom.internal();
+        request.log('api', err);
+        throw Boom.internal('Internal database error');
     }
 };
 
@@ -75,7 +75,8 @@ export const getAnswers = async (
 
         return results;
     } catch (err) {
-        throw Boom.internal();
+        request.log('api', err);
+        throw Boom.internal('Internal database error');
     }
 };
 
@@ -110,7 +111,8 @@ export const getResults = async (
 
         return results;
     } catch (err) {
-        throw Boom.internal();
+        request.log('api', err);
+        throw Boom.internal('Internal database error');
     }
 };
 
@@ -144,6 +146,7 @@ export const postResults = async (
             message: 'successfully created quiz results',
         };
     } catch (err) {
-        throw Boom.internal();
+        request.log('api', err);
+        throw Boom.internal('Internal database error');
     }
 };

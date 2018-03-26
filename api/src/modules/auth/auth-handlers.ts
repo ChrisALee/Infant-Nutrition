@@ -1,4 +1,5 @@
 import * as Bcrypt from 'bcrypt';
+import * as Boom from 'boom';
 import * as Hapi from 'hapi';
 import * as JWT from 'jsonwebtoken';
 import generate = require('nanoid/generate');
@@ -43,8 +44,8 @@ export const login = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
         try {
             await redisClient.set(session.guid, JSON.stringify(session));
         } catch (err) {
-            // throw Boom.internal('Internal Redis error')
-            throw err;
+            request.log('auth', err);
+            throw Boom.internal('Internal Redis error');
         }
 
         // TODO: set a good expiresIn for access token after refresh token
@@ -59,8 +60,8 @@ export const login = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
             .header('Authorization', token)
             .state('token', token);
     } catch (err) {
-        console.log(err);
-        return err;
+        request.log('auth', err);
+        throw Boom.internal('Internal database error');
     }
 };
 
@@ -86,8 +87,8 @@ export const logout = async (
             .response({ text: 'You have been logged out' })
             .unstate('token');
     } catch (err) {
-        console.log(err);
-        return err;
+        request.log('auth', err);
+        throw Boom.internal('Internal database error');
     }
 };
 
@@ -124,8 +125,8 @@ export const register = async (
         try {
             await redisClient.set(session.guid, JSON.stringify(session));
         } catch (err) {
-            // throw Boom.internal('Internal Redis error')
-            throw err;
+            request.log('auth', err);
+            throw Boom.internal('Internal Redis error');
         }
 
         // TODO: set a good expiresIn for access token after refresh token
@@ -140,7 +141,7 @@ export const register = async (
             .header('Authorization', token)
             .state('token', token);
     } catch (err) {
-        console.log(err);
-        return err;
+        request.log('auth', err);
+        throw Boom.internal('Internal database error');
     }
 };

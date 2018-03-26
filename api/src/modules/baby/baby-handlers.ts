@@ -1,3 +1,4 @@
+import * as Boom from 'boom';
 import * as Hapi from 'hapi';
 import generate = require('nanoid/generate');
 import url = require('nanoid/url');
@@ -36,8 +37,8 @@ export const getBabies = async (
 
         return results;
     } catch (err) {
-        console.log(err);
-        return err;
+        request.log('api', err);
+        throw Boom.internal('Internal database error');
     }
 };
 
@@ -71,7 +72,7 @@ export const postBaby = async (
             message: 'successfully created baby',
         };
     } catch (err) {
-        console.log(err);
-        return err;
+        request.log('api', err);
+        throw Boom.internal('Internal database error');
     }
 };

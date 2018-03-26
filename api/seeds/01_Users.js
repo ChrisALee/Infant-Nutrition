@@ -1,31 +1,45 @@
-exports.seed = function(knex, Promise) {
+const Bcrypt = require('bcrypt');
+
+exports.seed = async function(knex, Promise) {
     // Deletes ALL existing entries
-    return knex('users')
-        .del()
-        .then(function() {
+    try {
+        await knex.raw(
+            'truncate table users, user_settings, babies, answers, questions, quiz_results, quizzes ',
+        );
+
+        const pass1 = await Bcrypt.hash('password1', 10);
+        const pass2 = await Bcrypt.hash('password2', 10);
+        const pass3 = await Bcrypt.hash('password3', 10);
+
+        return knex('users').then(function() {
             // Inserts seed entries
             return knex('users').insert([
                 {
                     name: 'Chris Lee',
                     username: 'clee',
-                    password: 'password',
+                    password: pass1,
                     email: 'clee@gmail.com',
-                    guid: '4fb12b06-d9b1-4944-ba4d-28e6f74e6cef',
+                    guid: 'GHso99ia1P',
                 },
                 {
                     name: 'Andrew Borg',
                     username: 'aborg',
                     password: 'password123',
+                    password: pass2,
                     email: 'aborg@gmail.com',
-                    guid: 'cc08ac29-4a3a-4aa1-8bc2-f4b683c85a6d',
+                    guid: '8dDeBulp2U',
                 },
                 {
                     name: 'James Kahn',
                     username: 'jkahn',
-                    password: '123password',
+                    password: pass3,
                     email: 'jkahn@gmail.com',
-                    guid: '3dc2373c-4591-4940-86da-0315a7f10857',
+                    guid: '0scyzGE9XJ',
                 },
             ]);
         });
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
 };

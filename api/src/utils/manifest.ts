@@ -26,6 +26,25 @@ const redisOptions = {
     decorate: true,
 };
 
+const goodOptions = {
+    ops: {
+        interval: 1000,
+    },
+    reporters: {
+        myConsoleReporter: [
+            {
+                module: 'good-squeeze',
+                name: 'Squeeze',
+                args: [{ log: '*', response: '*' }],
+            },
+            {
+                module: 'good-console',
+            },
+            'stdout',
+        ],
+    },
+};
+
 module.exports = {
     server: {
         host: process.env.SERVER_HOST,
@@ -36,6 +55,7 @@ module.exports = {
             { plugin: require('hapi-auth-jwt2') },
             { plugin: 'inert' },
             { plugin: 'vision' },
+            { plugin: 'good', options: goodOptions },
             { plugin: 'blipp', options: { showAuth: true } },
             { plugin: 'hapi-swagger', options: swaggerOptions },
             { plugin: 'hapi-redis2', options: redisOptions },

@@ -1,3 +1,5 @@
+import { RedisClient } from 'redis';
+
 require('dotenv').config();
 
 const swaggerOptions = {
@@ -26,23 +28,39 @@ const redisOptions = {
     decorate: true,
 };
 
-const goodOptions = {
-    ops: {
-        interval: 1000,
-    },
-    reporters: {
-        myConsoleReporter: [
-            {
-                module: 'good-squeeze',
-                name: 'Squeeze',
-                args: [{ log: '*', response: '*' }],
+const getGoodOptions = () => {
+    if (process.env.NODE_ENV === 'production') {
+        return {
+            ops: false,
+            reporters: {},
+        };
+    } else {
+        return {
+            ops: {
+                interval: 1000,
             },
-            {
-                module: 'good-console',
+            reporters: {
+                myConsoleReporter: [
+                    {
+                        module: 'good-squeeze',
+                        name: 'Squeeze',
+                        args: [{ log: '*', response: '*', request: '*' }],
+                    },
+                    {
+                        module: 'good-console',
+                    },
+                    'stdout',
+                ],
             },
-            'stdout',
-        ],
-    },
+        };
+    }
+};
+
+const goodOptions = getGoodOptions();
+
+const devErrorsOptions = {
+    showErrors: process.env.NODE_ENV !== 'production',
+    useYouch: true,
 };
 
 module.exports = {
@@ -59,6 +77,7 @@ module.exports = {
             { plugin: 'blipp', options: { showAuth: true } },
             { plugin: 'hapi-swagger', options: swaggerOptions },
             { plugin: 'hapi-redis2', options: redisOptions },
+            { plugin: 'hapi-dev-errors', options: devErrorsOptions },
             { plugin: './utils/strategy' },
             { plugin: './utils/cookies' },
             {

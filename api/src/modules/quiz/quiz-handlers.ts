@@ -1,3 +1,4 @@
+import * as Boom from 'boom';
 import * as Hapi from 'hapi';
 import generate = require('nanoid/generate');
 import url = require('nanoid/url');
@@ -18,10 +19,11 @@ export const getQuizzes = async (
             };
         }
 
-        return results;
+        throw 'err';
+        // return results;
     } catch (err) {
-        console.log(err);
-        return err;
+        request.log('api', err);
+        throw Boom.internal();
     }
 };
 
@@ -47,8 +49,7 @@ export const getQuestions = async (
 
         return results;
     } catch (err) {
-        console.log(err);
-        return err;
+        throw Boom.internal();
     }
 };
 
@@ -74,8 +75,7 @@ export const getAnswers = async (
 
         return results;
     } catch (err) {
-        console.log(err);
-        return err;
+        throw Boom.internal();
     }
 };
 
@@ -110,8 +110,7 @@ export const getResults = async (
 
         return results;
     } catch (err) {
-        console.log(err);
-        return err;
+        throw Boom.internal();
     }
 };
 
@@ -145,7 +144,6 @@ export const postResults = async (
             message: 'successfully created quiz results',
         };
     } catch (err) {
-        console.log(err);
-        return err;
+        throw Boom.internal();
     }
 };

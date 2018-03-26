@@ -8,7 +8,8 @@
         "prestart": "tsc -p tsconfig.production.json",
         "start": "node dist/server.js",
         "pretest": "tsc",
-        "test": "jest --forceExit --coverage --verbose --env=./dist/utils/test-environment.js",
+        "test":
+            "jest --forceExit --coverage --verbose --env=./dist/utils/test-environment.js",
         "tslint": "tslint -c tslint.json -p tsconfig.json"
     },
     "repository": {
@@ -42,7 +43,8 @@
     },
     "dependencies": {
         "@types/bcrypt": "^1.0.0",
-        "@types/hapi": "^17.0.4",
+        "@types/boom": "^7.2.0",
+        "@types/hapi": "^17.0.7",
         "@types/hapi-auth-jwt2": "^8.0.0",
         "@types/joi": "^13.0.7",
         "@types/jsonwebtoken": "^7.2.6",
@@ -53,6 +55,8 @@
         "@types/redis": "^2.8.6",
         "bcrypt": "^1.0.3",
         "blipp": "^3.0.0",
+        "boom": "^7.2.0",
+        "disinfect": "^1.0.0",
         "dotenv": "^5.0.1",
         "glue": "^5.0.0",
         "good": "^8.1.1",
@@ -60,6 +64,7 @@
         "good-squeeze": "^5.0.2",
         "hapi": "^17.2.1",
         "hapi-auth-jwt2": "^8.0.0",
+        "hapi-dev-errors": "^2.1.0",
         "hapi-redis-connection": "^1.0.1",
         "hapi-redis2": "^2.0.0",
         "hapi-swagger": "^9.1.1",

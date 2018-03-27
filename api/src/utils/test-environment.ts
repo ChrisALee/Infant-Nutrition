@@ -4,6 +4,9 @@ const NodeEnvironment = require('jest-environment-node');
 
 class TestEnvironment extends NodeEnvironment {
     async setup() {
+        // Suppress good-console warnings during tests
+        process.stdout.setMaxListeners(Infinity);
+
         try {
             await super.setup();
             this.global.server = await deployment(false);

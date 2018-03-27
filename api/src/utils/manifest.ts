@@ -28,8 +28,12 @@ const redisOptions = {
     decorate: true,
 };
 
+// Should only report to console during development environment
 const getGoodOptions = () => {
-    if (process.env.NODE_ENV === 'production') {
+    if (
+        process.env.NODE_ENV === 'production' ||
+        process.env.NODE_ENV === 'test'
+    ) {
         return {
             ops: false,
             reporters: {},

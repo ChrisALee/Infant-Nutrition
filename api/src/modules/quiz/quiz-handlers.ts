@@ -10,7 +10,11 @@ export const getQuizzes = async (
     h: Hapi.ResponseToolkit,
 ) => {
     try {
-        const results = await Knex('quizzes').select('name', 'num_questions');
+        const results = await Knex('quizzes').select(
+            'name',
+            'num_questions',
+            'guid',
+        );
 
         if (!results || results.length === 0) {
             return {
@@ -37,7 +41,7 @@ export const getQuestions = async (
             .where({
                 owner: quizGuid,
             })
-            .select('question');
+            .select('question', 'guid');
 
         if (!results || results.length === 0) {
             return {
@@ -80,20 +84,12 @@ export const getAnswers = async (
     }
 };
 
-export const getResults = async (
+export const getResultsCurrent = async (
     request: Hapi.Request,
     h: Hapi.ResponseToolkit,
 ) => {
     try {
-        const { userGuid }: any = request.params;
-        const { authGuid }: any = request.auth.credentials;
-
-        if (authGuid !== userGuid) {
-            return {
-                error: true,
-                errMessage: 'Invalid user',
-            };
-        }
+        const { userGuid }: any = request.auth.credentials;
 
         const results = await Knex('quiz_results')
             .join('quizzes', 'quiz_results.quiz_owner', 'quizzes.guid')
@@ -116,21 +112,13 @@ export const getResults = async (
     }
 };
 
-export const postResults = async (
+export const postResultsCurrent = async (
     request: Hapi.Request,
     h: Hapi.ResponseToolkit,
 ) => {
     try {
-        const { quizGuid, userGuid }: any = request.params;
-        const { quiz_result }: any = request.payload;
-        const { authGuid }: any = request.auth.credentials;
-
-        if (authGuid !== userGuid) {
-            return {
-                error: true,
-                errMessage: 'Invalid user',
-            };
-        }
+        const { quiz_result, quizGuid }: any = request.payload;
+        const { userGuid }: any = request.auth.credentials;
 
         const guid = generate(url, 10);
 

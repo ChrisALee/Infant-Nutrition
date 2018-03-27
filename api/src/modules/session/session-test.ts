@@ -3,11 +3,11 @@ describe('Auth', () => {
     const Redis = global['Redis'];
 
     describe('Login', () => {
-        describe('POST /auth/login', () => {
+        describe('POST /api/session', () => {
             test('should login in as user when correct payload', async () => {
                 const injectOptions = {
                     method: 'POST',
-                    url: '/auth/login',
+                    url: '/api/session',
                     payload: {
                         user: {
                             username: 'clee',
@@ -24,7 +24,7 @@ describe('Auth', () => {
             test('should not login as user when incorrect payload', async () => {
                 const injectOptions = {
                     method: 'POST',
-                    url: '/auth/login',
+                    url: '/api/session',
                     payload: {
                         user: {
                             username: 'cle231je',
@@ -41,7 +41,7 @@ describe('Auth', () => {
             test('should not login as user when malformed payload', async () => {
                 const injectOptions = {
                     method: 'POST',
-                    url: '/auth/login',
+                    url: '/api/session',
                     payload: {
                         user: {
                             username: 'clee',
@@ -57,15 +57,15 @@ describe('Auth', () => {
     });
 
     describe('Logout', () => {
-        describe('POST /auth/logout', () => {
+        describe('DELETE /api/session', () => {
             beforeEach(async () => {
                 await Redis.flushdb();
             });
 
             test('should logout when correct session credentials', async () => {
                 const injectOptions = {
-                    method: 'POST',
-                    url: '/auth/logout',
+                    method: 'DELETE',
+                    url: '/api/session',
                     // Bypass validation by sending credentials
                     credentials: {
                         sessionGuid: 0,
@@ -81,8 +81,8 @@ describe('Auth', () => {
 
             test('should not logout when incorrect session credentials', async () => {
                 const injectOptions = {
-                    method: 'POST',
-                    url: '/auth/logout',
+                    method: 'DELETE',
+                    url: '/api/session',
                     // Bypass validation by sending credentials
                     credentials: {
                         sessionGuid: 5,
@@ -98,8 +98,8 @@ describe('Auth', () => {
 
             test('should not logout when malformed session credentials', async () => {
                 const injectOptions = {
-                    method: 'POST',
-                    url: '/auth/logout',
+                    method: 'DELETE',
+                    url: '/api/session',
                     // Bypass validation by sending credentials
                     credentials: {
                         malformedItem: 5,
@@ -116,11 +116,11 @@ describe('Auth', () => {
     });
 
     describe('Register', () => {
-        describe('POST /auth/register', () => {
+        describe('POST /session/register', () => {
             test('should register new user when correct payload', async () => {
                 const injectOptions = {
                     method: 'POST',
-                    url: '/auth/register',
+                    url: '/session/register',
                     payload: {
                         user: {
                             username: '1234',
@@ -142,7 +142,7 @@ describe('Auth', () => {
             // test('should not register new user when incorrect payload', async () => {
             //     const injectOptions = {
             //         method: 'POST',
-            //         url: '/auth/register',
+            //         url: '/session/register',
             //         payload: {
             //             user: {
             //                 username: '12345',
@@ -161,7 +161,7 @@ describe('Auth', () => {
             test('should not register new user when malformed payload', async () => {
                 const injectOptions = {
                     method: 'POST',
-                    url: '/auth/register',
+                    url: '/session/register',
                     payload: {
                         user: {
                             username: '1234567',

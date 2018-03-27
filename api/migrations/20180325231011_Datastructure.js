@@ -5,7 +5,6 @@ exports.up = function(knex, Promise) {
             usersTable.increments();
 
             // Data
-            usersTable.string('name', 50).notNullable();
             usersTable.string('username', 50).notNullable().unique();
             usersTable.string('email', 250).notNullable().unique();
             usersTable.string('password', 128).notNullable();
@@ -14,18 +13,19 @@ exports.up = function(knex, Promise) {
             usersTable.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'));
         })
 
-        .createTable('user_settings', userSettingsTable => {
+        .createTable('profile', profileTable => {
             // Primary Key
-            userSettingsTable.increments();
+            profileTable.increments();
 
             // Foreign Key
-            userSettingsTable.string('owner', 36).references('guid').inTable('users');
+            profileTable.string('owner', 36).references('guid').inTable('users');
 
             // Data
-            userSettingsTable.boolean('should_email').defaultTo(true).notNullable();
-            userSettingsTable.string('guid', 36).notNullable().unique();
+            profileTable.string('name', 50).notNullable();
+            profileTable.boolean('should_email').defaultTo(true).notNullable();
+            profileTable.string('guid', 36).notNullable().unique();
 
-            userSettingsTable.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'));
+            profileTable.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'));
         })
 
         .createTable('babies', function(babiesTable) {
@@ -101,5 +101,5 @@ exports.up = function(knex, Promise) {
 };
 
 exports.down = function(knex, Promise) {
-    return knex.schema.raw('drop table babies, user_settings, answers, questions, quiz_results, quizzes, users cascade')
+    return knex.schema.raw('drop table babies, profile, answers, questions, quiz_results, quizzes, users cascade')
 };

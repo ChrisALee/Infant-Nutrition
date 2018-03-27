@@ -9,7 +9,7 @@ exports.register = (server, options) => {
             auth: false,
             description: 'Get quizzes',
             notes: 'Returns all quiz items',
-            tags: ['api'],
+            tags: ['api', 'quizzes'],
         },
         handler: quizHandlers.getQuizzes,
     });
@@ -22,7 +22,7 @@ exports.register = (server, options) => {
             description: 'Get quiz questions',
             notes:
                 'Returns quiz question items for the quiz with the quizGuid passed in the path',
-            tags: ['api'],
+            tags: ['api', 'quizzes'],
             validate: quizValidators.getQuestions,
         },
         handler: quizHandlers.getQuestions,
@@ -35,39 +35,38 @@ exports.register = (server, options) => {
             auth: false,
             description: 'Get quiz answers',
             notes:
-                'Returns quiz answer items for the quiz with the quizGuid passed in the path',
-            tags: ['api'],
+                'Returns quiz answer items for the quiz with the quizGuid and questionGuid passed in the path',
+            tags: ['api', 'quizzes'],
             validate: quizValidators.getAnswers,
         },
         handler: quizHandlers.getAnswers,
     });
 
     server.route({
-        path: '/users/{userGuid}/quiz-results',
+        path: '/quizzes/quiz-results/current',
         method: 'GET',
         config: {
             auth: 'jwt',
-            description: 'Get quiz results',
+            description: 'Get quiz results from the current user',
             notes:
                 'Returns quiz result items for the user with the userGuid passed in the path',
-            tags: ['api'],
-            validate: quizValidators.getResults,
+            tags: ['api', 'quizzes'],
         },
-        handler: quizHandlers.getResults,
+        handler: quizHandlers.getResultsCurrent,
     });
 
     server.route({
-        path: '/users/{userGuid}/quiz-results/quiz/{quizGuid}',
+        path: '/quizzes/quiz-results/current',
         method: 'POST',
         config: {
             auth: 'jwt',
-            description: 'Post quiz results',
+            description: 'Add quiz results to the current user',
             notes:
                 'Adds quiz result for the user with the userGuid and quiz with the quizGuid passed in the path',
-            tags: ['api'],
-            validate: quizValidators.postResults,
+            tags: ['api', 'quizzes'],
+            validate: quizValidators.postResultsCurrent,
         },
-        handler: quizHandlers.postResults,
+        handler: quizHandlers.postResultsCurrent,
     });
 };
 

@@ -3,28 +3,25 @@ import * as babyValidators from './baby-validators';
 
 exports.register = (server, options) => {
     server.route({
-        path: '/users/{userGuid}/babies',
+        path: '/users/current/babies',
         method: 'GET',
         config: {
             auth: 'jwt',
-            description: 'Get babies',
-            notes:
-                'Returns baby items for the user with the userGuid passed in the path',
-            tags: ['api'],
-            validate: babyValidators.getBabies,
+            description: 'Get babies from the current user',
+            notes: 'Returns baby items for the current user',
+            tags: ['api', 'babies'],
         },
         handler: babyHandlers.getBabies,
     });
 
     server.route({
-        path: '/users/{userGuid}/babies',
+        path: '/users/current/babies',
         method: 'POST',
         config: {
             auth: 'jwt',
-            description: 'Post baby',
-            notes:
-                'Adds a baby to the user specified with the userGuid passed in the path',
-            tags: ['api'],
+            description: 'Add baby to the current user',
+            notes: 'Adds a baby to the user for the current user',
+            tags: ['api', 'babies'],
             validate: babyValidators.postBaby,
         },
         handler: babyHandlers.postBaby,

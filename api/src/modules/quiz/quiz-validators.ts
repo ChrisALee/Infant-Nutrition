@@ -13,26 +13,13 @@ export const getAnswers = {
         quizGuid: Joi.string()
             .required()
             .description('the guid for the quiz'),
+        questionGuid: Joi.string()
+            .required()
+            .description('the guid for the question'),
     },
 };
 
-export const getResults = {
-    params: {
-        userGuid: Joi.string()
-            .required()
-            .description('the guid for the user'),
-    },
-};
-
-export const postResults = {
-    params: {
-        quizGuid: Joi.string()
-            .required()
-            .description('the guid for the quiz'),
-        userGuid: Joi.string()
-            .required()
-            .description('the guid for the user'),
-    },
+export const postResultsCurrent = {
     payload: {
         quiz_result: Joi.object()
             .keys({
@@ -44,5 +31,8 @@ export const postResults = {
             })
             .required()
             .description('the quiz result body json payload'),
+        quizGuid: Joi.string()
+            .required()
+            .description('the guid for the quiz result owner'),
     },
 };

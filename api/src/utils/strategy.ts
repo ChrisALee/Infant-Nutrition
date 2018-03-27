@@ -21,11 +21,10 @@ exports.register = (server, options) => {
 
             if (session.valid === true) {
                 const credentials = {
-                    authGuid: session.userGuid,
+                    userGuid: session.userGuid,
                     sessionGuid: session.guid,
                     username: session.username,
                     email: session.email,
-                    name: session.name,
                 };
                 return { credentials, isValid: true };
             } else {

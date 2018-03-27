@@ -12,21 +12,14 @@ export const getBabies = async (
     h: Hapi.ResponseToolkit,
 ) => {
     try {
-        const { userGuid }: any = request.params;
-        const { authGuid }: any = request.auth.credentials;
-
-        if (authGuid !== userGuid) {
-            return {
-                error: true,
-                errMessage: 'Invalid user',
-            };
-        }
+        const { userGuid }: any = request.auth.credentials;
+        console.log(userGuid);
 
         const results = await Knex('babies')
             .where({
                 owner: userGuid,
             })
-            .select('name', 'age');
+            .select('name', 'date_of_birth');
 
         if (!results || results.length === 0) {
             return {
@@ -47,23 +40,15 @@ export const postBaby = async (
     h: Hapi.ResponseToolkit,
 ) => {
     try {
-        const { userGuid }: any = request.params;
         const { baby }: any = request.payload;
-        const { authGuid }: any = request.auth.credentials;
-
-        if (authGuid !== userGuid) {
-            return {
-                error: true,
-                errMessage: 'Invalid user',
-            };
-        }
+        const { userGuid }: any = request.auth.credentials;
 
         const guid = generate(url, 10);
 
         const insertOperation = await Knex('babies').insert({
             owner: userGuid,
             name: baby.name,
-            age: baby.age,
+            date_of_birth: baby.dateOfBirth,
             guid,
         });
 

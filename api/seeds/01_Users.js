@@ -4,7 +4,7 @@ exports.seed = async function(knex, Promise) {
     // Deletes ALL existing entries
     try {
         await knex.raw(
-            'truncate table users, user_settings, babies, answers, questions, quiz_results, quizzes ',
+            'truncate table users, profile, babies, answers, questions, quiz_results, quizzes ',
         );
 
         const pass1 = await Bcrypt.hash('password1', 10);
@@ -15,22 +15,18 @@ exports.seed = async function(knex, Promise) {
             // Inserts seed entries
             return knex('users').insert([
                 {
-                    name: 'Chris Lee',
                     username: 'clee',
                     password: pass1,
                     email: 'clee@gmail.com',
                     guid: 'GHso99ia1P',
                 },
                 {
-                    name: 'Andrew Borg',
                     username: 'aborg',
-                    password: 'password123',
                     password: pass2,
                     email: 'aborg@gmail.com',
                     guid: '8dDeBulp2U',
                 },
                 {
-                    name: 'James Kahn',
                     username: 'jkahn',
                     password: pass3,
                     email: 'jkahn@gmail.com',

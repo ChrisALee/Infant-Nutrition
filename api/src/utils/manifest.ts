@@ -2,10 +2,12 @@ require('dotenv').config();
 
 const swaggerOptions = {
     info: {
-        title: 'API documentation',
+        title: 'Infant Nutrition API documentation',
         description:
             'This is the documentation for the infant nutrition feeding API',
     },
+    grouping: 'tags',
+    sortTags: 'name',
     securityDefinitions: {
         jwt: {
             type: 'apiKey',
@@ -72,20 +74,24 @@ module.exports = {
             { plugin: './utils/strategy' },
             { plugin: './utils/cookies' },
             {
-                plugin: './modules/auth/auth-routes',
-                routes: { prefix: '/auth' },
+                plugin: './modules/session/session-routes',
+                routes: { prefix: '/api' },
             },
             {
                 plugin: './modules/baby/baby-routes',
-                routes: { prefix: '/api/v1' },
+                routes: { prefix: '/api' },
             },
             {
                 plugin: './modules/quiz/quiz-routes',
-                routes: { prefix: '/api/v1' },
+                routes: { prefix: '/api' },
             },
             {
-                plugin: './modules/user-settings/user-settings-routes',
-                routes: { prefix: '/api/v1' },
+                plugin: './modules/profile/profile-routes',
+                routes: { prefix: '/api' },
+            },
+            {
+                plugin: './modules/user/user-routes',
+                routes: { prefix: '/api' },
             },
         ],
     },

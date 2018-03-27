@@ -8,7 +8,9 @@ exports.register = (server, options) => {
         config: {
             auth: false,
             description: 'Log user in',
-            notes: 'Creates session and returns JWT in Auth Header',
+            notes:
+                'Creates session and returns JWT in Auth Header.' +
+                ' Note that it only accepts email OR username but NOT BOTH.',
             tags: ['api', 'session'],
             validate: sessionValidators.postSession,
         },

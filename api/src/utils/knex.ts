@@ -1,14 +1,23 @@
 require('dotenv').config();
 
-export default require('knex')({
-    client: process.env.DB_TYPE,
-    connection: {
-        host: process.env.DB_HOST,
+let Knex;
 
-        user: process.env.DB_USER,
-        password: process.env.DB_PASS,
+if (process.env.NODE_ENV !== 'test') {
+    Knex = require('knex')({
+        client: process.env.DB_TYPE,
+        connection: {
+            host: process.env.DB_HOST,
 
-        database: process.env.DB,
-        charset: 'utf8',
-    },
-});
+            user: process.env.DB_USER,
+            password: process.env.DB_PASS,
+
+            database: process.env.DB,
+            charset: 'utf8',
+        },
+    });
+} else {
+    // Pulls from Test Environment setup file
+    Knex = global['Knex'];
+}
+
+export default Knex;

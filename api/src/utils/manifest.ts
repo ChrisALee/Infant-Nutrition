@@ -1,5 +1,3 @@
-import { RedisClient } from 'redis';
-
 require('dotenv').config();
 
 const swaggerOptions = {
@@ -16,16 +14,6 @@ const swaggerOptions = {
         },
     },
     security: [{ jwt: [] }],
-};
-
-const redisOptions = {
-    settings: {
-        port: process.env.REDIS_PORT,
-        host: process.env.REDIS_HOST,
-        password: process.env.REDIS_PASS,
-        db: process.env.REDIS_DB,
-    },
-    decorate: true,
 };
 
 // Should only report to console during development environment
@@ -80,7 +68,6 @@ module.exports = {
             { plugin: 'good', options: goodOptions },
             { plugin: 'blipp', options: { showAuth: true } },
             { plugin: 'hapi-swagger', options: swaggerOptions },
-            { plugin: 'hapi-redis2', options: redisOptions },
             { plugin: 'hapi-dev-errors', options: devErrorsOptions },
             { plugin: './utils/strategy' },
             { plugin: './utils/cookies' },

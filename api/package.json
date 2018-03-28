@@ -1,6 +1,6 @@
 {
     "name": "infant-nutrition",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "description": "",
     "main": "index.js",
     "scripts": {
@@ -10,7 +10,8 @@
         "prestart:prod": "tsc -p tsconfig.production.json",
         "start:prod": "set NODE_ENV=production&& node dist/server.js",
         "pretest": "tsc",
-        "test": "jest --forceExit --coverage --verbose --env=./dist/utils/test-environment.js",
+        "test":
+            "jest --forceExit --coverage --verbose --env=./dist/utils/test-environment.js",
         "tslint": "tslint -c tslint.json -p tsconfig.json"
     },
     "repository": {

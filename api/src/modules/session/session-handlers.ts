@@ -17,15 +17,23 @@ export const postSession = async (
 
     try {
         // Use supplied credentials to fetch user from database
-        results = await Knex('users')
-            .where({
-                username: user.username,
-            })
-            .first();
+        if (user.username && user.username.length > 0) {
+            results = await Knex('users')
+                .where({
+                    username: user.username,
+                })
+                .first();
+        } else {
+            results = await Knex('users')
+                .where({
+                    email: user.email,
+                })
+                .first();
+        }
 
         // Invalid user was supplied and was unable to fetch from database
         if (!results || results.length === 0) {
-            throw 'Invalid username';
+            throw 'Invalid username or email';
         }
 
         const isValid = await Bcrypt.compare(user.password, results.password);

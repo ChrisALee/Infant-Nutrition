@@ -49,8 +49,11 @@ export const postUser = async (
     };
 
     // Set the session in Redis
+    console.log('Made it to before Redis');
     try {
+        console.log(Redis);
         await Redis.set(session.guid, JSON.stringify(session));
+        console.log('Attempted Redis');
     } catch (err) {
         request.log('auth', err);
         throw Boom.internal('Internal Redis error');

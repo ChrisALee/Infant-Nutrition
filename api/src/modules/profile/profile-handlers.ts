@@ -100,14 +100,12 @@ export const prePutProfile = async (
             .select('owner');
 
         if (!results) {
-            return {
-                error: true,
-                errMessage: `the profile with id ${profileGuid} was not found`,
-            };
+            throw `the profile with id ${profileGuid} was not found`;
         }
+
         return 'success';
     } catch (err) {
         request.log('api', err);
-        throw Boom.internal('Internal database error');
+        throw Boom.notFound(err);
     }
 };

@@ -68,3 +68,39 @@ export const postUser = async (
         .header('Authorization', token)
         .state('token', token);
 };
+
+export const prePostUser = async (
+    request: Hapi.Request,
+    h: Hapi.ResponseToolkit,
+) => {
+    try {
+        const { user }: any = request.payload;
+
+        // Check to see is username already exists in db
+        const usernameResults = await Knex('users')
+            .where({
+                username: user.username,
+            })
+            .select('*');
+
+        if (usernameResults && usernameResults.length > 0) {
+            throw 'Username already taken';
+        }
+
+        // Check to see is email already exists in db
+        const emailResults = await Knex('users')
+            .where({
+                email: user.email,
+            })
+            .select('*');
+
+        if (emailResults && emailResults.length > 0) {
+            throw 'Email already taken';
+        }
+
+        return 'success';
+    } catch (err) {
+        request.log('api', err);
+        throw Boom.conflict(err);
+    }
+};

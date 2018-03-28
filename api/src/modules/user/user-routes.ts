@@ -11,6 +11,7 @@ exports.register = (server, options) => {
             notes: 'Registers a new user and logs them in',
             tags: ['api', 'users'],
             validate: userValidators.postUser,
+            pre: [userHandlers.prePostUser],
         },
         handler: userHandlers.postUser,
     });

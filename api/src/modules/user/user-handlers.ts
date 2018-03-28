@@ -55,16 +55,19 @@ export const postUser = async (
         await Redis.set(session.guid, JSON.stringify(session));
         console.log('Attempted Redis');
     } catch (err) {
+        console.log('Made it to error: ', err);
         request.log('auth', err);
         throw Boom.internal('Internal Redis error');
     }
 
+    console.log('Right before JWT sign');
     // TODO: set a good expiresIn for access token after refresh token
     // is implemented
     const token = JWT.sign({ guid: session.guid }, process.env.JWT_KEY, {
         expiresIn: '30h',
     });
 
+    console.log('Right before returning', token);
     return h
         .response({ text: 'Check Auth Header for your Token' })
         .type('application/json')

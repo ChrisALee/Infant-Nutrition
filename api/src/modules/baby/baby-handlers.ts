@@ -13,7 +13,6 @@ export const getBabies = async (
 ) => {
     try {
         const { userGuid }: any = request.auth.credentials;
-        console.log(userGuid);
 
         const results = await Knex('babies')
             .where({

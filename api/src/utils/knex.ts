@@ -1,8 +1,7 @@
-require('dotenv').config();
-
 let Knex;
 
 if (process.env.NODE_ENV !== 'test') {
+    /* tslint:disable:no-var-requires */
     Knex = require('knex')({
         client: process.env.DB_TYPE,
         connection: {

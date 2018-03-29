@@ -5,8 +5,6 @@ import url = require('nanoid/url');
 
 import Knex from '../../utils/knex';
 
-require('dotenv').config();
-
 export const getBabies = async (
     request: Hapi.Request,
     h: Hapi.ResponseToolkit,

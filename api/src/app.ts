@@ -1,6 +1,7 @@
 import * as Glue from 'glue';
 
-const manifest = require('./utils/manifest');
+// const manifest = require('./utils/manifest');
+import manifest from './utils/manifest';
 
 export const deployment = async start => {
     try {
@@ -14,7 +15,7 @@ export const deployment = async start => {
 
         await server.start();
 
-        console.log(`Server started at ${server.info.uri}`);
+        server.log(`Server started at ${server.info.uri}`);
 
         return server;
     } catch (err) {

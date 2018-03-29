@@ -33,13 +33,13 @@ export const postSession = async (
 
         // Invalid user was supplied and was unable to fetch from database
         if (!results || results.length === 0) {
-            throw 'Invalid username or email';
+            throw new Error('Invalid username or email');
         }
 
         const isValid = await Bcrypt.compare(user.password, results.password);
 
         if (!isValid) {
-            throw 'Invalid password';
+            throw new Error('Invalid password');
         }
     } catch (err) {
         request.log('auth', err);

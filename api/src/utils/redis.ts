@@ -1,8 +1,9 @@
-require('dotenv').config();
+import 'dotenv/config';
 
 let Redis;
 
 if (process.env.NODE_ENV !== 'test') {
+    /* tslint:disable:no-var-requires */
     Redis = require('ioredis')({
         port: process.env.REDIS_DB_PORT || 6379,
         host: process.env.REDIS_DB_HOST,

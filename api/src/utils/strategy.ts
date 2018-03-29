@@ -1,7 +1,5 @@
 import Redis from './redis';
 
-require('dotenv').config();
-
 exports.register = (server, options) => {
     const validate = async (decoded, request, h) => {
         // TODO: Change to refresh token
@@ -13,7 +11,7 @@ exports.register = (server, options) => {
 
         try {
             if (!decoded.guid) {
-                throw 'Token missing';
+                throw new Error('Token missing');
             }
 
             const redisResult = await Redis.get(decoded.guid);
@@ -28,7 +26,7 @@ exports.register = (server, options) => {
                 };
                 return { credentials, isValid: true };
             } else {
-                throw 'Invalid session';
+                throw new Error('Invalid session');
             }
         } catch (err) {
             return { credentials: null, isValid: false };

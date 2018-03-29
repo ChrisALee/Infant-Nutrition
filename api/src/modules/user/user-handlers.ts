@@ -84,7 +84,7 @@ export const prePostUser = async (
             .select('*');
 
         if (usernameResults && usernameResults.length > 0) {
-            throw 'Username already taken';
+            throw new Error('Username already taken');
         }
 
         // Check to see is email already exists in db
@@ -95,7 +95,7 @@ export const prePostUser = async (
             .select('*');
 
         if (emailResults && emailResults.length > 0) {
-            throw 'Email already taken';
+            throw new Error('Email already taken');
         }
 
         return 'success';

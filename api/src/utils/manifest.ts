@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 const swaggerOptions = {
     info: {
         title: 'Infant Nutrition API documentation',
@@ -57,7 +55,7 @@ const devErrorsOptions = {
     useYouch: true,
 };
 
-module.exports = {
+const manifest = {
     server: {
         host: process.env.SERVER_HOST,
         port: process.env.SERVER_PORT,
@@ -96,3 +94,5 @@ module.exports = {
         ],
     },
 };
+
+export default manifest;

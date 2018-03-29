@@ -100,7 +100,7 @@ export const prePutProfile = async (
             .select('owner');
 
         if (!results) {
-            throw `the profile with id ${profileGuid} was not found`;
+            throw new Error(`the profile with id ${profileGuid} was not found`);
         }
 
         return 'success';

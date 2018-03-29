@@ -8,21 +8,16 @@ import Pushingup from '../components/pushingup';
 import Newborn from '../components/newborn';
 import LearningToSit from '../components/sit';
 
-export namespace Index {
-    export interface State {
-        babyStageClicked: string;
-    }
-
-    export interface Props {
-        name: string;
-        species: string;
-    }
+export interface State {
+    babyStageClicked: string;
 }
 
-export default class IndexPage extends React.Component<
-    Index.Props,
-    Index.State
-> {
+export interface Props {
+    name: string;
+    species: string;
+}
+
+export default class IndexPage extends React.Component<Props, State> {
     static async getInitialProps(): Promise<any> {
         try {
             // TODO: Use env var for url
@@ -33,7 +28,6 @@ export default class IndexPage extends React.Component<
                 species: json.data[0].species,
             };
         } catch (err) {
-            console.log(err);
             return {
                 name: '',
                 species: '',
@@ -45,11 +39,11 @@ export default class IndexPage extends React.Component<
         babyStageClicked: '',
     };
 
-    handleClick(e: any) {
+    handleClick = e => {
         this.setState({
             babyStageClicked: e.target.id,
         });
-    }
+    };
 
     render() {
         const { name, species } = this.props;
@@ -81,7 +75,7 @@ export default class IndexPage extends React.Component<
                     <p>{species}</p>
                 </div>
 
-                <table id="stages" onClick={this.handleClick.bind(this)}>
+                <table id="stages" onClick={this.handleClick}>
                     <tr>
                         <td id="0" className="devStage">
                             Newborn<br />(0-1 month)
@@ -142,7 +136,7 @@ export default class IndexPage extends React.Component<
                         }
 
                         #intro {
-                            background-color: white;
+                            background-color: w)hite;
                             padding: 2.5%;
                             border-radius: 5px;
                             margin-top: 5%;

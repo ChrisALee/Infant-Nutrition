@@ -1,10 +1,12 @@
-import { deployment } from '../app.js';
+import 'dotenv/config';
+
 import * as redis from 'ioredis-mock';
 import * as knex from 'knex';
 
-const NodeEnvironment = require('jest-environment-node');
+import { deployment } from '../app.js';
 
-require('dotenv').config();
+/* tslint:disable:no-var-requires */
+const NodeEnvironment = require('jest-environment-node');
 
 class TestEnvironment extends NodeEnvironment {
     Knex = knex({

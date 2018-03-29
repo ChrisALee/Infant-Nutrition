@@ -5,7 +5,7 @@ describe('auth tests', async () => {
                 method: 'GET',
                 url: '/api/v1/quizzes',
             };
-            let server = global['server'];
+            const server = global['server'];
 
             const response = await server.inject(injectOptions);
 

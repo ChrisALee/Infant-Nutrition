@@ -23,12 +23,6 @@ Create an .env file in the root `API` directory:
 $ touch .env
 ```
 
-Put these environment variables in the `.env` file with your relevant information:
-```
-API_HOST=localhost
-API_PORT=3002
-```
-
 To run locally:
 ```sh
 $ npm run dev

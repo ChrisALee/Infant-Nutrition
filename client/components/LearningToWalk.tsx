@@ -1,4 +1,4 @@
-export default props => (
+export default () => (
     <div id="50">
         <h3>Developmental Milestones:</h3>
         <ul>

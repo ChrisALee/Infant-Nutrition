@@ -2,11 +2,11 @@ import * as React from 'react';
 import 'isomorphic-unfetch';
 import Head from '../components/head';
 import Nav from '../components/nav';
-import BeginningToWalk from '../components/beginning-to-walk';
-import Crawler from '../components/crawler';
-import Pushingup from '../components/pushingup';
-import Newborn from '../components/newborn';
-import LearningToSit from '../components/sit';
+import LearningToWalk from '../components/LearningToWalk';
+import LearningToCrawl from '../components/LearningToCrawl';
+import PushingUp from '../components/PushingUp';
+import Newborn from '../components/Newborn';
+import LearningToSit from '../components/LearningToSit';
 
 export interface State {
     babyStageClicked: string;
@@ -92,7 +92,7 @@ export default class IndexPage extends React.Component<Props, State> {
                         <td id="4" className="devStage">
                             Learning to Walk<br />(9-12 months)
                         </td>
-                   </tr>
+                    </tr>
                 </table>
 
                 {this.state.babyStageClicked ? (
@@ -112,10 +112,10 @@ export default class IndexPage extends React.Component<Props, State> {
                             {
                                 {
                                     '0': <Newborn />,
-                                    '1': <Pushingup />,
+                                    '1': <PushingUp />,
                                     '2': <LearningToSit />,
-                                    '3': <Crawler />,
-                                    '4': <BeginningToWalk />,
+                                    '3': <LearningToCrawl />,
+                                    '4': <LearningToWalk />,
                                 }[this.state.babyStageClicked]
                             }
                         </div>

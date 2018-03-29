@@ -1,5 +1,3 @@
-import 'dotenv/config';
-
 let Redis;
 
 if (process.env.NODE_ENV !== 'test') {

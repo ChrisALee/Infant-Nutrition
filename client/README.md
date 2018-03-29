@@ -58,7 +58,7 @@ This will automatically pull an updated NodeJS image and target the source code 
 This will get updated as the project increases in complexity.
 
 ```
-// Clientside files should **only** be in the client folder
+// Clientside files should only be in the client folder
 client/
 |   // This is where installed packages end up
 |   // Unless you have some strange use-case or error
@@ -197,7 +197,8 @@ export default () => (
 
 // client/components/SomeComponentWithProps.tsx
 export default props => {
-    // Most likely more efficient way of doing this particular example, but I just wanted to show how to use props this way
+    // There is most likely a more efficient way of doing this particular example
+    // but I just wanted to show how to use props this way
     if (props.someProperty === 'tom') {
         return <div>{props.someProprty} does not like you!</div>;
     } else if (props.someProperty === 'bob'){

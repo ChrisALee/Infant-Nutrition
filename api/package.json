@@ -1,47 +1,20 @@
 {
     "name": "infant-nutrition",
     "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
+    "author": "Christopher Lee",
+    "private": true,
     "scripts": {
-        "start:watch": "nodemon",
+        "dev": "nodemon",
         "prestart": "tsc -p tsconfig.production.json",
         "start": "node dist/server.js",
         "prestart:prod": "tsc -p tsconfig.production.json",
         "start:prod": "set NODE_ENV=production&& node dist/server.js",
         "pretest": "tsc",
-        "test":
-            "jest --forceExit --coverage --verbose --env=./dist/utils/test-environment.js",
-        "tslint": "tslint -c tslint.json -p tsconfig.json"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/ChrisALee/infant-nutrition.git"
-    },
-    "files": [
-        "src",
-        "copyStaticAssets.js",
-        "tsconfig.json",
-        "tslint.json",
-        "views",
-        "package.json"
-    ],
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/ChrisALee/Infant-Nutrition/issues"
-    },
-    "homepage": "https://github.com/ChrisALee/Infant-Nutrition#readme",
-    "devDependencies": {
-        "@types/jest": "^22.2.2",
-        "jest": "^22.4.3",
-        "nodemon": "^1.17.1",
-        "prettier": "^1.10.2",
-        "ts-jest": "^22.4.2",
-        "ts-node": "^5.0.0",
-        "tslint": "^5.9.1",
-        "tslint-config-airbnb": "^5.7.0",
-        "tslint-config-prettier": "^1.9.0"
+        "test": "jest --forceExit --coverage --verbose --env=./dist/utils/test-environment.js",
+        "tslint-check": "tslint-config-prettier-check ./tslint.json",
+        "tslint": "tslint -c tslint.json -p tsconfig.json --fix",
+        "prettier": "prettier  --write **/*.ts*",
+        "format": "npm run prettier && npm run tslint"
     },
     "dependencies": {
         "@types/bcrypt": "^1.0.0",
@@ -79,5 +52,16 @@
         "pg": "^7.4.1",
         "typescript": "^2.7.2",
         "vision": "^5.3.2"
+    },
+    "devDependencies": {
+        "@types/jest": "^22.2.2",
+        "jest": "^22.4.3",
+        "nodemon": "^1.17.1",
+        "prettier": "^1.10.2",
+        "ts-jest": "^22.4.2",
+        "ts-node": "^5.0.0",
+        "tslint": "^5.9.1",
+        "tslint-config-prettier": "^1.9.0",
+        "tslint-eslint-rules": "^5.1.0"
     }
 }

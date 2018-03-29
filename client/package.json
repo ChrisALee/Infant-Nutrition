@@ -6,7 +6,11 @@
     "scripts": {
         "dev": "next",
         "prestart": "next build",
-        "start": "next start -p 8080"
+        "start": "next start -p 8080",
+        "tslint-check": "tslint-config-prettier-check ./tslint.json",
+        "tslint": "tslint -c tslint.json -p tsconfig.json --fix",
+        "prettier": "prettier  --write **/*.ts*",
+        "format": "npm run prettier && npm run tslint"
     },
     "dependencies": {
         "@types/next": "^2.4.8",
@@ -21,6 +25,11 @@
         "typescript": "^2.7.2"
     },
     "devDependencies": {
-        "cross-env": "^5.0.1"
+        "cross-env": "^5.0.1",
+        "prettier": "^1.11.1",
+        "tslint": "^5.9.1",
+        "tslint-config-prettier": "^1.10.0",
+        "tslint-eslint-rules": "^5.1.0",
+        "tslint-react": "^3.5.1"
     }
 }

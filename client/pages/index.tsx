@@ -1,12 +1,14 @@
-import * as React from 'react';
 import 'isomorphic-unfetch';
-import Head from '../components/head';
-import Nav from '../components/nav';
-import LearningToWalk from '../components/LearningToWalk';
+
+import * as React from 'react';
+
+import Head from '../components/Head';
 import LearningToCrawl from '../components/LearningToCrawl';
-import PushingUp from '../components/PushingUp';
-import Newborn from '../components/Newborn';
 import LearningToSit from '../components/LearningToSit';
+import LearningToWalk from '../components/LearningToWalk';
+import Nav from '../components/Nav';
+import Newborn from '../components/Newborn';
+import PushingUp from '../components/PushingUp';
 
 export interface State {
     babyStageClicked: string;

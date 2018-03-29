@@ -1,5 +1,6 @@
 import 'isomorphic-unfetch';
 
+import getConfig from 'next/config';
 import * as React from 'react';
 
 import Head from '../components/Head';
@@ -19,20 +20,22 @@ export interface Props {
     species: string;
 }
 
+const { serverRuntimeConfig } = getConfig();
+
 export default class IndexPage extends React.Component<Props, State> {
     static async getInitialProps(): Promise<any> {
         try {
-            // TODO: Use env var for url
-            const res: any = await fetch('http://localhost:3001/birds');
+            const res: any = await fetch(
+                `${serverRuntimeConfig.API_HOST}/quizzes`,
+            );
             const json: any = await res.json();
+
             return {
-                name: json.data[0].name,
-                species: json.data[0].species,
+                name: json[0].name,
             };
         } catch (err) {
             return {
                 name: '',
-                species: '',
             };
         }
     }
@@ -48,7 +51,7 @@ export default class IndexPage extends React.Component<Props, State> {
     };
 
     render() {
-        const { name, species } = this.props;
+        const { name } = this.props;
         return (
             <div>
                 <Head title="Home" />
@@ -74,7 +77,6 @@ export default class IndexPage extends React.Component<Props, State> {
                 <div>
                     <p>Example fetch of data from API: </p>
                     <p>{name}</p>
-                    <p>{species}</p>
                 </div>
 
                 <table id="stages" onClick={this.handleClick}>

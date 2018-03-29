@@ -59,45 +59,48 @@ This will get updated as the project increases in complexity.
 
 ```
 // Clientside files should **only** be in the client folder
-client
-    // This is where installed packages end up
-    // Unless you have some strange use-case or error
-    // You can safely ignore the contents of this
-    node_modules
-    components
-        // Notice the first letter of each component is capitalized
-        // Components should be a smaller part of what makes up an entire page
-        // For example, a nav bar or header could be a component
-        // Another example would be a forum page having posts
-        // Post.tsx would be a component used in a forum.tsx page
-        Header.tsx
-        Layout.tsx
-        Logout.tsx
-    pages
-        // These are all lowercase
-        // Pages are the full thing that can be linked to (i.e., website.com/about)
-        // They are made up of components
-        // Just remember that pages are technically components just like those in the components folder
-        // The only difference is that Next.js automatically creates link to each page
-        // in the pages folder
-        about.tsx
-        index.tsx
-        login.tsx
-        register.tsx
-        profile.tsx
-    static
-        // These are static files like images, favicons, fonts, etc.
-        image.png
-        favicon.ico
-    .prettierrc
-    next.config.js
-    package-lock.json
-    // Command line scripts to run, build, test, and lint are in here
-    // You can also see what the names of the installed packages
-    package.json 
-    README.md
-    tsconfig.json
-    tslint.json
+client/
+|   // This is where installed packages end up
+|   // Unless you have some strange use-case or error
+|   // You can safely ignore the contents of this
+|--- node_modules/
+|   
+|    // Notice the first letter of each component is capitalized
+|    // Components should be a smaller part of what makes up an entire page
+|    // For example, a nav bar or header could be a component
+|    // Another example would be a forum page having posts
+|    // Post.tsx would be a component used in a forum.tsx page
+|--- components/
+|   |--- Header.tsx
+|   |--- Layout.tsx
+|   |--- Logout.tsx
+|   |--- Post.tsx
+|        
+|    // Pages are the full thing that can be linked to (i.e., website.com/about)
+|    // They are made up of components
+|    // Just remember that pages are technically components just like those in the components folder
+|    // The only difference is that Next.js automatically creates link to each page in the pages folder
+|    // These are all lowercase
+|--- pages/
+|   |--- about.tsx
+|   |--- index.tsx
+|   |--- login.tsx
+|   |--- register.tsx
+|   |--- profile.tsx
+|   |--- forum.tsx
+|        
+|    // These are static files like images, favicons, fonts, etc.
+|--- static/
+|   |--- image.png
+|   |--- favicon.ico
+|       
+|--- .prettierrc
+|--- next.config.js
+|--- package-lock.json
+|--- package.json  // Command line scripts to run, build, test, lint and names of installed packages are in here
+|--- README.md
+|--- tsconfig.json
+|--- tslint.json
 
 ```
 
@@ -105,7 +108,7 @@ client
 
 To import either 3rd-party libraries or other files from the project, follow the example below:
 
-```js
+```jsx
 // pages/index.tsx
 import * as React from 'react'; // 3rd-party library import
 import 'isomorphic-unfetch'; // 3rd-party library import
@@ -128,7 +131,7 @@ export default class IndexPage extends React.Component<{}, {}> {
 
 To export project files so that other files may use them, follow the example below:
 
-```js
+```jsx
 // client/components/SomeComponent.tsx
 export default () => (
     <div>
@@ -139,7 +142,7 @@ export default () => (
 
 or 
 
-```js
+```jsx
 // client/components/AnotherComponent.tsx
 const AnotherComponent () => (
     <div>
@@ -156,12 +159,13 @@ The below example has a component, `SomeComponentWithProps`, that accepts props 
 Think of props as something passed down to a component that is immutable (cannot be changed).
 In this case, the props being passed down are the children. Children are usually the data in between the tags.
 So `props.children` would be equal to Hello!
+
 This can be useful for two cases:
 
 1. You want to control the data getting sent down to be presented by the child component
 2. There are multiple components you can send the data down to to be presented in different ways
 
-```js
+```jsx
 // client/pages/index.tsx
 import SomeComponentWithProps from '../components/SomeComponentWithProps'
 
@@ -181,23 +185,25 @@ export default props => (
 
 Props can be passed down in other properties than children:
 
-```js
+```jsx
 // client/pages/index.tsx
 import SomeComponentWithProps from '../components/SomeComponentWithProps'
 
 export default () => (
     <div>
-        <SomeComponentWithProps someBoolean=true>This part doesn't matter</SomeComponentWithProps>
+        <SomeComponentWithProps someProperty='tom'>This part does not matter</SomeComponentWithProps>
     </div>
 );
 
 // client/components/SomeComponentWithProps.tsx
 export default props => {
-    // check if the someBoolean passed down is true
-    if (props.someBoolean) {
-        return <div>someBoolean was true!</div>;
+    // Most likely more efficient way of doing this particular example, but I just wanted to show how to use props this way
+    if (props.someProperty === 'tom') {
+        return <div>{props.someProprty} does not like you!</div>;
+    } else if (props.someProperty === 'bob'){
+        return <div>{props.someProperty} does like you!</div>;
     } else {
-        return <div>someBoolean was false!</div>;
+        return <div>Who is this {props.someProperty}?</div>;
     }
 };
 ```
@@ -210,7 +216,7 @@ Therefore, files in the components folder can pass props down to other files in 
 The below example has a component, `SomeComponentWithState`, that has some state for a count number.
 When a user clicks on the button rendered by this component, the state of the count increases by 1.
 
-```js
+```jsx
 // client/components/SomeComponentWithState.tsx
 import * as React from 'react'; // needed for extending the class
 
@@ -269,6 +275,7 @@ If you are super limited in time, I would **at the very least** do Learnnextjs! 
 That being said, I **strongly** recommend at least doing the book to page 241.
 The pages have a lot of spacing, white-space, and code-samples, so it's not a true, dense 241 pages.
 I've gone through a ton of learning resources when I was learning React, and this was the best one.
+
 Sure it might take a day, but you'll probably save multiples of days from being inefficient otherwise.
 
 **It will clear everything up.**

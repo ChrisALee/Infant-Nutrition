@@ -265,7 +265,9 @@ You can find an article with comparisons between the different types [here](http
 This will make it so your code gets automatically formatted to whatever rules we have set whenever you save your file.
 This is important so that our code format stays consistent among all of us!
 
-**To be filled out later... (for now, you can run `npm run format-code` in the command line before pushing your code up to GitLab)**
+**To be filled out later... (for now, you can run `npm run format` in the command line before pushing your code up to GitLab)**
+
+TypeScript errors are usually pretty descriptive, so you should be able to Google each one you run into and learn TypeScript as you go.
 
 Note: I use Visual Studio Code (not Visual Studio), so I'm not sure how well this all works on Sublime.
 

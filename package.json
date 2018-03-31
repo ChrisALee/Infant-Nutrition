@@ -24,17 +24,15 @@
     },
     "husky": {
         "hooks": {
-            "pre-commit": "lint-staged"
+            "pre-commit": "lerna run --concurrency 1 --stream precommit"
         }
     },
-    "lint-staged": {
-        "*.{ts,tsx}": [
-            "npm run format",
-            "git add"
-        ]
+    "lerna": {
+        "packages": ["api", "client"]
     },
     "devDependencies": {
         "husky": "^0.15.0-rc.13",
+        "lerna": "^2.9.1",
         "lint-staged": "^7.0.0",
         "npm-run-all": "^4.1.2"
     }

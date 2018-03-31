@@ -10,11 +10,16 @@
         "prestart:prod": "tsc -p tsconfig.production.json",
         "start:prod": "set NODE_ENV=production&& node dist/server.js",
         "pretest": "tsc",
-        "test": "jest --forceExit --coverage --verbose --env=./dist/utils/test-environment.js",
+        "test":
+            "jest --forceExit --coverage --verbose --env=./dist/utils/test-environment.js",
         "tslint-check": "tslint-config-prettier-check ./tslint.json",
         "tslint": "tslint -c tslint.json -p tsconfig.json --fix",
         "prettier": "prettier  --write **/*.ts*",
-        "format": "npm run prettier && npm run tslint"
+        "format": "npm run prettier && npm run tslint",
+        "precommit": "lint-staged"
+    },
+    "lint-staged": {
+        "*.{ts,tsx}": ["npm run format", "git add"]
     },
     "dependencies": {
         "@types/bcrypt": "^1.0.0",
@@ -56,6 +61,7 @@
     "devDependencies": {
         "@types/jest": "^22.2.2",
         "jest": "^22.4.3",
+        "lint-staged": "^7.0.1",
         "nodemon": "^1.17.2",
         "prettier": "^1.11.1",
         "ts-jest": "^22.4.2",

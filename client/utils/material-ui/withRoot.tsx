@@ -3,7 +3,7 @@ import { MuiThemeProvider } from 'material-ui/styles';
 import CssBaseline from 'material-ui/CssBaseline';
 import getPageContext from './getPageContext';
 
-function withRoot(Component) {
+export default () => Component => {
     class WithRoot extends React.Component {
         constructor(props, context) {
             super(props, context);
@@ -46,6 +46,4 @@ function withRoot(Component) {
     };
 
     return WithRoot;
-}
-
-export default withRoot;
+};

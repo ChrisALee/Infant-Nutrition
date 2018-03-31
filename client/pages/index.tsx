@@ -12,7 +12,12 @@ import LearningToWalk from '../components/LearningToWalk';
 import Nav from '../components/Nav';
 import Newborn from '../components/Newborn';
 import PushingUp from '../components/PushingUp';
-import withRoot from '../lib/material-ui/withRoot';
+import withRoot from '../utils/material-ui/withRoot';
+
+import withRedux from 'next-redux-wrapper';
+import { compose } from 'redux';
+import { initStore, logout } from '../store';
+import withAuth, { PUBLIC } from '../utils/auth/withAuth';
 
 export interface State {
     babyStageClicked: string;
@@ -144,4 +149,14 @@ class IndexPage extends React.Component<Props, State> {
     }
 }
 
-export default withRoot(IndexPage);
+const mapStateToProps = state => {
+    return {
+        user: state.user,
+    };
+};
+
+export default compose<any>(
+    withRoot(),
+    withRedux(initStore, mapStateToProps),
+    withAuth([PUBLIC]),
+)(IndexPage);

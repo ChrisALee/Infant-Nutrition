@@ -4,8 +4,8 @@ import JssProvider from 'react-jss/lib/JssProvider';
 import { ServerStyleSheet } from 'styled-components';
 import flush from 'styled-jsx/server';
 
-import getPageContext from '../lib/material-ui/getPageContext';
-import injectGlobalStyles from '../lib/styles/global-styles';
+import getPageContext from '../utils/material-ui/getPageContext';
+import injectGlobalStyles from '../utils/styles/global-styles';
 
 injectGlobalStyles();
 

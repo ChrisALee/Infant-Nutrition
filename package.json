@@ -27,9 +27,6 @@
             "pre-commit": "lerna run --concurrency 1 --stream precommit"
         }
     },
-    "lerna": {
-        "packages": ["api", "client"]
-    },
     "devDependencies": {
         "husky": "^0.15.0-rc.13",
         "lerna": "^2.9.1",

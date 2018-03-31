@@ -1,55 +1,41 @@
+import MenuIcon from 'material-ui-icons/Menu';
+import AppBar from 'material-ui/AppBar';
+import Button from 'material-ui/Button';
+import IconButton from 'material-ui/IconButton';
+import Toolbar from 'material-ui/Toolbar';
 import Link from 'next/link';
+import styled from 'styled-components';
+import Typography from 'material-ui/Typography';
 
-// const links = [
-//     { href: "https://github.com/segmentio/create-next-app", label: "Github" }
-// ].map(link => {
-//     link.key = `nav-link-${link.href}-${link.label}`;
-//     return link;
-// });
+const MenuButton = styled(IconButton)`
+    && {
+        margin-left: -12;
+        margin-right: 20;
+    }
+`;
+
+const TopBar = styled.div`
+    flex-grow: 1;
+`;
 
 const Nav = () => (
-    <nav>
-        <ul>
-            <li>
+    <TopBar>
+        <AppBar position="static">
+            <Toolbar>
+                <MenuButton color="inherit" aria-label="Menu">
+                    <MenuIcon />
+                </MenuButton>
                 <Link prefetch href="/">
-                    <a>Home</a>
+                    <a>
+                        <Typography variant="title" color="inherit">
+                            Home
+                        </Typography>
+                    </a>
                 </Link>
-            </li>
-        </ul>
-
-        <style jsx>{`
-            :global(body) {
-                height: 100%;
-                width: 100%;
-                margin: 0;
-                font-family: -apple-system, BlinkMacSystemFont, Avenir Next,
-                    Avenir, Helvetica, sans-serif;
-                background-image: url('../static/Baby-Boy-Backgrounds-Baby-boy-desktop-wallpaper.png');
-                background-repeat: no-repeat;
-                background-attachment: fixed;
-                overflow: scroll;
-            }
-            nav {
-                text-align: center;
-            }
-            ul {
-                display: flex;
-                justify-content: space-between;
-            }
-            nav > ul {
-                padding: 4px 16px;
-            }
-            li {
-                display: flex;
-                padding: 6px 8px;
-            }
-            a {
-                color: #067df7;
-                text-decoration: none;
-                font-size: 13px;
-            }
-        `}</style>
-    </nav>
+                <Button color="inherit">Login</Button>
+            </Toolbar>
+        </AppBar>
+    </TopBar>
 );
 
 export default Nav;

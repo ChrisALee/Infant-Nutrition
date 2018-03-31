@@ -14,10 +14,6 @@ const Head: any = props => (
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/static/favicon.ico" />
-        <link
-            href="https://fonts.googleapis.com/css?family=Arima+Madurai|Pacifico|Shrikhand"
-            rel="stylesheet"
-        />
         <meta property="og:url" content={props.url || defaultOGURL} />
         <meta property="og:title" content={props.title || ''} />
         <meta

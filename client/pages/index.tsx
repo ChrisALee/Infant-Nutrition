@@ -1,5 +1,7 @@
 import 'isomorphic-unfetch';
 
+import Card, { CardContent } from 'material-ui/Card';
+import Typography from 'material-ui/Typography';
 import getConfig from 'next/config';
 import * as React from 'react';
 
@@ -10,6 +12,7 @@ import LearningToWalk from '../components/LearningToWalk';
 import Nav from '../components/Nav';
 import Newborn from '../components/Newborn';
 import PushingUp from '../components/PushingUp';
+import withRoot from '../lib/material-ui/withRoot';
 
 export interface State {
     babyStageClicked: string;
@@ -22,7 +25,7 @@ export interface Props {
 
 const { serverRuntimeConfig } = getConfig();
 
-export default class IndexPage extends React.Component<Props, State> {
+class IndexPage extends React.Component<Props, State> {
     static async getInitialProps(): Promise<any> {
         try {
             const res: any = await fetch(
@@ -58,26 +61,35 @@ export default class IndexPage extends React.Component<Props, State> {
                 <Nav />
 
                 <h1>Healthy Feeding guidelines for Infants</h1>
-                <div id="intro">
-                    &nbsp; &nbsp; &nbsp; Your baby will go on an amazing food
-                    journey during the first year of life. At the start of the
-                    journey, breast milk or formula will be all that your baby
-                    will need. Along the way, your baby will pass by several
-                    “developmental milestones” — common stages at which babies
-                    can do new things, including trying new foods and textures.
-                    Like most parents, you will have lots of questions about
-                    what to feed your baby and when to begin. Look inside the
-                    “Great Eating Adventure” to see what’s ahead for your baby.
-                    As your baby approaches each stage, we’ll send you more
-                    detailed information, including ideas for new foods to try,
-                    tips for picky eaters and advice on how to wean your baby
-                    from breast milk or formula.
-                </div>
+                <Card>
+                    <CardContent>
+                        <Typography variant="body1" gutterBottom>
+                            &nbsp; &nbsp; &nbsp; Your baby will go on an amazing
+                            food journey during the first year of life. At the
+                            start of the journey, breast milk or formula will be
+                            all that your baby will need. Along the way, your
+                            baby will pass by several “developmental milestones”
+                            — common stages at which babies can do new things,
+                            including trying new foods and textures. Like most
+                            parents, you will have lots of questions about what
+                            to feed your baby and when to begin. Look inside the
+                            “Great Eating Adventure” to see what’s ahead for
+                            your baby. As your baby approaches each stage, we’ll
+                            send you more detailed information, including ideas
+                            for new foods to try, tips for picky eaters and
+                            advice on how to wean your baby from breast milk or
+                            formula.
+                        </Typography>
+                    </CardContent>
+                </Card>
 
-                <div>
-                    <p>Example fetch of data from API: </p>
-                    <p>{name}</p>
-                </div>
+                <Typography variant="body1" gutterBottom>
+                    Example fetch of data from API:
+                </Typography>
+
+                <Typography variant="body1" gutterBottom>
+                    {name}
+                </Typography>
 
                 <table id="stages" onClick={this.handleClick}>
                     <tr>
@@ -127,100 +139,9 @@ export default class IndexPage extends React.Component<Props, State> {
                 ) : (
                     <div />
                 )}
-
-                <style jsx>{`
-                     {
-                        h1 {
-                            text-align: center;
-                            font-family: 'Pacifico', cursive;
-                        }
-
-                        h3 {
-                            font-family: 'Pacifico', cursive;
-                        }
-
-                        #intro {
-                            background-color: w)hite;
-                            padding: 2.5%;
-                            border-radius: 5px;
-                            margin-top: 5%;
-                            margin-left: 7.5%;
-                            width: 80%;
-                            font-size: 18px;
-                            font-family: 'Arima Madurai', cursive;
-                        }
-
-                        #stages {
-                            margin-top: 5%;
-                            margin-left: 5%;
-                            width: 90%;
-                            height: 33.33%;
-                            /**/
-                            /* border-color: red;
-	border-style: dotted; */
-                            /**/
-                            position: absolute;
-                        }
-
-                        .devStage {
-                            background-color: white;
-                            height: 80%;
-                            width: 12.5%;
-                            font-family: 'Arima Madurai', cursive;
-                            text-align: center;
-                            border-style: solid;
-                            border-color: transparent;
-                            border-radius: 15px;
-                            transition: background-color 1.25s, height 0.75s,
-                                width 0.75s, font-size 0.75s, padding 0.75s;
-                            /**/
-                            /*display: inline-block;
-	margin-left: 1%;*/
-                            position: auto;
-                            overflow: visible;
-                        }
-
-                        .devStage:hover {
-                            height: 100%;
-                            width: 20%;
-                            font-size: 22px;
-                            padding-bottom: 15%;
-                            background-color: grey;
-                            color: white;
-                        }
-
-                        #stageName {
-                            text-align: center;
-                            position: auto;
-                            margin-top: 27.5%;
-                            font-family: 'Shrikhand', cursive;
-                        }
-
-                        #stageInfo {
-                            position: auto;
-                            margin-left: 7.5%;
-                            margin-bottom: 10%;
-                            padding: 2.5%;
-                            width: 80%;
-                            height: 40%;
-                            text-align: left;
-                            font-family: 'Arima Madurai', cursive;
-                            /**/
-                            background-color: white;
-                            border-radius: 5px;
-                            transition: height 0.75s;
-                        }
-
-                        .hidden {
-                            visibility: visible;
-                            width: 0px;
-                            height: 0px;
-                            font-size: 0%;
-                            position: absolute;
-                        }
-                    }
-                `}</style>
             </div>
         );
     }
 }
+
+export default withRoot(IndexPage);

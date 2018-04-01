@@ -1,32 +1,26 @@
 import withRedux from 'next-redux-wrapper';
 import React, { Component } from 'react';
 import { compose } from 'redux';
+import LoginForm from '../components/LoginForm';
 
 import Head from '../components/Head';
 import Nav from '../components/Nav';
 import { initStore, login } from '../store';
 import withRoot from '../utils/material-ui/withRoot';
 
-class Login extends Component {
-    state = {
-        username: '',
-        password: '',
-        errorMessage: '',
-    };
-
+class Login extends Component<{}, {}> {
     handleOnChange = e => {
         this.setState({
             [e.target.name]: e.target.value,
         });
     };
 
-    handleLoginSubmit = e => {
-        e.preventDefault();
+    handleLoginSubmit = (e, state) => {
         const { dispatch }: any = this.props;
         const payload = {
             user: {
-                username: this.state.username,
-                password: this.state.password,
+                username: state.username,
+                password: state.password,
             },
         };
         dispatch(login(payload)).catch(err => {
@@ -40,28 +34,7 @@ class Login extends Component {
             <div>
                 <Head title="Login" />
                 <Nav user={user} />
-
-                <form onSubmit={this.handleLoginSubmit}>
-                    <div>
-                        <label>Username</label>
-                        <input
-                            type="text"
-                            name="username"
-                            onChange={this.handleOnChange}
-                        />
-                    </div>
-                    <div>
-                        <label>Password</label>
-                        <input
-                            type="password"
-                            name="password"
-                            onChange={this.handleOnChange}
-                        />
-                    </div>
-                    <div>
-                        <button>Login</button>
-                    </div>
-                </form>
+                <LoginForm handleLoginSubmit={this.handleLoginSubmit} />
             </div>
         );
     }

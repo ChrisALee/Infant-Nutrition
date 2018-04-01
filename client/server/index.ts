@@ -50,7 +50,7 @@ app
 
         // Removes the session cookie and sends an empty response
         server.get('/api/logout', (req, res) => {
-            res.cookie('session_id', '', { expires: new Date(0) });
+            res.clearCookie('session_id');
             res.send({});
         });
 

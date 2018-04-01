@@ -5,7 +5,8 @@
     "private": true,
     "scripts": {
         "dev": "nodemon server/index.ts",
-        "prestart": "next build",
+        "build": "next build && tsc --project tsconfig.server.json",
+        "prestart": "npm run build",
         "start": "next start -p 8080",
         "tslint-check": "tslint-config-prettier-check ./tslint.json",
         "tslint": "tslint -c tslint.json -p tsconfig.json --fix",
@@ -14,10 +15,7 @@
         "precommit": "lint-staged"
     },
     "lint-staged": {
-        "*.{ts,tsx}": [
-            "npm run format",
-            "git add"
-        ]
+        "*.{ts,tsx}": ["npm run format", "git add"]
     },
     "dependencies": {
         "@types/next": "^2.4.8",

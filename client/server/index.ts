@@ -50,6 +50,9 @@ app
 
         // Removes the session cookie and sends an empty response
         server.get('/api/logout', (req, res) => {
+            // TODO: Remove console log and figure out how to make req used
+            // tslint:disable-next-line:no-console
+            console.log(req);
             res.clearCookie('session_id');
             res.send({});
         });

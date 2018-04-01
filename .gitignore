@@ -38,6 +38,7 @@ results
 */dist/**/*
 */.nuxt
 */.next
+production-server
 
 # OS metadata
 .DS_Store

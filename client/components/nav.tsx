@@ -5,7 +5,10 @@ import IconButton from 'material-ui/IconButton';
 import Toolbar from 'material-ui/Toolbar';
 import Link from 'next/link';
 import styled from 'styled-components';
-import Typography from 'material-ui/Typography';
+import { logout } from '../store';
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { initStore } from '../store';
 
 const MenuButton = styled(IconButton)`
     && {
@@ -18,24 +21,48 @@ const TopBar = styled.div`
     flex-grow: 1;
 `;
 
-const Nav = () => (
-    <TopBar>
-        <AppBar position="static">
-            <Toolbar>
-                <MenuButton color="inherit" aria-label="Menu">
-                    <MenuIcon />
-                </MenuButton>
-                <Link prefetch href="/">
-                    <a>
-                        <Typography variant="title" color="inherit">
-                            Home
-                        </Typography>
-                    </a>
-                </Link>
-                <Button color="inherit">Login</Button>
-            </Toolbar>
-        </AppBar>
-    </TopBar>
-);
+class Nav extends React.Component {
+    handleLogout = e => {
+        e.preventDefault();
+        const { dispatch }: any = this.props;
+        dispatch(logout());
+    };
 
-export default Nav;
+    render() {
+        const { user }: any = this.props;
+        return (
+            <TopBar>
+                <AppBar position="static">
+                    <Toolbar>
+                        <MenuButton color="inherit" aria-label="Menu">
+                            <MenuIcon />
+                        </MenuButton>
+                        <Link prefetch href="/">
+                            <Button color="inherit">
+                                <a>Home</a>
+                            </Button>
+                        </Link>
+                        <Link prefetch href="/private">
+                            <Button color="inherit">
+                                <a>Private</a>
+                            </Button>
+                        </Link>
+                        {user ? (
+                            <Button onClick={this.handleLogout} color="inherit">
+                                <a>Logout {user}</a>
+                            </Button>
+                        ) : (
+                            <Link prefetch href="/login">
+                                <Button color="inherit">
+                                    <a>Login</a>
+                                </Button>
+                            </Link>
+                        )}
+                    </Toolbar>
+                </AppBar>
+            </TopBar>
+        );
+    }
+}
+
+export default connect(initStore)(Nav);

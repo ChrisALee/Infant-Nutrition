@@ -2,8 +2,10 @@ import 'isomorphic-unfetch';
 
 import Card, { CardContent } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
+import withRedux from 'next-redux-wrapper';
 import getConfig from 'next/config';
 import * as React from 'react';
+import { compose } from 'redux';
 
 import Head from '../components/Head';
 import LearningToCrawl from '../components/LearningToCrawl';
@@ -12,12 +14,9 @@ import LearningToWalk from '../components/LearningToWalk';
 import Nav from '../components/Nav';
 import Newborn from '../components/Newborn';
 import PushingUp from '../components/PushingUp';
-import withRoot from '../utils/material-ui/withRoot';
-
-import withRedux from 'next-redux-wrapper';
-import { compose } from 'redux';
-import { initStore, logout } from '../store';
+import { initStore } from '../store';
 import withAuth, { PUBLIC } from '../utils/auth/withAuth';
+import withRoot from '../utils/material-ui/withRoot';
 
 export interface State {
     babyStageClicked: string;
@@ -26,15 +25,23 @@ export interface State {
 export interface Props {
     name: string;
     species: string;
+    user: string;
 }
 
-const { serverRuntimeConfig } = getConfig();
+const { publicRuntimeConfig } = getConfig();
 
 class IndexPage extends React.Component<Props, State> {
     static async getInitialProps(): Promise<any> {
         try {
             const res: any = await fetch(
-                `${serverRuntimeConfig.API_HOST}/quizzes`,
+                `${publicRuntimeConfig.API_HOST}/users/current/babies`,
+                {
+                    method: 'GET',
+                    headers: {
+                        Accept: 'application/json',
+                    },
+                    credentials: 'same-origin',
+                },
             );
             const json: any = await res.json();
 
@@ -59,11 +66,11 @@ class IndexPage extends React.Component<Props, State> {
     };
 
     render() {
-        const { name } = this.props;
+        const { name, user } = this.props;
         return (
             <div>
                 <Head title="Home" />
-                <Nav />
+                <Nav user={user} />
 
                 <h1>Healthy Feeding guidelines for Infants</h1>
                 <Card>
@@ -97,23 +104,25 @@ class IndexPage extends React.Component<Props, State> {
                 </Typography>
 
                 <table id="stages" onClick={this.handleClick}>
-                    <tr>
-                        <td id="0" className="devStage">
-                            Newborn<br />(0-1 month)
-                        </td>
-                        <td id="1" className="devStage">
-                            Pushing Up<br />(1-4 months)
-                        </td>
-                        <td id="2" className="devStage">
-                            Learning to Sit<br />(4-7 months)
-                        </td>
-                        <td id="3" className="devStage">
-                            Learning to crawl<br />(7-9 months)
-                        </td>
-                        <td id="4" className="devStage">
-                            Learning to Walk<br />(9-12 months)
-                        </td>
-                    </tr>
+                    <tbody>
+                        <tr>
+                            <td id="0" className="devStage">
+                                Newborn<br />(0-1 month)
+                            </td>
+                            <td id="1" className="devStage">
+                                Pushing Up<br />(1-4 months)
+                            </td>
+                            <td id="2" className="devStage">
+                                Learning to Sit<br />(4-7 months)
+                            </td>
+                            <td id="3" className="devStage">
+                                Learning to crawl<br />(7-9 months)
+                            </td>
+                            <td id="4" className="devStage">
+                                Learning to Walk<br />(9-12 months)
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
 
                 {this.state.babyStageClicked ? (

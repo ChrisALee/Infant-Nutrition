@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
 import Router from 'next/router';
+import React, { Component } from 'react';
+
 import { whoAmI } from '../../store';
+
 export const PUBLIC = 'PUBLIC';
 
 /**

@@ -27,33 +27,56 @@ export const reducer = (state = exampleInitialState, action) => {
 // ACTIONS
 export const login = payload => {
     return async dispatch => {
-        const response = await fetch('http://localhost:3001/api/session', {
-            method: 'POST',
-            body: payload,
-        });
+        let response;
+        let token;
+        try {
+            response = await fetch('http://localhost:3000/api/session', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                },
+                credentials: 'include',
+                body: JSON.stringify(payload),
+            });
+
+            token = await response.text();
+        } catch (err) {
+            // tslint:disable-next-line:no-console
+            console.log('err from store.ts login: ', err);
+        }
+
         if (response.status === 200) {
             dispatch({
                 type: actionTypes.SET_USER,
-                user: response.data,
+                user: token,
             });
             Router.push('/');
         }
-        return response;
+        return token;
     };
 };
 
 export const logout = () => {
     return async dispatch => {
-        const response = await fetch('http://localhost:3001/api/session', {
-            method: 'DELETE',
-        });
-        if (response.status === 200) {
-            dispatch({
-                type: actionTypes.SET_USER,
-                user: null,
+        try {
+            const response = await fetch('http://localhost:3000/api/logout', {
+                method: 'GET',
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+                credentials: 'include',
             });
+            if (response.status === 200) {
+                dispatch({
+                    type: actionTypes.SET_USER,
+                    user: null,
+                });
+            }
+            return response;
+        } catch (err) {
+            // tslint:disable-next-line:no-console
+            console.log(err);
         }
-        return response;
     };
 };
 
@@ -62,21 +85,28 @@ export const logout = () => {
 // If session is active it saves the user to redux store
 export const whoAmI = cookie => {
     return async dispatch => {
-        const response = await fetch('http://localhost:3001/api/session', {
-            method: 'GET',
-            headers: {
-                Accept: 'application/json',
-                Cookie: cookie,
-            },
-            withCredentials: true,
-        });
-        if (response.status === 200) {
-            dispatch({
-                type: actionTypes.SET_USER,
-                user: response.data,
+        try {
+            const response = await fetch('http://localhost:3000/api/whoami', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                    Cookie: cookie,
+                },
             });
+            const json = await response.json();
+
+            if (response.status === 200) {
+                dispatch({
+                    type: actionTypes.SET_USER,
+                    user: json.guid,
+                });
+            }
+            return json.guid;
+        } catch (err) {
+            // tslint:disable-next-line:no-console
+            console.log('');
         }
-        return response.data;
     };
 };
 

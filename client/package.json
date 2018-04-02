@@ -15,7 +15,11 @@
         "precommit": "lint-staged"
     },
     "lint-staged": {
-        "*.{ts,tsx}": ["tslint --fix", "prettier --write", "git add"]
+        "*.{ts,tsx}": [
+            "tslint --fix",
+            "prettier --write",
+            "git add"
+        ]
     },
     "dependencies": {
         "@types/next": "^2.4.8",

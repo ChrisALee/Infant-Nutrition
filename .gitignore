@@ -44,3 +44,6 @@ production-server
 .DS_Store
 Thumbs.db
 api/.env.prod
+
+# Ignore NPM's package lock file
+package-lock.json

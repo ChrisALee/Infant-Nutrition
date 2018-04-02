@@ -1,7 +1,7 @@
-import TextField from 'material-ui/TextField';
-import React, { Component } from 'react';
-import Grid from 'material-ui/Grid';
 import Button from 'material-ui/Button';
+import Grid from 'material-ui/Grid';
+import TextField from 'material-ui/TextField';
+import React from 'react';
 import styled from 'styled-components';
 
 const StyledForm = styled.form`

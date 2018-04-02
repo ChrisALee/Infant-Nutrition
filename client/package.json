@@ -4,8 +4,8 @@
     "author": "Christopher Lee",
     "private": true,
     "scripts": {
-        "dev": "nodemon server/index.ts",
-        "build": "next build && tsc --project tsconfig.server.json",
+        "dev": "next",
+        "build": "next build",
         "prestart": "npm run build",
         "start": "next start -p 8080",
         "tslint-check": "tslint-config-prettier-check ./tslint.json",

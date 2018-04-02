@@ -3,6 +3,10 @@ import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunkMiddleware from 'redux-thunk';
 import fetch from 'isomorphic-unfetch';
+import * as jwtDecode from 'jwt-decode';
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig } = getConfig();
 
 const exampleInitialState = {
     user: { isLoggedIn: false },
@@ -27,29 +31,30 @@ export const reducer = (state = exampleInitialState, action) => {
 // ACTIONS
 export const login = payload => {
     return async dispatch => {
-        let response;
-
         try {
-            response = await fetch('http://localhost:3001/api/session', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
+            const response = await fetch(
+                `${publicRuntimeConfig.API_HOST}/session`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Accept: 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify(payload),
                 },
-                credentials: 'include',
-                body: JSON.stringify(payload),
-            });
+            );
+
+            if (response.status === 200) {
+                dispatch({
+                    type: actionTypes.SET_USER,
+                    user: { isLoggedIn: true },
+                });
+                Router.push('/');
+            }
         } catch (err) {
             // tslint:disable-next-line:no-console
             console.log('err from store.ts login: ', err);
-        }
-
-        if (response.status === 200) {
-            dispatch({
-                type: actionTypes.SET_USER,
-                user: { isLoggedIn: true },
-            });
-            Router.push('/');
         }
     };
 };
@@ -57,19 +62,21 @@ export const login = payload => {
 export const logout = () => {
     return async dispatch => {
         try {
-            const response = await fetch('http://localhost:3000/api/logout', {
-                method: 'GET',
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-                credentials: 'include',
-            });
+            const response = await fetch(
+                `${publicRuntimeConfig.API_HOST}/session`,
+                {
+                    method: 'DELETE',
+                    Accept: 'application/json',
+                    credentials: 'include',
+                },
+            );
+
             if (response.status === 200) {
                 dispatch({
                     type: actionTypes.SET_USER,
                     user: { isLoggedIn: false },
                 });
             }
-            return response;
         } catch (err) {
             // tslint:disable-next-line:no-console
             console.log(err);
@@ -78,39 +85,32 @@ export const logout = () => {
 };
 
 // This is used server side on the first page render.
-// Sends the cookie to server to verify active session.
-// If session is active it saves the user to redux store
+// Decoded the JWT in the cookies to see if user is logged in
+// If session is active it saves the user log in status to redux store
 export const whoAmI = cookie => {
     return async dispatch => {
         try {
-            const response = await fetch('http://localhost:3000/api/whoami', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                    Cookie: cookie,
-                },
-            });
+            const decoded = jwtDecode(cookie);
 
-            if (response.status === 200) {
+            if (decoded) {
                 dispatch({
                     type: actionTypes.SET_USER,
                     user: { isLoggedIn: true },
                 });
             }
+
+            return { isLoggedIn: true };
         } catch (err) {
             // tslint:disable-next-line:no-console
-            console.log('');
+            console.log('whoAmI: ', err);
         }
     };
 };
 
 export const register = payload => {
     return async dispatch => {
-        let response;
-
         try {
-            response = await fetch('http://localhost:3001/api/users', {
+            const response = await fetch('http://localhost:3001/api/users', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -119,17 +119,17 @@ export const register = payload => {
                 credentials: 'include',
                 body: JSON.stringify(payload),
             });
+
+            if (response.status === 200) {
+                dispatch({
+                    type: actionTypes.SET_USER,
+                    user: { isLoggedIn: true },
+                });
+                Router.push('/');
+            }
         } catch (err) {
             // tslint:disable-next-line:no-console
             console.log('err from store.ts register: ', err);
-        }
-
-        if (response.status === 200) {
-            dispatch({
-                type: actionTypes.SET_USER,
-                user: { isLoggedIn: true },
-            });
-            Router.push('/');
         }
     };
 };

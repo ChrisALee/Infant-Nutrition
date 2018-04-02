@@ -8,7 +8,11 @@ import { initStore } from '../store';
 import withAuth from '../utils/auth/withAuth';
 import withRoot from '../utils/material-ui/withRoot';
 
-class Private extends React.Component {
+export interface Props {
+    user: string;
+}
+
+class Private extends React.Component<Props, {}> {
     render() {
         const { user }: any = this.props;
         return (

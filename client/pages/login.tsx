@@ -8,7 +8,11 @@ import Nav from '../components/Nav';
 import { initStore, login } from '../store';
 import withRoot from '../utils/material-ui/withRoot';
 
-class Login extends Component<{}, {}> {
+export interface Props {
+    user: string;
+}
+
+class Login extends Component<Props, {}> {
     handleOnChange = e => {
         this.setState({
             [e.target.name]: e.target.value,
@@ -29,7 +33,7 @@ class Login extends Component<{}, {}> {
     };
 
     render() {
-        const { user }: any = this.props;
+        const { user } = this.props;
         return (
             <div>
                 <Head title="Login" />

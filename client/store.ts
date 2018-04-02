@@ -5,7 +5,7 @@ import thunkMiddleware from 'redux-thunk';
 import fetch from 'isomorphic-unfetch';
 
 const exampleInitialState = {
-    user: null,
+    user: { isLoggedIn: false },
 };
 
 export const actionTypes = {
@@ -28,9 +28,9 @@ export const reducer = (state = exampleInitialState, action) => {
 export const login = payload => {
     return async dispatch => {
         let response;
-        let token;
+
         try {
-            response = await fetch('http://localhost:3000/api/session', {
+            response = await fetch('http://localhost:3001/api/session', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -39,8 +39,6 @@ export const login = payload => {
                 credentials: 'include',
                 body: JSON.stringify(payload),
             });
-
-            token = await response.text();
         } catch (err) {
             // tslint:disable-next-line:no-console
             console.log('err from store.ts login: ', err);
@@ -49,11 +47,10 @@ export const login = payload => {
         if (response.status === 200) {
             dispatch({
                 type: actionTypes.SET_USER,
-                user: token,
+                user: { isLoggedIn: true },
             });
             Router.push('/');
         }
-        return token;
     };
 };
 
@@ -69,7 +66,7 @@ export const logout = () => {
             if (response.status === 200) {
                 dispatch({
                     type: actionTypes.SET_USER,
-                    user: null,
+                    user: { isLoggedIn: false },
                 });
             }
             return response;
@@ -94,18 +91,45 @@ export const whoAmI = cookie => {
                     Cookie: cookie,
                 },
             });
-            const json = await response.json();
 
             if (response.status === 200) {
                 dispatch({
                     type: actionTypes.SET_USER,
-                    user: json.guid,
+                    user: { isLoggedIn: true },
                 });
             }
-            return json.guid;
         } catch (err) {
             // tslint:disable-next-line:no-console
             console.log('');
+        }
+    };
+};
+
+export const register = payload => {
+    return async dispatch => {
+        let response;
+
+        try {
+            response = await fetch('http://localhost:3001/api/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                },
+                credentials: 'include',
+                body: JSON.stringify(payload),
+            });
+        } catch (err) {
+            // tslint:disable-next-line:no-console
+            console.log('err from store.ts register: ', err);
+        }
+
+        if (response.status === 200) {
+            dispatch({
+                type: actionTypes.SET_USER,
+                user: { isLoggedIn: true },
+            });
+            Router.push('/');
         }
     };
 };

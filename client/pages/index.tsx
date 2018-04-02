@@ -40,7 +40,6 @@ class IndexPage extends React.Component<Props, State> {
                     headers: {
                         Accept: 'application/json',
                     },
-                    credentials: 'same-origin',
                 },
             );
             const json: any = await res.json();

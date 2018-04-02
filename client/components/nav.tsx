@@ -52,11 +52,18 @@ class Nav extends React.Component {
                                 <a>Logout</a>
                             </Button>
                         ) : (
-                            <Link prefetch href="/login">
-                                <Button color="inherit">
-                                    <a>Login</a>
-                                </Button>
-                            </Link>
+                            <div>
+                                <Link prefetch href="/login">
+                                    <Button color="inherit">
+                                        <a>Login</a>
+                                    </Button>
+                                </Link>
+                                <Link prefetch href="/register">
+                                    <Button color="inherit">
+                                        <a>Register</a>
+                                    </Button>
+                                </Link>
+                            </div>
                         )}
                     </Toolbar>
                 </AppBar>

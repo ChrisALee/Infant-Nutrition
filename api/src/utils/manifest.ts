@@ -59,6 +59,12 @@ const manifest = {
     server: {
         host: process.env.SERVER_HOST,
         port: process.env.SERVER_PORT,
+        routes: {
+            cors: {
+                origin: ['*'],
+                credentials: true,
+            },
+        },
     },
     register: {
         plugins: [

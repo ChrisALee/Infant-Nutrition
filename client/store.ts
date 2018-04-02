@@ -1,10 +1,10 @@
-import Router from 'next/router';
-import { createStore, applyMiddleware } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import thunkMiddleware from 'redux-thunk';
 import fetch from 'isomorphic-unfetch';
 import * as jwtDecode from 'jwt-decode';
 import getConfig from 'next/config';
+import Router from 'next/router';
+import { applyMiddleware, createStore } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import thunkMiddleware from 'redux-thunk';
 
 const { publicRuntimeConfig } = getConfig();
 

@@ -1,9 +1,9 @@
 import withRedux from 'next-redux-wrapper';
 import React, { Component } from 'react';
 import { compose } from 'redux';
-import LoginForm from '../components/LoginForm';
 
 import Head from '../components/Head';
+import LoginForm from '../components/LoginForm';
 import Nav from '../components/Nav';
 import { initStore, login } from '../store';
 import withRoot from '../utils/material-ui/withRoot';

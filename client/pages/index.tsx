@@ -1,4 +1,4 @@
-import 'isomorphic-unfetch';
+import fetch from 'isomorphic-unfetch';
 
 import Card, { CardContent } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';

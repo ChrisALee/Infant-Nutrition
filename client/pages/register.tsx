@@ -1,10 +1,10 @@
 import withRedux from 'next-redux-wrapper';
 import React, { Component } from 'react';
 import { compose } from 'redux';
-import RegisterForm from '../components/RegisterForm';
 
 import Head from '../components/Head';
 import Nav from '../components/Nav';
+import RegisterForm from '../components/RegisterForm';
 import { initStore, register } from '../store';
 import withRoot from '../utils/material-ui/withRoot';
 

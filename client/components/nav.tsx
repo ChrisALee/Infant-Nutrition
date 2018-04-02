@@ -4,11 +4,11 @@ import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import Toolbar from 'material-ui/Toolbar';
 import Link from 'next/link';
-import styled from 'styled-components';
-import { logout } from '../store';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { initStore } from '../store';
+import styled from 'styled-components';
+
+import { initStore, logout } from '../store';
 
 const MenuButton = styled(IconButton)`
     && {

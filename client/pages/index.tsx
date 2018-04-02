@@ -24,8 +24,8 @@ export interface State {
 
 export interface Props {
     name: string;
+    user: { isLoggedIn: string };
     species: string;
-    user: string;
 }
 
 const { publicRuntimeConfig } = getConfig();

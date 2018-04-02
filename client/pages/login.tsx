@@ -9,7 +9,7 @@ import { initStore, login } from '../store';
 import withRoot from '../utils/material-ui/withRoot';
 
 export interface Props {
-    user: string;
+    user: { isLoggedIn: string };
 }
 
 class Login extends Component<Props, {}> {

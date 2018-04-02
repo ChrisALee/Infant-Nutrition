@@ -90,7 +90,7 @@ export default (permissions = []) => ChildComponent =>
                 user = store.getState().user;
             }
 
-            if (user) {
+            if (user && user.isLoggedIn) {
                 // mean user is logged in so we verify permissions
                 if (!isPublicPage) {
                     if (!this.userHasPermission(user)) {

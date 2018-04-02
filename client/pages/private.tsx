@@ -9,7 +9,7 @@ import withAuth from '../utils/auth/withAuth';
 import withRoot from '../utils/material-ui/withRoot';
 
 export interface Props {
-    user: string;
+    user: { isLoggedIn: string };
 }
 
 class Private extends React.Component<Props, {}> {
@@ -19,7 +19,7 @@ class Private extends React.Component<Props, {}> {
             <div>
                 <Head title="private" />
                 <Nav user={user} />
-                <h1>Hello {user}!</h1>
+                <h1>Hello!</h1>
                 <p>This content is available for logged in users only.</p>
             </div>
         );

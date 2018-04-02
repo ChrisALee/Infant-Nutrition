@@ -47,9 +47,9 @@ class Nav extends React.Component {
                                 <a>Private</a>
                             </Button>
                         </Link>
-                        {user ? (
+                        {user && user.isLoggedIn ? (
                             <Button onClick={this.handleLogout} color="inherit">
-                                <a>Logout {user}</a>
+                                <a>Logout</a>
                             </Button>
                         ) : (
                             <Link prefetch href="/login">

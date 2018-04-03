@@ -9,6 +9,7 @@ import withAuth from '../utils/auth/withAuth';
 import withRoot from '../utils/material-ui/withRoot';
 import { Editor } from 'react-draft-wysiwyg';
 import { EditorState, convertFromRaw } from 'draft-js';
+import Button from 'material-ui/Button';
 
 export interface Props {
     user: { isLoggedIn: string };
@@ -18,7 +19,8 @@ class Private extends React.Component<Props, {}> {
     state = {
         editorState: EditorState.createWithContent(emptyContentState),
         // A flag to make sure the editor doesn't render too early
-        editor: false,
+        editorRender: false,
+        editorReadOnly: true,
     };
 
     onEditorStateChange: Function = editorState => {
@@ -27,32 +29,53 @@ class Private extends React.Component<Props, {}> {
         });
     };
 
+    handleClick = e => {
+        this.setState({
+            editorReadOnly: !this.state.editorReadOnly,
+        });
+    };
+
     componentDidMount() {
         this.setState({
-            editor: true,
+            editorRender: true,
         });
     }
 
     render() {
         const { user } = this.props;
-        const { editor, editorState } = this.state;
+        const { editorRender, editorReadOnly, editorState } = this.state;
         return (
             <div>
                 <Head title="private" />
                 <Nav user={user} />
                 <h1>Hello!</h1>
                 <p>This content is available for logged in users only.</p>
-                {editor ? (
-                    <Editor
-                        editorKey="editor"
-                        editorState={editorState}
-                        wrapperClassName="demo-wrapper"
-                        editorClassName="demo-editor"
-                        onEditorStateChange={this.onEditorStateChange}
-                    />
+
+                {editorRender ? (
+                    // TODO: Split this out into its own component
+                    // Component mounted so render the Editors
+                    editorReadOnly ? (
+                        // Essentially render just the values
+                        <Editor
+                            editorState={editorState}
+                            onEditorStateChange={this.onEditorStateChange}
+                            readOnly={true}
+                            toolbarHidden
+                        />
+                    ) : (
+                        // Render the actual WYSIWYG functionality
+                        <Editor
+                            editorState={editorState}
+                            onEditorStateChange={this.onEditorStateChange}
+                        />
+                    )
                 ) : (
-                    <div />
+                    // Component hasn't mounted yet so show loading
+                    <div>Loading...</div>
                 )}
+                <Button color="primary" onClick={this.handleClick}>
+                    Edit
+                </Button>
             </div>
         );
     }
@@ -69,66 +92,6 @@ export default compose(
     withRedux(initStore, mapStateToProps),
     withAuth(),
 )(Private);
-
-const initialData = {
-    blocks: [
-        {
-            key: '16d0k',
-            text: 'You can edit this text.',
-            type: 'unstyled',
-            depth: 0,
-            inlineStyleRanges: [{ offset: 0, length: 23, style: 'BOLD' }],
-            entityRanges: [],
-            data: {},
-        },
-        {
-            key: '98peq',
-            text: '',
-            type: 'unstyled',
-            depth: 0,
-            inlineStyleRanges: [],
-            entityRanges: [],
-            data: {},
-        },
-        {
-            key: 'ecmnc',
-            text:
-                'Luke Skywalker has vanished. In his absence, the sinister FIRST ORDER has risen from the ashes of the Empire and will not rest until Skywalker, the last Jedi, has been destroyed.',
-            type: 'unstyled',
-            depth: 0,
-            inlineStyleRanges: [
-                { offset: 0, length: 14, style: 'BOLD' },
-                { offset: 133, length: 9, style: 'BOLD' },
-            ],
-            entityRanges: [],
-            data: {},
-        },
-        {
-            key: 'fe2gn',
-            text: '',
-            type: 'unstyled',
-            depth: 0,
-            inlineStyleRanges: [],
-            entityRanges: [],
-            data: {},
-        },
-        {
-            key: '4481k',
-            text:
-                'With the support of the REPUBLIC, General Leia Organa leads a brave RESISTANCE. She is desperate to find her brother Luke and gain his help in restoring peace and justice to the galaxy.',
-            type: 'unstyled',
-            depth: 0,
-            inlineStyleRanges: [
-                { offset: 34, length: 19, style: 'BOLD' },
-                { offset: 117, length: 4, style: 'BOLD' },
-                { offset: 68, length: 10, style: 'ANYCUSTOMSTYLE' },
-            ],
-            entityRanges: [],
-            data: {},
-        },
-    ],
-    entityMap: {},
-};
 
 const emptyContentState = convertFromRaw({
     entityMap: {},

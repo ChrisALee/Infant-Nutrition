@@ -1872,7 +1872,7 @@ handlebars@^4.0.11, handlebars@^4.0.3:
   optionalDependencies:
     uglify-js "^2.6"
 
-hapi-auth-jwt2@^8.0.1:
+hapi-auth-jwt2@^8.1.0:
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/hapi-auth-jwt2/-/hapi-auth-jwt2-8.1.0.tgz#4e3497cdb3925a315861f60f4057ddd11466e68c"
   dependencies:
@@ -1900,7 +1900,7 @@ hapi-swagger@^9.1.1:
     json-schema-ref-parser "^4.1.0"
     swagger-parser "^4.0.2"
 
-hapi@17.x.x, hapi@^17.2.3:
+hapi@17.x.x, hapi@^17.3.1:
   version "17.3.1"
   resolved "https://registry.yarnpkg.com/hapi/-/hapi-17.3.1.tgz#d99679d208389e12a13a91f55932b32ab7dceff1"
   dependencies:
@@ -2153,7 +2153,7 @@ invert-kv@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/invert-kv/-/invert-kv-1.0.0.tgz#104a8e4aaca6d3d8cd157a8ef8bfab2d7a3ffdb6"
 
-ioredis-mock@^3.6.4:
+ioredis-mock@^3.7.0:
   version "3.7.0"
   resolved "https://registry.yarnpkg.com/ioredis-mock/-/ioredis-mock-3.7.0.tgz#8c0ef6d3de02a1d9a5b36e33f18a124d0f18696c"
   dependencies:
@@ -3081,7 +3081,7 @@ liftoff@2.5.0:
     rechoir "^0.6.2"
     resolve "^1.1.7"
 
-lint-staged@^7.0.1:
+lint-staged@^7.0.2:
   version "7.0.2"
   resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-7.0.2.tgz#c99f6800e0525fa9c16f04c13ebe137edfd4fcd7"
   dependencies:
@@ -3575,7 +3575,7 @@ node-pre-gyp@^0.6.39:
     tar "^2.2.1"
     tar-pack "^3.4.0"
 
-nodemon@^1.17.2:
+nodemon@^1.17.3:
   version "1.17.3"
   resolved "https://registry.yarnpkg.com/nodemon/-/nodemon-1.17.3.tgz#3b0bbc2ee05ccb43b1aef15ba05c63c7bc9b8530"
   dependencies:

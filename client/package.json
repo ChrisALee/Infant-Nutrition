@@ -15,7 +15,11 @@
         "precommit": "lint-staged"
     },
     "lint-staged": {
-        "*.{ts,tsx}": ["tslint --fix", "prettier --write", "git add"]
+        "*.{ts,tsx}": [
+            "tslint --fix",
+            "prettier --write",
+            "git add"
+        ]
     },
     "dependencies": {
         "@types/next": "^2.4.8",
@@ -24,10 +28,7 @@
         "@zeit/next-css": "^0.1.5",
         "@zeit/next-typescript": "0.1.1",
         "babel-plugin-styled-components": "^1.5.1",
-        "body-parser": "^1.18.2",
-        "cookie-parser": "^1.4.3",
         "dotenv": "^5.0.1",
-        "express": "^4.16.3",
         "isomorphic-unfetch": "^2.0.0",
         "jss": "^9.8.1",
         "jwt-decode": "^2.2.0",
@@ -49,12 +50,12 @@
         "ajv": "^6.4.0",
         "cross-env": "^5.1.4",
         "lint-staged": "^7.0.2",
-        "nodemon": "^1.17.3",
         "prettier": "^1.11.1",
         "ts-node": "^5.0.1",
         "tslint": "^5.9.1",
         "tslint-config-prettier": "^1.10.0",
         "tslint-eslint-rules": "^5.1.0",
         "tslint-react": "^3.5.1"
-    }
+    },
+    "peerDependencies": {}
 }

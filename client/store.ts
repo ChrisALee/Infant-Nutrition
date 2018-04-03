@@ -66,7 +66,9 @@ export const logout = () => {
                 `${publicRuntimeConfig.API_HOST}/session`,
                 {
                     method: 'DELETE',
-                    Accept: 'application/json',
+                    headers: {
+                        Accept: 'application/json',
+                    },
                     credentials: 'include',
                 },
             );

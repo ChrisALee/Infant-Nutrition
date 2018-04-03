@@ -31,7 +31,7 @@ export interface Props {
 const { publicRuntimeConfig } = getConfig();
 
 class IndexPage extends React.Component<Props, State> {
-    static async getInitialProps(): Promise<any> {
+    static async getInitialProps({ req }): Promise<any> {
         try {
             const res: any = await fetch(
                 `${publicRuntimeConfig.API_HOST}/users/current/babies`,
@@ -39,7 +39,10 @@ class IndexPage extends React.Component<Props, State> {
                     method: 'GET',
                     headers: {
                         Accept: 'application/json',
+                        // If server rendered, cookies must manually be passed in
+                        Cookie: req ? req.headers.cookie : undefined,
                     },
+                    credentials: 'include',
                 },
             );
             const json: any = await res.json();

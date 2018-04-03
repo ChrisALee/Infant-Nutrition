@@ -1,32 +1,36 @@
-## Getting Started
+# Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-### Prerequisites
+## Prerequisites
 
-* Node.js - version 8.x or greater
+*   Node.js - version 8.x or greater
 
-### Installing
+## Installing
 
 First fork and clone the repo
 
 Then:
+
 ```sh
 $ cd PATH/TO/PROJECT/CLIENT
-$ npm install
+$ yarn
 ```
 
 Now you must set up environment variables
 
 Create an .env file in the root `API` directory:
+
 ```sh
 $ touch .env
 ```
 
 To run locally:
+
 ```sh
 $ npm run dev
 ```
+
 Then go to `localhost:3000`
 
 Any time you save changes to any files locally, your web page will automatically reload with the changes!
@@ -58,7 +62,7 @@ client/
 |   // Unless you have some strange use-case or error
 |   // You can safely ignore the contents of this
 |--- node_modules/
-|   
+|
 |    // Notice the first letter of each component is capitalized
 |    // Components should be a smaller part of what makes up an entire page
 |    // For example, a nav bar or header could be a component
@@ -68,8 +72,8 @@ client/
 |   |--- Header.tsx
 |   |--- Layout.tsx
 |   |--- Logout.tsx
-|   |--- Post.tsx
-|        
+|   `--- Post.tsx
+|
 |    // Pages are the full thing that can be linked to (i.e., website.com/about)
 |    // They are made up of components
 |    // Just remember that pages are technically components just like those in the components folder
@@ -81,21 +85,20 @@ client/
 |   |--- login.tsx
 |   |--- register.tsx
 |   |--- profile.tsx
-|   |--- forum.tsx
-|        
+|   `--- forum.tsx
+|
 |    // These are static files like images, favicons, fonts, etc.
 |--- static/
 |   |--- image.png
-|   |--- favicon.ico
-|       
+|   `--- favicon.ico
+|
 |--- .prettierrc
 |--- next.config.js
 |--- package-lock.json
 |--- package.json  // Command line scripts to run, build, test, lint and names of installed packages are in here
 |--- README.md
 |--- tsconfig.json
-|--- tslint.json
-
+`--- tslint.json
 ```
 
 ## Imports and Exports
@@ -106,35 +109,27 @@ To import either 3rd-party libraries or other files from the project, follow the
 // pages/index.tsx
 import * as React from 'react'; // 3rd-party library import
 import 'isomorphic-unfetch'; // 3rd-party library import
-import Headup from '../components/Headup' // Import from another project file
-import SomeComponent from '../components/SomeComponent' // Import from another project file
-import AnotherComponent from '../components/AnotherComponent' // Import from another project file
+import Headup from '../components/Headup'; // Import from another project file
+import SomeComponent from '../components/SomeComponent'; // Import from another project file
+import AnotherComponent from '../components/AnotherComponent'; // Import from another project file
 
 // We import React explicitly when we need to use a React method like below
 // In this case, we extend the React.Component since we're making a class
 export default class IndexPage extends React.Component<{}, {}> {
     render() {
-        return (
-        <div>
-            // stuff
-        </div>
-        );
+        return <div>// stuff</div>;
     }
-};
+}
 ```
 
 To export project files so that other files may use them, follow the example below:
 
 ```jsx
 // client/components/SomeComponent.tsx
-export default () => (
-    <div>
-        // stuff
-    </div>
-);
+export default () => <div>// stuff</div>;
 ```
 
-or 
+or
 
 ```jsx
 // client/components/AnotherComponent.tsx
@@ -156,8 +151,8 @@ So `props.children` would be equal to Hello!
 
 This can be useful for two cases:
 
-1. You want to control the data getting sent down to be presented by the child component
-2. There are multiple components you can send the data down to to be presented in different ways
+1.  You want to control the data getting sent down to be presented by the child component
+2.  There are multiple components you can send the data down to to be presented in different ways
 
 ```jsx
 // client/pages/index.tsx
@@ -219,13 +214,13 @@ export default class SomeComponentWithState extends React.Component<{}, {}> {
     state = {
         count = 1,
     }
-    
+
     onClick(e) {
         this.setState({
             count: this.state.count + 1
         });
     }
-    
+
     render() {
         return (
             <div>
@@ -280,14 +275,14 @@ Sure it might take a day, but you'll probably save multiples of days from being 
 Just keep in mind that Next.js gets rid of a lot of the boilerplate shown in the normal React in the book and is opinionated about some things.
 That's why if you do decide to do the book, do that first then absolutely do Learnnextjs second.
 
-* The React book and code linked in Trello - You only need to go up to page 241
-* [Learnnextjs](https://learnnextjs.com/) - You only need to do sections 1-8
+*   The React book and code linked in Trello - You only need to go up to page 241
+*   [Learnnextjs](https://learnnextjs.com/) - You only need to do sections 1-8
 
 If you get stuck on anything in the project, take a look at the [Next.js examples](https://github.com/zeit/next.js/tree/canary/examples) or Google the issue first.
 
 ## Built With
 
-* [React](https://github.com/facebook/react) - JavaScript library for building user interfaces
-* [Next.js](https://github.com/zeit/next.js/) - Web framework for server-rendered React
-* [Styled-JSX](https://github.com/zeit/styled-jsx) - CSS for JSX
-* [TypeScript](https://www.typescriptlang.org/) - Superset of JavaScript that allows for types
+*   [React](https://github.com/facebook/react) - JavaScript library for building user interfaces
+*   [Next.js](https://github.com/zeit/next.js/) - Web framework for server-rendered React
+*   [Styled-JSX](https://github.com/zeit/styled-jsx) - CSS for JSX
+*   [TypeScript](https://www.typescriptlang.org/) - Superset of JavaScript that allows for types

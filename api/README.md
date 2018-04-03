@@ -1,29 +1,32 @@
-## Getting Started
+# Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-### Prerequisites
+## Prerequisites
 
-* Node.js - version 8.x or greater
+*   Node.js - version 8.x or greater
 
-### Installing
+## Installing
 
 First fork and clone the repo
 
 Then:
+
 ```sh
 $ cd PATH/TO/PROJECT/API
-$ npm install
+$ yarn
 ```
 
 Now you must set up environment variables
 
 Create an .env file in the root `API` directory:
+
 ```sh
 $ touch .env
 ```
 
 Put these environment variables in the `.env` file with your relevant information:
+
 ```
 DB_TYPE=postgres
 DB_HOST=localhost
@@ -41,15 +44,18 @@ SERVER_PORT=3001
 ```
 
 If you haven't set up your database yet, then you can run these commands to quickly bootstrap one up with seeded data:
+
 ```sh
 $ knex migrate:latest
 $ knex seed:run
 ```
 
 To run locally:
+
 ```sh
 $ npm start:watch
 ```
+
 Then go to `localhost:3001/documentation`
 
 ## Deployment to OpenShift
@@ -70,9 +76,9 @@ This will automatically pull an updated NodeJS image and target the source code 
 
 ## Built With
 
-* [Node.js](https://nodejs.org/en/) - The JavaScript runtime used
-* [Hapi](https://hapijs.com/) - Web framework for Node.js
-* [Knex](http://knexjs.org/) - Template engine
-* [Swagger](https://swagger.io/) - API documentation
-* [TypeScript](https://www.typescriptlang.org/) - Superset of JavaScript that allows for types
-* [PostgreSQL](https://www.postgresql.org/) - SQL database
+*   [Node.js](https://nodejs.org/en/) - The JavaScript runtime used
+*   [Hapi](https://hapijs.com/) - Web framework for Node.js
+*   [Knex](http://knexjs.org/) - Template engine
+*   [Swagger](https://swagger.io/) - API documentation
+*   [TypeScript](https://www.typescriptlang.org/) - Superset of JavaScript that allows for types
+*   [PostgreSQL](https://www.postgresql.org/) - SQL database

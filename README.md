@@ -12,24 +12,27 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-* Node.js - version 8.x or greater
+*   Node.js - version 8.x or greater
 
 ### Installing
 
 First fork and clone the repo
 
 Then:
+
 ```sh
 $ cd PATH/TO/PROJECT
-$ npm install
+$ yarn
 ```
 
 This will install the dependencies in the master package, and then it'll also install the dependencies in `API` and `CLIENT`
 
 To run both `API` and `CLIENT` locally:
+
 ```sh
 $ npm start
 ```
+
 Then go to `localhost:8080` to see `CLIENT` or `localhost:3001/documentation` to see `API`
 
 NOTE: This requires environment variables to be set up for `API`
@@ -48,10 +51,10 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code style, an
 
 ## Authors
 
-* **Christopher Lee** - [ChrisALee](https://github.com/chrisalee)
-* **Sufi Khaksari** - [skhaksari](https://github.com/skhaksari)
-* **Scott Krawcyzk** - [czyk14](https://github.com/czyk14)
-* **Carrie Storch** - [carriems](https://github.com/carriems)
+*   **Christopher Lee** - [ChrisALee](https://github.com/chrisalee)
+*   **Sufi Khaksari** - [skhaksari](https://github.com/skhaksari)
+*   **Scott Krawcyzk** - [czyk14](https://github.com/czyk14)
+*   **Carrie Storch** - [carriems](https://github.com/carriems)
 
 ## License
 

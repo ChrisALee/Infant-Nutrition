@@ -1,4 +1,6 @@
 {
     "lerna": "2.9.1",
-    "packages": ["api", "client"]
+    "packages": ["api", "client"],
+    "npmClient": "yarn",
+    "npmClientArgs": ["--development"]
 }

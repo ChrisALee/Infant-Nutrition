@@ -6,9 +6,6 @@
     "private": true,
     "homepage": "https://github.com/ChrisALee/infant-nutrition#readme",
     "scripts": {
-        "postinstall": "run-p install:api install:client",
-        "install:api": "cd api && yarn",
-        "install:client": "cd client && yarn",
         "start": "run-p start:api start:client",
         "start:api": "npm run start --prefix api",
         "start:client": "npm run start --prefix client",

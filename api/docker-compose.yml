@@ -1,0 +1,25 @@
+version: '3'
+services:
+    # SQL and document data store
+    db:
+        image: postgres
+        environment:
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=password
+            - POSTGRES_DB=dev_nutrition
+
+    # Distributed in-memory cache
+    redis:
+        image: redis:alpine
+
+    infant-api:
+        build: ./
+        depends_on:
+            - db
+            - redis
+        ports:
+            - "3001:3001"
+        volumes:
+            - .:/usr/src/api-app/
+            - /usr/src/api-app/node_modules
+        command: ["./wait-for-postgres.sh", "db", "knex", "migrate:latest"]

@@ -112,15 +112,18 @@ export const whoAmI = cookie => {
 export const register = payload => {
     return async dispatch => {
         try {
-            const response = await fetch('http://localhost:3001/api/users', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
+            const response = await fetch(
+                `${publicRuntimeConfig.API_HOST}/users`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Accept: 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify(payload),
                 },
-                credentials: 'include',
-                body: JSON.stringify(payload),
-            });
+            );
 
             if (response.status === 200) {
                 dispatch({

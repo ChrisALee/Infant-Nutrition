@@ -63,8 +63,8 @@ const manifest = {
         port: process.env.SERVER_PORT,
         routes: {
             cors: {
-                // origin: prod ? [process.env.PROD_CORS_DOMAIN_CLIENT] : ['*'],
-                origin: ['*'],
+                origin: prod ? [process.env.PROD_CORS_DOMAIN_CLIENT] : ['*'],
+                additionalHeaders: ['cache-control', 'x-requested-with'],
                 credentials: true,
             },
         },

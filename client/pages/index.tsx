@@ -18,6 +18,10 @@ import { initStore } from '../store';
 import withAuth, { PUBLIC } from '../utils/auth/withAuth';
 import withRoot from '../utils/material-ui/withRoot';
 
+import Grid from 'material-ui/Grid';
+import PropTypes from 'prop-types';
+
+
 export interface State {
     babyStageClicked: string;
 }
@@ -62,10 +66,12 @@ class IndexPage extends React.Component<Props, State> {
     };
 
     handleClick = e => {
+        console.log(e.target)
         this.setState({
             babyStageClicked: e.target.id,
         });
     };
+
 
     render() {
         const { name, user } = this.props;
@@ -93,41 +99,76 @@ class IndexPage extends React.Component<Props, State> {
                             for new foods to try, tips for picky eaters and
                             advice on how to wean your baby from breast milk or
                             formula.
+
+                            Not sure where to start? Click the titles below to explore information for the repective developmental stages!
+
+
                         </Typography>
                     </CardContent>
                 </Card>
 
-                <Typography variant="body1" gutterBottom>
-                    Example fetch of data from API:
-                </Typography>
+            <Grid container justify = "center" spacing={40} id="stages" onClick = {this.handleClick}>
+                <Grid item xs={12}>
+                <Card >
+                    <CardContent>
+                        <Typography variant="body1" gutterBottom id="0" >
+                            &nbsp; &nbsp; &nbsp; Newborn<br />(0-1 month)
 
-                <Typography variant="body1" gutterBottom>
-                    {name}
-                </Typography>
+                        </Typography>
+                    </CardContent>
+                </Card>
+                </Grid>
 
-                <table id="stages" onClick={this.handleClick}>
-                    <tbody>
-                        <tr>
-                            <td id="0" className="devStage">
-                                Newborn<br />(0-1 month)
-                            </td>
-                            <td id="1" className="devStage">
-                                Pushing Up<br />(1-4 months)
-                            </td>
-                            <td id="2" className="devStage">
-                                Learning to Sit<br />(4-7 months)
-                            </td>
-                            <td id="3" className="devStage">
-                                Learning to crawl<br />(7-9 months)
-                            </td>
-                            <td id="4" className="devStage">
-                                Learning to Walk<br />(9-12 months)
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <Grid item xs={12}>
+                <Card >
+                    <CardContent>
+                        <Typography variant="body1" gutterBottom id="1">
+                            &nbsp; &nbsp; &nbsp; Pushing Up<br />(1-4 months)
+                            
 
-                {this.state.babyStageClicked ? (
+                        </Typography>
+                    </CardContent>
+                </Card>
+                </Grid>
+
+<Grid item xs={12}>
+                <Card >
+                    <CardContent>
+                        <Typography variant="body1" gutterBottom id="2">
+                            &nbsp; &nbsp; &nbsp; Learning to Sit<br />(4-7 months)
+                           
+
+                        </Typography>
+                    </CardContent>
+                </Card>
+                </Grid>
+<Grid item xs={12}>
+               <Card id="3">
+                    <CardContent>
+                        <Typography variant="body1" gutterBottom id="3">
+                            &nbsp; &nbsp; &nbsp; Learning to crawl<br />(7-9 months)
+                            
+
+                        </Typography>
+                    </CardContent>
+                </Card>
+                </Grid>
+
+<Grid item xs={12}>
+               <Card id="4">
+                    <CardContent>
+                        <Typography variant="body1" gutterBottom id="4">
+                            &nbsp; &nbsp; &nbsp; 
+                            
+                           
+
+                        </Typography>
+                    </CardContent>
+                </Card>
+                </Grid>
+
+                </Grid>
+               {this.state.babyStageClicked ? (
                     <div>
                         <h2 id="stageName">
                             {
@@ -171,3 +212,4 @@ export default compose<any>(
     withRedux(initStore, mapStateToProps),
     withAuth([PUBLIC]),
 )(IndexPage);
+

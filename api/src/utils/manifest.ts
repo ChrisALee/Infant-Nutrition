@@ -1,3 +1,5 @@
+const prod = process.env.NODE_ENV === 'production';
+
 const swaggerOptions = {
     info: {
         title: 'Infant Nutrition API documentation',
@@ -61,7 +63,7 @@ const manifest = {
         port: process.env.SERVER_PORT,
         routes: {
             cors: {
-                origin: ['*'],
+                origin: prod ? [process.env.PROD_CORS_DOMAIN_CLIENT] : ['*'],
                 credentials: true,
             },
         },

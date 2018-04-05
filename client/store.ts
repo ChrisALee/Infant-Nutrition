@@ -5,6 +5,10 @@ import Router from 'next/router';
 import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunkMiddleware from 'redux-thunk';
+import {
+    actionStorageMiddleware,
+    createStorageListener,
+} from 'redux-state-sync';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -91,6 +95,15 @@ export const logout = () => {
 // If session is active it saves the user log in status to redux store
 export const whoAmI = cookie => {
     return async dispatch => {
+        if (!cookie) {
+            dispatch({
+                type: actionTypes.SET_USER,
+                user: { isLoggedIn: false },
+            });
+
+            return { isLoggedIn: false };
+        }
+
         try {
             const decoded = jwtDecode(cookie);
 
@@ -140,9 +153,24 @@ export const register = payload => {
 };
 
 export const initStore = (initialState = exampleInitialState) => {
-    return createStore(
-        reducer,
-        initialState,
-        composeWithDevTools(applyMiddleware(thunkMiddleware)),
-    );
+    if (typeof window === 'undefined') {
+        // Server render so we cannot use Window to sync tabs
+        // Shouldn't matter since the client does a request to cookies on server render
+        return createStore(
+            reducer,
+            initialState,
+            composeWithDevTools(applyMiddleware(thunkMiddleware)),
+        );
+    } else {
+        // Client render so we can sync the store between tabs using Window
+        const store = createStore(
+            reducer,
+            initialState,
+            composeWithDevTools(
+                applyMiddleware(thunkMiddleware, actionStorageMiddleware),
+            ),
+        );
+        createStorageListener(store);
+        return store;
+    }
 };

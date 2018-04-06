@@ -1,5 +1,8 @@
+import { convertToRaw, convertFromRaw, EditorState } from 'draft-js';
+import Button from 'material-ui/Button';
 import withRedux from 'next-redux-wrapper';
 import React from 'react';
+import { Editor } from 'react-draft-wysiwyg';
 import { compose } from 'redux';
 
 import Head from '../components/Head';
@@ -7,9 +10,6 @@ import Nav from '../components/Nav';
 import { initStore } from '../store';
 import withAuth from '../utils/auth/withAuth';
 import withRoot from '../utils/material-ui/withRoot';
-import { Editor } from 'react-draft-wysiwyg';
-import { EditorState, convertFromRaw } from 'draft-js';
-import Button from 'material-ui/Button';
 
 export interface Props {
     user: { isLoggedIn: string };
@@ -17,28 +17,56 @@ export interface Props {
 
 class Private extends React.Component<Props, {}> {
     state = {
-        editorState: EditorState.createWithContent(emptyContentState),
+        editorState: EditorState.createEmpty(),
         // A flag to make sure the editor doesn't render too early
         editorRender: false,
         editorReadOnly: true,
     };
 
-    onEditorStateChange: Function = editorState => {
+    onEditorStateChange = editorState => {
         this.setState({
             editorState,
         });
     };
 
+    saveContent = content => {
+        // TODO: save the content
+        const convertedContent = convertToRaw(content.getCurrentContent());
+        window.localStorage.setItem('content', convertedContent);
+    };
+
     handleClick = e => {
+        if (!this.state.editorReadOnly) {
+            console.log('Saving...');
+            this.saveContent(this.state.editorState);
+        }
         this.setState({
             editorReadOnly: !this.state.editorReadOnly,
         });
     };
 
     componentDidMount() {
-        this.setState({
-            editorRender: true,
-        });
+        try {
+            const content = window.localStorage.getItem('content');
+            // console.log(content);
+            let contentToUse;
+            if (content) {
+                contentToUse = EditorState.createWithContent(
+                    convertFromRaw(JSON.parse(content)),
+                );
+            } else {
+                contentToUse = EditorState.createEmpty();
+            }
+            this.setState({
+                editorRender: true,
+                editorState: contentToUse,
+            });
+        } catch (err) {
+            // console.log(err);
+            return {
+                name: '',
+            };
+        }
     }
 
     render() {
@@ -73,9 +101,16 @@ class Private extends React.Component<Props, {}> {
                     // Component hasn't mounted yet so show loading
                     <div>Loading...</div>
                 )}
-                <Button color="primary" onClick={this.handleClick}>
-                    Edit
-                </Button>
+
+                {editorReadOnly ? (
+                    <Button color="primary" onClick={this.handleClick}>
+                        Edit
+                    </Button>
+                ) : (
+                    <Button color="primary" onClick={this.handleClick}>
+                        Save
+                    </Button>
+                )}
             </div>
         );
     }
@@ -93,14 +128,14 @@ export default compose(
     withAuth(),
 )(Private);
 
-const emptyContentState = convertFromRaw({
-    entityMap: {},
-    blocks: [
-        {
-            text: '',
-            key: 'foo',
-            type: 'unstyled',
-            entityRanges: [],
-        },
-    ],
-});
+// const emptyContentState = convertFromRaw({
+//     entityMap: {},
+//     blocks: [
+//         {
+//             text: '',
+//             key: 'foo',
+//             type: 'unstyled',
+//             entityRanges: [],
+//         },
+//     ],
+// });

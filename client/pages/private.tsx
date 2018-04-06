@@ -4,6 +4,8 @@ import withRedux from 'next-redux-wrapper';
 import React from 'react';
 import { Editor } from 'react-draft-wysiwyg';
 import { compose } from 'redux';
+import fetch from 'isomorphic-unfetch';
+import getConfig from 'next/config';
 
 import Head from '../components/Head';
 import Nav from '../components/Nav';
@@ -14,6 +16,8 @@ import withRoot from '../utils/material-ui/withRoot';
 export interface Props {
     user: { isLoggedIn: string };
 }
+
+const { publicRuntimeConfig } = getConfig();
 
 class Private extends React.Component<Props, {}> {
     state = {
@@ -29,12 +33,25 @@ class Private extends React.Component<Props, {}> {
         });
     };
 
-    saveContent = content => {
+    saveContent = async content => {
         // TODO: save the content
         const convertedContent = JSON.stringify(
             convertToRaw(content.getCurrentContent()),
         );
-        window.localStorage.setItem('content', convertedContent);
+
+        const response = await fetch(
+            `${publicRuntimeConfig.API_HOST}/content`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                },
+                credentials: 'include',
+                body: convertedContent,
+            },
+        );
+        // window.localStorage.setItem('content', convertedContent);
     };
 
     handleClick = e => {

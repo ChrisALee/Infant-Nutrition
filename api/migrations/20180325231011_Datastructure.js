@@ -97,9 +97,22 @@ exports.up = function(knex, Promise) {
             quizResultsTable.string('guid', 36).notNullable().unique();
 
             quizResultsTable.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'));
-        });
+        })
+
+        .createTable('content', contentTable => {
+            // Primary Key
+            contentTable.increments();
+
+            // Data
+            contentTable.string('content_type', 36).notNullable().unique();
+            contentTable.string('content_location', 36).notNullable().unique();
+            contentTable.string('text');
+            contentTable.string('guid', 36).notNullable().unique();
+
+            contentTable.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'));
+        })
 };
 
 exports.down = function(knex, Promise) {
-    return knex.schema.raw('drop table babies, profile, answers, questions, quiz_results, quizzes, users cascade')
+    return knex.schema.raw('drop table content, babies, profile, answers, questions, quiz_results, quizzes, users cascade')
 };

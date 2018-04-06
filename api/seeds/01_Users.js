@@ -4,7 +4,7 @@ exports.seed = async function(knex, Promise) {
     // Deletes ALL existing entries
     try {
         await knex.raw(
-            'truncate table users, profile, babies, answers, questions, quiz_results, quizzes ',
+            'truncate table content, users, profile, babies, answers, questions, quiz_results, quizzes ',
         );
 
         const pass1 = await Bcrypt.hash('password1', 10);

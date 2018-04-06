@@ -31,7 +31,9 @@ class Private extends React.Component<Props, {}> {
 
     saveContent = content => {
         // TODO: save the content
-        const convertedContent = convertToRaw(content.getCurrentContent());
+        const convertedContent = JSON.stringify(
+            convertToRaw(content.getCurrentContent()),
+        );
         window.localStorage.setItem('content', convertedContent);
     };
 
@@ -48,7 +50,7 @@ class Private extends React.Component<Props, {}> {
     componentDidMount() {
         try {
             const content = window.localStorage.getItem('content');
-            // console.log(content);
+            console.log(content);
             let contentToUse;
             if (content) {
                 contentToUse = EditorState.createWithContent(
@@ -62,7 +64,7 @@ class Private extends React.Component<Props, {}> {
                 editorState: contentToUse,
             });
         } catch (err) {
-            // console.log(err);
+            console.log(err);
             return {
                 name: '',
             };

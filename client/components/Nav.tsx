@@ -21,6 +21,15 @@ const TopBar = styled.div`
     flex-grow: 1;
 `;
 
+const AuthContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+`;
+
+const LeftSide = styled.div`
+    flex-basis: 100%;
+`;
+
 class Nav extends React.Component {
     handleLogout = e => {
         e.preventDefault();
@@ -34,25 +43,32 @@ class Nav extends React.Component {
             <TopBar>
                 <AppBar position="static">
                     <Toolbar>
-                        <MenuButton color="inherit" aria-label="Menu">
-                            <MenuIcon />
-                        </MenuButton>
-                        <Link prefetch href="/">
-                            <Button color="inherit">
-                                <a>Home</a>
-                            </Button>
-                        </Link>
-                        <Link prefetch href="/private">
-                            <Button color="inherit">
-                                <a>Private</a>
-                            </Button>
-                        </Link>
+                        <LeftSide>
+                            <MenuButton color="inherit" aria-label="Menu">
+                                <MenuIcon />
+                            </MenuButton>
+                            <Link prefetch href="/">
+                                <Button color="inherit">
+                                    <a>Home</a>
+                                </Button>
+                            </Link>
+                            <Link prefetch href="/private">
+                                <Button color="inherit">
+                                    <a>Private</a>
+                                </Button>
+                            </Link>
+                        </LeftSide>
                         {user && user.isLoggedIn ? (
-                            <Button onClick={this.handleLogout} color="inherit">
-                                <a>Logout</a>
-                            </Button>
+                            <AuthContainer>
+                                <Button
+                                    onClick={this.handleLogout}
+                                    color="inherit"
+                                >
+                                    <a>Logout</a>
+                                </Button>
+                            </AuthContainer>
                         ) : (
-                            <div>
+                            <AuthContainer>
                                 <Link prefetch href="/login">
                                     <Button color="inherit">
                                         <a>Login</a>
@@ -63,7 +79,7 @@ class Nav extends React.Component {
                                         <a>Register</a>
                                     </Button>
                                 </Link>
-                            </div>
+                            </AuthContainer>
                         )}
                     </Toolbar>
                 </AppBar>

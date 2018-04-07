@@ -65,6 +65,10 @@ const manifest = {
             cors: {
                 origin: prod ? [process.env.PROD_CORS_DOMAIN_CLIENT] : ['*'],
                 additionalHeaders: ['cache-control', 'x-requested-with'],
+                // additionalHeaders: [
+                //     'access-control-allow-headers',
+                //     'Access-Control-Allow-Origin, Access-Control-Allow-Headers, Origin, X-Requested-With, Content-Type, CORRELATION_ID',
+                // ],
                 credentials: true,
             },
         },
@@ -98,6 +102,10 @@ const manifest = {
             },
             {
                 plugin: './modules/user/user-routes',
+                routes: { prefix: '/api' },
+            },
+            {
+                plugin: './modules/content/content-routes',
                 routes: { prefix: '/api' },
             },
         ],

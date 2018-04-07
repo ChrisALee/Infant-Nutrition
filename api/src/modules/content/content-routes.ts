@@ -10,12 +10,13 @@ exports.register = (server, options) => {
             description: 'Get all content',
             notes: 'Returns all the content posts in the database',
             tags: ['api', 'content'],
+            validate: contentValidators.getAllContent,
         },
         handler: contentHandlers.getAllContent,
     });
 
     server.route({
-        path: '/content/${contentGuid}',
+        path: '/content/{contentGuid}',
         method: 'GET',
         config: {
             auth: 'jwt',
@@ -38,6 +39,20 @@ exports.register = (server, options) => {
             validate: contentValidators.postContent,
         },
         handler: contentHandlers.postContent,
+    });
+
+    server.route({
+        path: '/content/{contentGuid}',
+        method: 'PUT',
+        config: {
+            auth: 'jwt',
+            description: 'Update a single content post',
+            notes: 'Updates a content to the database',
+            tags: ['api', 'content'],
+            validate: contentValidators.putContent,
+            pre: [contentHandlers.prePutContent],
+        },
+        handler: contentHandlers.putContent,
     });
 };
 

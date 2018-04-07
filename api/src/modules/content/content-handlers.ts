@@ -9,26 +9,60 @@ export const getAllContent = async (
     request: Hapi.Request,
     h: Hapi.ResponseToolkit,
 ) => {
+    const params: any = request.query;
+    let results;
     try {
-        const results = await Knex('content').select(
-            'content_type',
-            'content_location',
-            'text',
-            'guid',
-        );
-
-        if (!results || results.length === 0) {
-            return {
-                error: true,
-                errMessage: 'no content posts found',
-            };
+        if (params && params.contentLocation) {
+            results = await Knex('content')
+                .where({
+                    content_location: params.contentLocation,
+                })
+                .select('content_type', 'content_location', 'text', 'guid');
+        } else {
+            results = await Knex('content').select(
+                'content_type',
+                'content_location',
+                'text',
+                'guid',
+            );
         }
-
-        return results;
     } catch (err) {
         request.log('api', err);
         throw Boom.internal('Internal database error');
     }
+
+    if (!results || results.length === 0) {
+        throw Boom.notFound('No content found');
+    }
+
+    const filtered = results.map(item => {
+        return {
+            contentType: item.content_type,
+            contentLocation: item.content_location,
+            text: item.text,
+            guid: item.guid,
+            links: {
+                self: `${process.env.SERVER_FULL_URL}/content/${item.guid}`,
+            },
+        };
+    });
+
+    // TODO: Put in utils folder
+    const arrayToObject = (arr, keyField) =>
+        arr.reduce((obj, item) => ({ ...obj, [item[keyField]]: item }), {});
+
+    const data = arrayToObject(filtered, 'contentType');
+
+    return h
+        .response({
+            status: 'success',
+            type: 'content posts',
+            links: {
+                self: `${process.env.SERVER_FULL_URL}/content`,
+            },
+            data,
+        })
+        .type('application/json');
 };
 
 export const getSingleContent = async (
@@ -51,6 +85,7 @@ export const getSingleContent = async (
             };
         }
 
+        // TODO: Return better json with self links and whatnot
         return results;
     } catch (err) {
         request.log('api', err);
@@ -63,24 +98,97 @@ export const postContent = async (
     h: Hapi.ResponseToolkit,
 ) => {
     try {
-        const { baby }: any = request.payload;
-        const { userGuid }: any = request.auth.credentials;
+        const { content }: any = request.payload;
 
         const guid = generate(url, 10);
 
-        const insertOperation = await Knex('babies').insert({
-            owner: userGuid,
-            name: baby.name,
-            date_of_birth: baby.dateOfBirth,
+        const insertOperation = await Knex('content').insert({
+            content_type: content.contentType,
+            content_location: content.contentLocation,
+            text: content.text,
             guid,
         });
 
-        return {
-            data: guid,
-            message: 'successfully created baby',
-        };
+        return h
+            .response({
+                status: 'success',
+                type: 'content posts',
+                links: {
+                    self: `${process.env.SERVER_FULL_URL}/content`,
+                },
+                data: { ...content, guid },
+            })
+            .type('application/json')
+            .header(
+                'Location',
+                `${process.env.SERVER_FULL_URL}/content/${guid}`,
+            )
+            .code(201);
     } catch (err) {
         request.log('api', err);
         throw Boom.internal('Internal database error');
+    }
+};
+
+export const putContent = async (
+    request: Hapi.Request,
+    h: Hapi.ResponseToolkit,
+) => {
+    try {
+        const { contentGuid }: any = request.params;
+        const { content }: any = request.payload;
+
+        const guid = generate(url, 10);
+
+        const insertOperation = await Knex('content')
+            .where({
+                guid: contentGuid,
+            })
+            .update({
+                text: content.text,
+            });
+
+        return h
+            .response({
+                status: 'success',
+                type: 'content posts',
+                links: {
+                    self: `${process.env.SERVER_FULL_URL}/content`,
+                },
+                data: { ...content, guid },
+            })
+            .type('application/json')
+            .header(
+                'Location',
+                `${process.env.SERVER_FULL_URL}/content/${guid}`,
+            )
+            .code(200);
+    } catch (err) {
+        request.log('api', err);
+        throw Boom.internal('Internal database error');
+    }
+};
+
+export const prePutContent = async (
+    request: Hapi.Request,
+    h: Hapi.ResponseToolkit,
+) => {
+    try {
+        const { contentGuid } = request.params;
+
+        const results = await Knex('profile')
+            .where({
+                guid: contentGuid,
+            })
+            .select('guid');
+
+        if (!results) {
+            throw new Error(`the content with id ${contentGuid} was not found`);
+        }
+
+        return 'success';
+    } catch (err) {
+        request.log('api', err);
+        throw Boom.notFound(err);
     }
 };

@@ -1,11 +1,14 @@
 {
     "defaultSeverity": "error",
-    "extends": ["tslint:recommended", "tslint-config-prettier"],
+    "extends": [
+        "tslint:recommended",
+        "tslint-eslint-rules",
+        "tslint-config-prettier"
+    ],
     "jsRules": {
         "no-unused-expression": true
     },
     "rules": {
-        "align": [true, "arguments", "parameters", "statements"],
         "array-type": [false],
         "arrow-parens": false,
         "ban": false,

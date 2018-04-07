@@ -105,8 +105,8 @@ exports.up = function(knex, Promise) {
 
             // Data
             contentTable.string('content_type', 36).notNullable().unique();
-            contentTable.string('content_location', 36).notNullable().unique();
-            contentTable.string('text');
+            contentTable.string('content_location', 36).notNullable();
+            contentTable.string('text', 50000);
             contentTable.string('guid', 36).notNullable().unique();
 
             contentTable.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'));

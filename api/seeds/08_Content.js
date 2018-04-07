@@ -10,6 +10,13 @@ exports.seed = function(knex, Promise) {
                     '{"blocks":[{"key":"bhae3","text":"This is a sample text from the database","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}',
                 guid: 'FEw9fkNcwx',
             },
+            {
+                content_type: 'title',
+                content_location: 'index',
+                text:
+                    '{"blocks":[{"key":"bhae3","text":"This is a sample text from the database","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}',
+                guid: 'Fkw9fkNcwx',
+            },
         ]);
     });
 };

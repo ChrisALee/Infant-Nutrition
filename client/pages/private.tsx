@@ -10,7 +10,7 @@ import { compose } from 'redux';
 import Head from '../components/Head';
 import Nav from '../components/Nav';
 import { initStore } from '../store';
-import withAuth from '../utils/auth/withAuth';
+import withAuth, { ADMIN } from '../utils/auth/withAuth';
 import withRoot from '../utils/material-ui/withRoot';
 
 export interface Props {
@@ -206,5 +206,5 @@ const mapStateToProps = state => {
 export default compose(
     withRoot(),
     withRedux(initStore, mapStateToProps),
-    withAuth(),
+    withAuth([ADMIN]),
 )(Private);

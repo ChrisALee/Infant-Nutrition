@@ -6,6 +6,7 @@ import Head from '../components/Head';
 import LoginForm from '../components/LoginForm';
 import Nav from '../components/Nav';
 import { initStore, login } from '../store';
+import withAuth, { PUBLIC } from '../utils/auth/withAuth';
 import withRoot from '../utils/material-ui/withRoot';
 
 export interface Props {
@@ -44,4 +45,8 @@ class Login extends Component<Props, {}> {
     }
 }
 
-export default compose<any>(withRoot(), withRedux(initStore))(Login);
+export default compose<any>(
+    withRoot(),
+    withRedux(initStore),
+    withAuth([PUBLIC]),
+)(Login);

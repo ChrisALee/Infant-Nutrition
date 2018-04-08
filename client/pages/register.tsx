@@ -6,6 +6,7 @@ import Head from '../components/Head';
 import Nav from '../components/Nav';
 import RegisterForm from '../components/RegisterForm';
 import { initStore, register } from '../store';
+import withAuth, { PUBLIC } from '../utils/auth/withAuth';
 import withRoot from '../utils/material-ui/withRoot';
 
 export interface Props {
@@ -47,4 +48,8 @@ class Register extends Component<Props, {}> {
     }
 }
 
-export default compose<any>(withRoot(), withRedux(initStore))(Register);
+export default compose<any>(
+    withRoot(),
+    withRedux(initStore),
+    withAuth([PUBLIC]),
+)(Register);

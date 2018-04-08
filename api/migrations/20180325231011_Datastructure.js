@@ -8,6 +8,7 @@ exports.up = function(knex, Promise) {
             usersTable.string('username', 50).notNullable().unique();
             usersTable.string('email', 250).notNullable().unique();
             usersTable.string('password', 128).notNullable();
+            usersTable.specificType('scope', 'text[]').notNullable();
             usersTable.string('guid', 50).notNullable().unique();
 
             usersTable.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'));

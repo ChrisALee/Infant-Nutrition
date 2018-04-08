@@ -53,6 +53,7 @@ export const postSession = async (
         userGuid: results.guid,
         username: results.username,
         email: results.email,
+        scope: results.scope,
         guid,
     };
 
@@ -66,14 +67,20 @@ export const postSession = async (
 
     // TODO: set a good expiresIn for access token after refresh token
     // is implemented
-    const token = JWT.sign({ guid: session.guid }, process.env.JWT_KEY, {
-        expiresIn: '30h',
-    });
+    const token = JWT.sign(
+        { guid: session.guid, scope: results.scope },
+        process.env.JWT_KEY,
+        {
+            expiresIn: '30h',
+        },
+    );
 
     return h
-        .response({ text: 'Check Auth Header for your Token' })
+        .response({
+            text: 'Check Auth Header for your Token',
+            scope: results.scope,
+        })
         .type('application/json')
-        .header('Authorization', token)
         .state('token', token);
 };
 

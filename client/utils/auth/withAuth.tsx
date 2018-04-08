@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { whoAmI } from '../../store';
 
 export const PUBLIC = 'PUBLIC';
-export const ADMIN = 'ADMIN';
+export const ADMIN = 'admin';
 
 /**
  * Higher order component for Next.js `pages` components.

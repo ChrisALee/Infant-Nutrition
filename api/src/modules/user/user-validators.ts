@@ -14,6 +14,7 @@ export const postUser = {
                     .email()
                     .required()
                     .example('string@email.com'),
+                scope: Joi.array().example(['user']),
             })
             .required()
             .description('the user body json payload'),

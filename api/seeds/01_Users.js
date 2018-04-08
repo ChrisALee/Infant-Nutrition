@@ -18,18 +18,21 @@ exports.seed = async function(knex, Promise) {
                     username: 'clee',
                     password: pass1,
                     email: 'clee@gmail.com',
+                    scope: ['admin', 'user'],
                     guid: 'GHso99ia1P',
                 },
                 {
                     username: 'aborg',
                     password: pass2,
                     email: 'aborg@gmail.com',
+                    scope: ['user'],
                     guid: '8dDeBulp2U',
                 },
                 {
                     username: 'jkahn',
                     password: pass3,
                     email: 'jkahn@gmail.com',
+                    scope: ['user'],
                     guid: '0scyzGE9XJ',
                 },
             ]);

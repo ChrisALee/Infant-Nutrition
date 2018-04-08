@@ -25,9 +25,11 @@ export const postUser = async (
     }
 
     // Create a new user object with all final data for database
+    const scope = user.scope ? user.scope : ['user'];
     const userWithGuidAndSalt = {
         ...user,
         password: saltedPass,
+        scope,
         guid: userGuid,
     };
 
@@ -45,6 +47,7 @@ export const postUser = async (
         userGuid: userWithGuidAndSalt.guid,
         username: userWithGuidAndSalt.username,
         email: userWithGuidAndSalt.email,
+        scope: userWithGuidAndSalt.scope,
         guid,
     };
 

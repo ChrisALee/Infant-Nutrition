@@ -13,7 +13,7 @@ import {
 const { publicRuntimeConfig } = getConfig();
 
 const exampleInitialState = {
-    user: { isLoggedIn: false },
+    user: { isLoggedIn: false, groups: [] },
 };
 
 export const actionTypes = {
@@ -24,7 +24,7 @@ export const actionTypes = {
 export const reducer = (state = exampleInitialState, action) => {
     switch (action.type) {
         case actionTypes.SET_USER: {
-            return { ...state, user: action.user };
+            return { ...state, user: action.user, groups: action.groups };
         }
 
         default:
@@ -49,10 +49,16 @@ export const login = payload => {
                 },
             );
 
+            const json = await response.json();
+            const scope = json.scope;
+
             if (response.status === 200) {
                 dispatch({
                     type: actionTypes.SET_USER,
-                    user: { isLoggedIn: true },
+                    user: {
+                        isLoggedIn: true,
+                        groups: scope,
+                    },
                 });
                 Router.push('/');
             }
@@ -80,7 +86,7 @@ export const logout = () => {
             if (response.status === 200) {
                 dispatch({
                     type: actionTypes.SET_USER,
-                    user: { isLoggedIn: false },
+                    user: { isLoggedIn: false, groups: [] },
                 });
             }
         } catch (err) {
@@ -110,11 +116,11 @@ export const whoAmI = cookie => {
             if (decoded) {
                 dispatch({
                     type: actionTypes.SET_USER,
-                    user: { isLoggedIn: true },
+                    user: { isLoggedIn: true, groups: [...decoded.scope] },
                 });
             }
 
-            return { isLoggedIn: true };
+            return { isLoggedIn: true, groups: [...decoded.scope] };
         } catch (err) {
             // tslint:disable-next-line:no-console
             console.log('whoAmI: ', err);
@@ -141,7 +147,7 @@ export const register = payload => {
             if (response.status === 200) {
                 dispatch({
                     type: actionTypes.SET_USER,
-                    user: { isLoggedIn: true },
+                    user: { isLoggedIn: true, groups: [] },
                 });
                 Router.push('/');
             }

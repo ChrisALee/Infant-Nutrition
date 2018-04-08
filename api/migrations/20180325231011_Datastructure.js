@@ -105,8 +105,9 @@ exports.up = function(knex, Promise) {
             contentTable.increments();
 
             // Data
-            contentTable.string('content_type', 36).notNullable().unique();
-            contentTable.string('content_location', 36).notNullable();
+            contentTable.string('content_type', 36);
+            contentTable.string('outer_location', 36).notNullable();
+            contentTable.string('inner_location', 36).notNullable();
             contentTable.string('text', 50000);
             contentTable.string('guid', 36).notNullable().unique();
 

@@ -2,7 +2,7 @@ import * as Joi from 'joi';
 
 export const getAllContent = {
     query: {
-        contentLocation: Joi.string().description(
+        outerLocation: Joi.string().description(
             'the page location for the content',
         ),
     },
@@ -13,7 +13,7 @@ export const postContent = {
         content: Joi.object()
             .keys({
                 contentType: Joi.string().required(),
-                contentLocation: Joi.string().required(),
+                outerLocation: Joi.string().required(),
                 text: Joi.string().required(),
             })
             .required()
@@ -26,7 +26,6 @@ export const putContent = {
         contentGuid: Joi.string().required(),
     },
     payload: {
-        // content: Joi.string(),
         content: Joi.object()
             .keys({
                 text: Joi.object(),

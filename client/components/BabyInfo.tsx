@@ -1,6 +1,7 @@
 import { convertFromRaw, EditorState } from 'draft-js';
 import * as React from 'react';
 import { Editor } from 'react-draft-wysiwyg';
+import { Typography } from 'material-ui';
 
 export interface BabyInfoState {
     babyInfo: {
@@ -9,7 +10,6 @@ export interface BabyInfoState {
 }
 
 export interface BabyInfoProps {
-    id: string;
     key: string;
     content: any;
 }
@@ -50,11 +50,13 @@ class BabyInfo extends React.Component<BabyInfoProps, BabyInfoState> {
         return (
             <div>
                 {this.state && this.state.babyInfo ? (
-                    <Editor
-                        editorState={this.state.babyInfo.text}
-                        readOnly={true}
-                        toolbarHidden
-                    />
+                    <Typography component="h2" gutterBottom>
+                        <Editor
+                            editorState={this.state.babyInfo.text}
+                            readOnly={true}
+                            toolbarHidden
+                        />
+                    </Typography>
                 ) : (
                     // Component hasn't mounted yet so show loading
                     <div>Loading...</div>

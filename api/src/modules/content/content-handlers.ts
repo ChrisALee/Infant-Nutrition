@@ -2,8 +2,10 @@ import * as Boom from 'boom';
 import * as Hapi from 'hapi';
 import generate = require('nanoid/generate');
 import url = require('nanoid/url');
+import arrayToObject from '../../utils/response-formatter';
 
 import Knex from '../../utils/knex';
+import arrayToMultipleDepthObject from '../../utils/response-formatter';
 
 export const getAllContent = async (
     request: Hapi.Request,
@@ -12,16 +14,23 @@ export const getAllContent = async (
     const params: any = request.query;
     let results;
     try {
-        if (params && params.contentLocation) {
+        if (params && params.outerLocation) {
             results = await Knex('content')
                 .where({
-                    content_location: params.contentLocation,
+                    outer_location: params.outerLocation,
                 })
-                .select('content_type', 'content_location', 'text', 'guid');
+                .select(
+                    'content_type',
+                    'outer_location',
+                    'inner_location',
+                    'text',
+                    'guid',
+                );
         } else {
             results = await Knex('content').select(
                 'content_type',
-                'content_location',
+                'outer_location',
+                'inner_location',
                 'text',
                 'guid',
             );
@@ -38,7 +47,8 @@ export const getAllContent = async (
     const filtered = results.map(item => {
         return {
             contentType: item.content_type,
-            contentLocation: item.content_location,
+            outerLocation: item.outer_location,
+            innerLocation: item.inner_location,
             text: item.text,
             guid: item.guid,
             links: {
@@ -47,11 +57,11 @@ export const getAllContent = async (
         };
     });
 
-    // TODO: Put in utils folder
-    const arrayToObject = (arr, keyField) =>
-        arr.reduce((obj, item) => ({ ...obj, [item[keyField]]: item }), {});
-
-    const data = arrayToObject(filtered, 'contentType');
+    const data = arrayToMultipleDepthObject(filtered, [
+        'outerLocation',
+        'innerLocation',
+        'contentType',
+    ]);
 
     return h
         .response({
@@ -104,7 +114,8 @@ export const postContent = async (
 
         const insertOperation = await Knex('content').insert({
             content_type: content.contentType,
-            content_location: content.contentLocation,
+            outer_location: content.outerLocation,
+            inner_location: content.innerLocation,
             text: content.text,
             guid,
         });

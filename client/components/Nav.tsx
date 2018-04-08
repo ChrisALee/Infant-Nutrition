@@ -8,7 +8,11 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import { initStore, logout } from '../store';
+import { logout } from '../store';
+
+export interface NavProps {
+    user: { isLoggedIn: string; groups: string[] };
+}
 
 const MenuButton = styled(IconButton)`
     && {
@@ -30,7 +34,7 @@ const LeftSide = styled.div`
     flex-basis: 100%;
 `;
 
-class Nav extends React.Component {
+class Nav extends React.Component<NavProps, {}> {
     handleLogout = e => {
         e.preventDefault();
         const { dispatch }: any = this.props;
@@ -38,7 +42,7 @@ class Nav extends React.Component {
     };
 
     render() {
-        const { user }: any = this.props;
+        const { user } = this.props;
         return (
             <TopBar>
                 <AppBar position="static">
@@ -52,11 +56,17 @@ class Nav extends React.Component {
                                     <a>Home</a>
                                 </Button>
                             </Link>
-                            <Link prefetch href="/private">
-                                <Button color="inherit">
-                                    <a>Private</a>
-                                </Button>
-                            </Link>
+                            {user &&
+                            user.groups &&
+                            user.groups.includes('admin') ? (
+                                <Link prefetch href="/private">
+                                    <Button color="inherit">
+                                        <a>Private</a>
+                                    </Button>
+                                </Link>
+                            ) : (
+                                <div />
+                            )}
                         </LeftSide>
                         {user && user.isLoggedIn ? (
                             <AuthContainer>
@@ -88,4 +98,10 @@ class Nav extends React.Component {
     }
 }
 
-export default connect(initStore)(Nav);
+const mapStateToProps = state => {
+    return {
+        user: state.user,
+    };
+};
+
+export default connect(mapStateToProps)(Nav);

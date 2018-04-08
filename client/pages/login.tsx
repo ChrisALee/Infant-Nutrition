@@ -10,7 +10,7 @@ import withAuth, { PUBLIC } from '../utils/auth/withAuth';
 import withRoot from '../utils/material-ui/withRoot';
 
 export interface Props {
-    user: { isLoggedIn: string };
+    user: { isLoggedIn: string; groups: string[] };
 }
 
 class Login extends Component<Props, {}> {
@@ -34,11 +34,10 @@ class Login extends Component<Props, {}> {
     };
 
     render() {
-        const { user } = this.props;
         return (
             <div>
                 <Head title="Login" />
-                <Nav user={user} />
+                <Nav />
                 <LoginForm handleLoginSubmit={this.handleLoginSubmit} />
             </div>
         );

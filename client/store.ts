@@ -24,7 +24,7 @@ export const actionTypes = {
 export const reducer = (state = exampleInitialState, action) => {
     switch (action.type) {
         case actionTypes.SET_USER: {
-            return { ...state, user: action.user, groups: action.groups };
+            return { ...state, user: action.user };
         }
 
         default:
@@ -104,10 +104,10 @@ export const whoAmI = cookie => {
         if (!cookie) {
             dispatch({
                 type: actionTypes.SET_USER,
-                user: { isLoggedIn: false },
+                user: { isLoggedIn: false, groups: [] },
             });
 
-            return { isLoggedIn: false };
+            return { isLoggedIn: false, groups: [] };
         }
 
         try {

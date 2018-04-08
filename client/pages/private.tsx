@@ -14,7 +14,7 @@ import withAuth, { ADMIN } from '../utils/auth/withAuth';
 import withRoot from '../utils/material-ui/withRoot';
 
 export interface Props {
-    user: { isLoggedIn: string };
+    user: { isLoggedIn: string; groups: string[] };
     text: string;
     guid: string;
 }
@@ -150,13 +150,12 @@ class Private extends React.Component<Props, {}> {
     }
 
     render() {
-        const { user } = this.props;
         const { shouldRender, shouldReadOnly, text } = this.state.private;
 
         return (
             <div>
                 <Head title="private" />
-                <Nav user={user} />
+                <Nav />
                 <h1>Hello!</h1>
                 <p>This content is available for logged in users only.</p>
 
@@ -197,14 +196,6 @@ class Private extends React.Component<Props, {}> {
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        user: state.user,
-    };
-};
-
-export default compose(
-    withRoot(),
-    withRedux(initStore, mapStateToProps),
-    withAuth([ADMIN]),
-)(Private);
+export default compose(withRoot(), withRedux(initStore), withAuth([ADMIN]))(
+    Private,
+);

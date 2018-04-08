@@ -24,7 +24,7 @@ export interface State {
 
 export interface Props {
     name: string;
-    user: { isLoggedIn: string };
+    user: { isLoggedIn: string; groups: string[] };
     content: any;
 }
 
@@ -128,12 +128,11 @@ class IndexPage extends React.Component<Props, State> {
     };
 
     render() {
-        const { user } = this.props;
         const { babyStageClicked, babyContentToPass } = this.state;
         return (
             <IndexContainer>
                 <Head title="Home" />
-                <Nav user={user} />
+                <Nav />
                 <Hero>
                     <Content>
                         <Title
@@ -319,14 +318,8 @@ class IndexPage extends React.Component<Props, State> {
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        user: state.user,
-    };
-};
-
 export default compose<any>(
     withRoot(),
-    withRedux(initStore, mapStateToProps),
+    withRedux(initStore),
     withAuth([PUBLIC]),
 )(IndexPage);

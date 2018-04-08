@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-unfetch';
 import Button from 'material-ui/Button';
-import Card, { CardActions, CardContent } from 'material-ui/Card';
+import { CardActions, CardContent } from 'material-ui/Card';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 import withRedux from 'next-redux-wrapper';
@@ -9,26 +9,23 @@ import * as React from 'react';
 import { compose } from 'redux';
 import styled from 'styled-components';
 
+import BabyInfo from '../components/BabyInfo';
 import Head from '../components/Head';
-import LearningToCrawl from '../components/LearningToCrawl';
-import LearningToSit from '../components/LearningToSit';
-import LearningToWalk from '../components/LearningToWalk';
 import Nav from '../components/Nav';
-import Newborn from '../components/Newborn';
-import PushingUp from '../components/PushingUp';
 import { initStore } from '../store';
+import theme from '../utils//styles/mui-theme';
 import withAuth, { PUBLIC } from '../utils/auth/withAuth';
 import withRoot from '../utils/material-ui/withRoot';
-import theme from '../utils//styles/mui-theme';
 
 export interface State {
     babyStageClicked: string;
+    babyContentToPass: any;
 }
 
 export interface Props {
     name: string;
     user: { isLoggedIn: string };
-    species: string;
+    content: any;
 }
 
 const HorizontalGrid = styled(Grid)`
@@ -89,47 +86,50 @@ const SectionInfo = styled.div`
 const { publicRuntimeConfig } = getConfig();
 
 class IndexPage extends React.Component<Props, State> {
-    static async getInitialProps({ req }): Promise<any> {
+    static async getInitialProps(): Promise<any> {
         try {
             const res: any = await fetch(
-                `${publicRuntimeConfig.API_HOST}/users/current/babies`,
+                `${
+                    publicRuntimeConfig.API_HOST
+                }/content?contentLocation=babyInfo`,
                 {
                     method: 'GET',
                     headers: {
                         Accept: 'application/json',
-                        // If server rendered, cookies must manually be passed in
-                        Cookie: req ? req.headers.cookie : undefined,
                     },
-                    credentials: 'include',
                 },
             );
             const json: any = await res.json();
 
             return {
-                name: json[0].name,
+                content: json.data,
             };
         } catch (err) {
             return {
-                name: '',
+                content: {},
             };
         }
     }
 
     state = {
         babyStageClicked: '',
+        babyContentToPass: {},
     };
 
     handleClick = e => {
         const targetId = e.currentTarget.id;
+        const babyContentToPass = this.props.content[targetId];
         // Users should be able to toggle a card if already shown hence the check
         this.setState({
             babyStageClicked:
                 targetId === this.state.babyStageClicked ? '' : targetId,
+            babyContentToPass,
         });
     };
 
     render() {
         const { user } = this.props;
+        const { babyStageClicked, babyContentToPass } = this.state;
         return (
             <IndexContainer>
                 <Head title="Home" />
@@ -187,7 +187,7 @@ class IndexPage extends React.Component<Props, State> {
                                 <CardActions>
                                     <Button
                                         size="small"
-                                        id="0"
+                                        id="newborn"
                                         onClick={this.handleClick}
                                         color="primary"
                                     >
@@ -213,7 +213,7 @@ class IndexPage extends React.Component<Props, State> {
                                 <CardActions>
                                     <Button
                                         size="small"
-                                        id="1"
+                                        id="pushingUp"
                                         onClick={this.handleClick}
                                         color="primary"
                                     >
@@ -239,7 +239,7 @@ class IndexPage extends React.Component<Props, State> {
                                 <CardActions>
                                     <Button
                                         size="small"
-                                        id="2"
+                                        id="learningToSit"
                                         onClick={this.handleClick}
                                         color="primary"
                                     >
@@ -265,7 +265,7 @@ class IndexPage extends React.Component<Props, State> {
                                 <CardActions>
                                     <Button
                                         size="small"
-                                        id="3"
+                                        id="learningToCrawl"
                                         onClick={this.handleClick}
                                         color="primary"
                                     >
@@ -291,7 +291,7 @@ class IndexPage extends React.Component<Props, State> {
                                 <CardActions>
                                     <Button
                                         size="small"
-                                        id="4"
+                                        id="learningToWalk"
                                         onClick={this.handleClick}
                                         color="primary"
                                     >
@@ -303,31 +303,12 @@ class IndexPage extends React.Component<Props, State> {
                     </HorizontalGrid>
 
                     <SectionInfo>
-                        {this.state.babyStageClicked ? (
-                            <div>
-                                <h2 id="stageName">
-                                    {
-                                        {
-                                            '0': 'Newborn',
-                                            '1': 'Pushing Up',
-                                            '2': 'Learning to Sit',
-                                            '3': 'Learning to Crawl',
-                                            '4': 'Learning to Walk',
-                                        }[this.state.babyStageClicked]
-                                    }
-                                </h2>
-                                <div id="stageInfo">
-                                    {
-                                        {
-                                            '0': <Newborn />,
-                                            '1': <PushingUp />,
-                                            '2': <LearningToSit />,
-                                            '3': <LearningToCrawl />,
-                                            '4': <LearningToWalk />,
-                                        }[this.state.babyStageClicked]
-                                    }
-                                </div>
-                            </div>
+                        {babyStageClicked ? (
+                            <BabyInfo
+                                id="stageInfo"
+                                key={babyStageClicked}
+                                content={babyContentToPass}
+                            />
                         ) : (
                             <div>Filler content</div>
                         )}

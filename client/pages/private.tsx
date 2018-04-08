@@ -1,11 +1,11 @@
-import { convertToRaw, convertFromRaw, EditorState } from 'draft-js';
+import { convertFromRaw, convertToRaw, EditorState } from 'draft-js';
+import fetch from 'isomorphic-unfetch';
 import Button from 'material-ui/Button';
 import withRedux from 'next-redux-wrapper';
+import getConfig from 'next/config';
 import React from 'react';
 import { Editor } from 'react-draft-wysiwyg';
 import { compose } from 'redux';
-import fetch from 'isomorphic-unfetch';
-import getConfig from 'next/config';
 
 import Head from '../components/Head';
 import Nav from '../components/Nav';

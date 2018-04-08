@@ -6,7 +6,7 @@ exports.register = (server, options) => {
         path: '/content',
         method: 'GET',
         config: {
-            auth: 'jwt',
+            auth: false,
             description: 'Get all content',
             notes: 'Returns all the content posts in the database',
             tags: ['api', 'content'],
@@ -19,7 +19,7 @@ exports.register = (server, options) => {
         path: '/content/{contentGuid}',
         method: 'GET',
         config: {
-            auth: 'jwt',
+            auth: false,
             description: 'Get single content post',
             notes:
                 'Returns the content post with the supplied guid in the database',

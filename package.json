@@ -1,7 +1,7 @@
 {
     "name": "infant-nutrition",
     "license": "MIT",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "author": "Christopher Lee",
     "private": true,
     "homepage": "https://github.com/ChrisALee/infant-nutrition#readme",
@@ -26,8 +26,8 @@
     },
     "devDependencies": {
         "husky": "^0.15.0-rc.13",
-        "lerna": "^2.9.1",
-        "lint-staged": "^7.0.2",
+        "lerna": "^2.10.1",
+        "lint-staged": "^7.0.4",
         "npm-run-all": "^4.1.2"
     },
     "dependencies": {}

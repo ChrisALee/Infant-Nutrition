@@ -1,4 +1,4 @@
-import MenuIcon from 'material-ui-icons/Menu';
+import MenuIcon from '@material-ui/icons/Menu';
 import AppBar from 'material-ui/AppBar';
 import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';

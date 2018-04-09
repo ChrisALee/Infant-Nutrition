@@ -1,6 +1,6 @@
 {
     "name": "infant-nutrition",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "author": "Christopher Lee",
     "private": true,
     "scripts": {
@@ -10,8 +10,7 @@
         "prestart:prod": "tsc -p tsconfig.production.json",
         "start:prod": "set NODE_ENV=production&& node dist/server.js",
         "pretest": "tsc",
-        "test":
-            "jest --forceExit --coverage --verbose --env=./dist/utils/test-environment.js",
+        "test": "jest --forceExit --coverage --verbose --env=./dist/utils/test-environment.js",
         "tslint-check": "tslint-config-prettier-check ./tslint.json",
         "tslint": "tslint -c tslint.json -p tsconfig.json --fix",
         "prettier": "prettier  --write **/*.ts*",
@@ -19,19 +18,23 @@
         "precommit": "lint-staged"
     },
     "lint-staged": {
-        "*.{ts,tsx}": ["tslint --fix", "prettier --write", "git add"]
+        "*.{ts,tsx}": [
+            "tslint --fix",
+            "prettier --write",
+            "git add"
+        ]
     },
     "dependencies": {
         "@types/bcrypt": "^1.0.0",
         "@types/boom": "^7.2.0",
-        "@types/hapi": "^17.0.7",
+        "@types/hapi": "^17.0.9",
         "@types/hapi-auth-jwt2": "^8.0.0",
         "@types/ioredis": "^3.2.7",
         "@types/joi": "^13.0.7",
         "@types/jsonwebtoken": "^7.2.6",
         "@types/knex": "^0.14.9",
         "@types/nanoid": "^1.0.0",
-        "@types/node": "^9.6.1",
+        "@types/node": "^9.6.2",
         "@types/pg": "^7.4.5",
         "bcrypt": "^1.0.3",
         "blipp": "^3.0.0",
@@ -48,10 +51,10 @@
         "hapi-swagger": "^9.1.1",
         "inert": "^5.1.0",
         "ioredis": "^3.2.2",
-        "ioredis-mock": "^3.7.0",
+        "ioredis-mock": "^3.7.1",
         "joi": "^13.1.2",
-        "jsonwebtoken": "^8.2.0",
-        "knex": "^0.14.4",
+        "jsonwebtoken": "^8.2.1",
+        "knex": "^0.14.5",
         "mock-knex": "^0.4.0",
         "nanoid": "^1.0.2",
         "pg": "^7.4.1",
@@ -61,7 +64,7 @@
     "devDependencies": {
         "@types/jest": "^22.2.2",
         "jest": "^22.4.3",
-        "lint-staged": "^7.0.2",
+        "lint-staged": "^7.0.4",
         "nodemon": "^1.17.3",
         "prettier": "^1.11.1",
         "ts-jest": "^22.4.2",

@@ -25,6 +25,7 @@ const BabyPanel = styled.div`
     border: 1.2px solid ${theme.palette.common.white};
     background-color: #fafafa;
     padding: 3px 2px;
+    width: 100%;
 `;
 
 class BabySummary extends React.Component<BabySummaryProps, BabySummaryState> {
@@ -32,6 +33,7 @@ class BabySummary extends React.Component<BabySummaryProps, BabySummaryState> {
         babyInfo: {
             text: EditorState.createEmpty(),
         },
+        spacing: '16',
     };
 
     componentDidMount() {
@@ -64,7 +66,7 @@ class BabySummary extends React.Component<BabySummaryProps, BabySummaryState> {
         return (
             <div>
                 {this.state && this.state.babyInfo ? (
-                    <Grid item xs={2}>
+                    <Grid item xs={12}>
                         <BabyPanel>
                             <CardContent>
                                 <Typography component="h2" gutterBottom>

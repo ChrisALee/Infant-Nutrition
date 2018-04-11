@@ -1,201 +1,204 @@
-import { convertFromRaw, convertToRaw, EditorState } from 'draft-js';
 import fetch from 'isomorphic-unfetch';
-import Button from 'material-ui/Button';
+import Grid from 'material-ui/Grid';
+import Typography from 'material-ui/Typography';
 import withRedux from 'next-redux-wrapper';
 import getConfig from 'next/config';
-import React from 'react';
-import { Editor } from 'react-draft-wysiwyg';
+import * as React from 'react';
 import { compose } from 'redux';
+import styled from 'styled-components';
 
+import BabyInfo from '../components/BabyInfo';
+import BabySummary from '../components/BabySummary';
 import Head from '../components/Head';
 import Nav from '../components/Nav';
 import { initStore } from '../store';
+import theme from '../utils//styles/mui-theme';
 import withAuth, { ADMIN } from '../utils/auth/withAuth';
 import withRoot from '../utils/material-ui/withRoot';
 
-export interface Props {
-    user: { isLoggedIn: string; groups: string[] };
-    text: string;
-    guid: string;
+export interface PrivatePageState {
+    babyStageClicked: string;
+    babyContentToPass: any;
+    shouldReadOnly: boolean;
 }
+
+export interface PrivatePageProps {
+    name: string;
+    user: { isLoggedIn: string; groups: string[] };
+    content: any;
+}
+
+const Title = styled(Typography)`
+    && {
+        padding-bottom: 50;
+    }
+`;
+
+const IndexContainer = styled.div`
+    flex: 1 0 100%;
+`;
+
+const Hero = styled.div`
+    min-height: '80vh';
+    flex: '0 0 auto';
+    display: 'flex';
+    justify-content: 'center';
+    align-items: 'center';
+    background-color: ${theme.palette.primary.main};
+    color: ${theme.palette.primary.contrastText};
+`;
+
+const Content = styled.div`
+    padding-bottom: 25vh;
+    padding-top: 25vh;
+`;
+
+const IntroText = styled.div`
+    max-width: 500;
+    text-align: center;
+`;
+
+const BottomInfo = styled.div`
+    background-color: #ffffff;
+`;
+
+const SectionInfo = styled.div`
+    padding-bottom: 25vh;
+    padding-top: 25vh;
+    padding-left: 16vh;
+    padding-right: 16vh;
+    max-width: 500;
+`;
+
+const HorizontalGrid = styled(Grid)`
+    && {
+        flex-grow: 1;
+    }
+`;
 
 const { publicRuntimeConfig } = getConfig();
 
-class Private extends React.Component<Props, {}> {
-    static async getInitialProps({ req }): Promise<any> {
+class PrivatePage extends React.Component<PrivatePageProps, PrivatePageState> {
+    static async getInitialProps(): Promise<any> {
         try {
-            const res: any = await fetch(
-                `${
-                    publicRuntimeConfig.API_HOST
-                }/content?contentLocation=private`,
+            const babyInfo: any = await fetch(
+                `${publicRuntimeConfig.API_HOST}/content?outerLocation=index`,
                 {
                     method: 'GET',
                     headers: {
                         Accept: 'application/json',
-                        // If server rendered, cookies must manually be passed in
-                        Cookie: req ? req.headers.cookie : undefined,
                     },
-                    credentials: 'include',
                 },
             );
-            const json: any = await res.json();
+            const json: any = await babyInfo.json();
+            const content = json.data.index;
 
-            return {
-                text: json.data.private.text,
-                guid: json.data.private.guid,
-            };
+            return { content };
         } catch (err) {
             return {
-                text: '',
+                content: {},
             };
         }
     }
 
     state = {
-        private: {
-            text: EditorState.createEmpty(),
-            // A flag to make sure the editor doesn't render too early
-            shouldRender: false,
-            shouldReadOnly: true,
-            guid: '',
-        },
-    };
-
-    onEditorStateChange = text => {
-        this.setState({
-            private: { ...this.state.private, text },
-        });
-    };
-
-    saveContent = async content => {
-        // TODO: save the content
-        const convertedContent = convertToRaw(content.getCurrentContent());
-
-        const contentToSend = {
-            content: {
-                text: convertedContent,
-            },
-        };
-
-        // const contentToSend = {
-        //     content: {
-        //         text: convertedContent,
-        //     },
-        // };
-
-        const url = `${publicRuntimeConfig.API_HOST}/content/${
-            this.state.private.guid
-        }`;
-
-        try {
-            const response = await fetch(url, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                },
-                credentials: 'include',
-                body: JSON.stringify(contentToSend),
-            });
-
-            if (response.status === 200) {
-                // TODO: Redux possibly?
-            }
-        } catch (err) {
-            // tslint:disable-next-line:no-console
-            console.log(err);
-        }
+        babyStageClicked: '',
+        babyContentToPass: {},
+        shouldReadOnly: true,
     };
 
     handleClick = e => {
-        e.preventDefault();
-
-        if (!this.state.private.shouldReadOnly) {
-            this.saveContent(this.state.private.text);
-        }
+        const targetId = e.currentTarget.id;
+        const babyContentToPass = this.props.content.babySummary[targetId];
+        // Users should be able to toggle a card if already shown hence the check
         this.setState({
-            private: {
-                ...this.state.private,
-                shouldReadOnly: !this.state.private.shouldReadOnly,
-            },
+            babyStageClicked:
+                targetId === this.state.babyStageClicked ? '' : targetId,
+            babyContentToPass,
         });
     };
 
-    componentDidMount() {
-        try {
-            const content = this.props.text;
-            let contentToUse;
-
-            // We only want to try to parse the content if it exists
-            try {
-                contentToUse = EditorState.createWithContent(
-                    convertFromRaw(JSON.parse(content)),
-                );
-            } catch (err) {
-                contentToUse = EditorState.createEmpty();
-            }
-
-            this.setState({
-                private: {
-                    ...this.state.private,
-                    shouldRender: true,
-                    text: contentToUse,
-                    guid: this.props.guid,
-                },
-            });
-        } catch (err) {
-            // tslint:disable-next-line:no-console
-            console.log(err);
-        }
-    }
-
     render() {
-        const { shouldRender, shouldReadOnly, text } = this.state.private;
+        const { babyStageClicked, babyContentToPass } = this.state;
+        const { babySummary } = this.props.content;
 
         return (
-            <div>
-                <Head title="private" />
+            <IndexContainer>
+                <Head title="Home" />
                 <Nav />
-                <h1>Hello!</h1>
-                <p>This content is available for logged in users only.</p>
+                <Hero>
+                    <Content>
+                        <Title
+                            variant="display2"
+                            component="h1"
+                            align="center"
+                            color="secondary"
+                            gutterBottom
+                        >
+                            Infant Feeding
+                        </Title>
 
-                {shouldRender ? (
-                    // TODO: Split this out into its own component
-                    // Component mounted so render the Editors
-                    shouldReadOnly ? (
-                        // Essentially render just the values
-                        <Editor
-                            editorState={text}
-                            onEditorStateChange={this.onEditorStateChange}
-                            readOnly={true}
-                            toolbarHidden
-                        />
-                    ) : (
-                        // Render the actual WYSIWYG functionality
-                        <Editor
-                            editorState={text}
-                            onEditorStateChange={this.onEditorStateChange}
-                        />
-                    )
-                ) : (
-                    // Component hasn't mounted yet so show loading
-                    <div>Loading...</div>
-                )}
+                        <IntroText>
+                            <Typography component="h2" color="secondary">
+                                Healthy Feeding Guidelines for Infants.
+                            </Typography>
+                        </IntroText>
+                    </Content>
+                </Hero>
 
-                {shouldReadOnly ? (
-                    <Button color="primary" onClick={this.handleClick}>
-                        Edit
-                    </Button>
-                ) : (
-                    <Button color="primary" onClick={this.handleClick}>
-                        Save
-                    </Button>
-                )}
-            </div>
+                <BottomInfo>
+                    <HorizontalGrid container justify="center" id="stages">
+                        {babySummary ? (
+                            Object.keys(babySummary).map(key => (
+                                <BabySummary
+                                    key={babySummary[key].guid}
+                                    handleClick={this.handleClick}
+                                    content={babySummary[key]}
+                                />
+                            ))
+                        ) : (
+                            <div>Loading...</div>
+                        )}
+                    </HorizontalGrid>
+
+                    <SectionInfo>
+                        {babyStageClicked ? (
+                            <BabyInfo
+                                key={babyStageClicked}
+                                content={babyContentToPass}
+                                editable={true}
+                            />
+                        ) : (
+                            <Typography variant="body1">
+                                Your baby will go on an amazing food journey
+                                during the first year of life. At the start of
+                                the journey, breast milk or formula will be all
+                                that your baby will need. Along the way, your
+                                baby will pass by several “developmental
+                                milestones” — common stages at which babies can
+                                do new things, including trying new foods and
+                                textures. Like most parents, you will have lots
+                                of questions about what to feed your baby and
+                                when to begin. Look inside the “Great Eating
+                                Adventure” to see what’s ahead for your baby. As
+                                your baby approaches each stage, we’ll send you
+                                more detailed information, including ideas for
+                                new foods to try, tips for picky eaters and
+                                advice on how to wean your baby from breast milk
+                                or formula. Not sure where to start? Click the
+                                titles below to explore information for the
+                                respective developmental stages!
+                            </Typography>
+                        )}
+                    </SectionInfo>
+                </BottomInfo>
+            </IndexContainer>
         );
     }
 }
 
-export default compose(withRoot(), withRedux(initStore), withAuth([ADMIN]))(
-    Private,
-);
+export default compose<any>(
+    withRoot(),
+    withRedux(initStore),
+    withAuth([ADMIN]),
+)(PrivatePage);

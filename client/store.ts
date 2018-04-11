@@ -9,15 +9,19 @@ import {
     actionStorageMiddleware,
     createStorageListener,
 } from 'redux-state-sync';
+import { convertFromRaw, convertToRaw, EditorState } from 'draft-js';
 
 const { publicRuntimeConfig } = getConfig();
 
 const exampleInitialState = {
     user: { isLoggedIn: false, groups: [] },
+    babyInfo: { text: EditorState.createEmpty() },
+    editorState: EditorState.createEmpty(),
 };
 
 export const actionTypes = {
     SET_USER: 'SET_USER',
+    UPDATE_BABYINFO: 'UPDATE_BABYINFO',
 };
 
 // REDUCERS
@@ -27,12 +31,30 @@ export const reducer = (state = exampleInitialState, action) => {
             return { ...state, user: action.user };
         }
 
+        case actionTypes.UPDATE_BABYINFO: {
+            return { ...state, babyInfo: action.babyInfo };
+        }
+
         default:
             return state;
     }
 };
 
 // ACTIONS
+export const updateText = payload => {
+    return async dispatch => {
+        try {
+            dispatch({
+                type: actionTypes.UPDATE_BABYINFO,
+                babyInfo: { text: payload },
+            });
+        } catch (err) {
+            // tslint:disable-next-line:no-console
+            console.log(err);
+        }
+    };
+};
+
 export const login = payload => {
     return async dispatch => {
         try {

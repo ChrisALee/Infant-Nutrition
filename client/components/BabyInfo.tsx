@@ -1,24 +1,74 @@
-import { convertFromRaw, EditorState } from 'draft-js';
+import { convertFromRaw, convertToRaw, EditorState } from 'draft-js';
+import { Typography } from 'material-ui';
 import * as React from 'react';
 import { Editor } from 'react-draft-wysiwyg';
-import { Typography } from 'material-ui';
+import Button from 'material-ui/Button';
 
 export interface BabyInfoState {
-    babyInfo: {
-        text: any;
-    };
+    editorState: any;
+    shouldReadOnly: boolean;
 }
 
 export interface BabyInfoProps {
     key: string;
     content: any;
+    babyInfo: {
+        text: any;
+    };
+    editable: boolean;
 }
 
 class BabyInfo extends React.Component<BabyInfoProps, BabyInfoState> {
     state = {
-        babyInfo: {
-            text: EditorState.createEmpty(),
-        },
+        editorState: EditorState.createEmpty(),
+        shouldReadOnly: true,
+    };
+
+    saveContent = async content => {
+        const convertedContent = convertToRaw(content.getCurrentContent());
+
+        const contentToSend = {
+            content: {
+                text: convertedContent,
+            },
+        };
+
+        const url = this.props.content.links.self;
+
+        try {
+            const response = await fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                },
+                credentials: 'include',
+                body: JSON.stringify(contentToSend),
+            });
+
+            if (response.status === 200) {
+                // TODO: Redux possibly?
+            }
+        } catch (err) {
+            // tslint:disable-next-line:no-console
+            console.log(err);
+        }
+    };
+
+    updateText = editorState => {
+        this.setState({
+            editorState,
+        });
+    };
+
+    toggleEditor = e => {
+        if (!this.state.shouldReadOnly) {
+            this.saveContent(this.state.editorState);
+        }
+
+        this.setState({
+            shouldReadOnly: !this.state.shouldReadOnly,
+        });
     };
 
     componentDidMount() {
@@ -36,9 +86,7 @@ class BabyInfo extends React.Component<BabyInfoProps, BabyInfoState> {
             }
 
             this.setState({
-                babyInfo: {
-                    text: contentToUse,
-                },
+                editorState: contentToUse,
             });
         } catch (err) {
             // tslint:disable-next-line:no-console
@@ -47,19 +95,48 @@ class BabyInfo extends React.Component<BabyInfoProps, BabyInfoState> {
     }
 
     render() {
+        const { editorState, shouldReadOnly } = this.state;
+        const { editable } = this.props;
+
         return (
             <div>
-                {this.state && this.state.babyInfo ? (
-                    <Typography component="h2" gutterBottom>
-                        <Editor
-                            editorState={this.state.babyInfo.text}
-                            readOnly={true}
-                            toolbarHidden
-                        />
-                    </Typography>
+                {this.state && editorState ? (
+                    // Component mounted so render the Editors
+                    shouldReadOnly ? (
+                        // Essentially render just the values
+                        <Typography component="h2" gutterBottom>
+                            <Editor
+                                editorState={editorState}
+                                readOnly={true}
+                                toolbarHidden
+                            />
+                        </Typography>
+                    ) : (
+                        // Render the actual WYSIWYG functionality
+                        <Typography component="h2" gutterBottom>
+                            <Editor
+                                editorState={editorState}
+                                onEditorStateChange={this.updateText}
+                            />
+                        </Typography>
+                    )
                 ) : (
                     // Component hasn't mounted yet so show loading
                     <div>Loading...</div>
+                )}
+
+                {editable ? (
+                    shouldReadOnly ? (
+                        <Button color="primary" onClick={this.toggleEditor}>
+                            Edit
+                        </Button>
+                    ) : (
+                        <Button color="primary" onClick={this.toggleEditor}>
+                            Save
+                        </Button>
+                    )
+                ) : (
+                    <div />
                 )}
             </div>
         );

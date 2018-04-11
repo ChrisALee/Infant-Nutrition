@@ -4,8 +4,8 @@ exports.seed = function(knex, Promise) {
         // Inserts seed entries
         return knex('quiz_results').insert([
             {
-                quiz_owner: 'DnZhL8bnC0',
-                user_owner: 'GHso99ia1P',
+                quiz_guid: 'DnZhL8bnC0',
+                user_guid: 'GHso99ia1P',
                 score: 1,
                 guid: 'FEw9fCNcwx',
             },

@@ -4,14 +4,9 @@ exports.seed = function(knex, Promise) {
         // Inserts seed entries
         return knex('quizzes').insert([
             {
-                name: 'Easy',
-                num_questions: 2,
+                name: 'General Quiz',
+                num_questions: 20,
                 guid: 'DnZhL8bnC0',
-            },
-            {
-                name: 'Hard',
-                num_questions: 2,
-                guid: 'WI9g6uzzIz',
             },
         ]);
     });

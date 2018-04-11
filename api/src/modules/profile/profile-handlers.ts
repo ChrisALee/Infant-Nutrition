@@ -43,7 +43,7 @@ export const postProfile = async (
         const guid = generate(url, 10);
 
         const insertOperation = await Knex('profile').insert({
-            owner: userGuid,
+            user_guid: userGuid,
             name: profile.name,
             should_email: profile.should_email,
             guid,
@@ -97,7 +97,7 @@ export const prePutProfile = async (
             .where({
                 guid: profileGuid,
             })
-            .select('owner');
+            .select('user_guid');
 
         if (!results) {
             throw new Error(`the profile with id ${profileGuid} was not found`);

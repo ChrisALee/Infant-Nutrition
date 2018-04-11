@@ -14,7 +14,7 @@ export const getBabies = async (
 
         const results = await Knex('babies')
             .where({
-                owner: userGuid,
+                user_guid: userGuid,
             })
             .select('name', 'date_of_birth');
 
@@ -43,7 +43,7 @@ export const postBaby = async (
         const guid = generate(url, 10);
 
         const insertOperation = await Knex('babies').insert({
-            owner: userGuid,
+            user_guid: userGuid,
             name: baby.name,
             date_of_birth: baby.dateOfBirth,
             guid,

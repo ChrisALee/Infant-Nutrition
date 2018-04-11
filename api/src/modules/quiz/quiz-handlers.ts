@@ -39,7 +39,7 @@ export const getQuestions = async (
 
         const results = await Knex('questions')
             .where({
-                owner: quizGuid,
+                quiz_guid: quizGuid,
             })
             .select('question', 'guid');
 
@@ -66,7 +66,7 @@ export const getAnswers = async (
 
         const results = await Knex('answers')
             .where({
-                owner: questionGuid,
+                question_guid: questionGuid,
             })
             .select('answer', 'is_correct');
 
@@ -92,9 +92,9 @@ export const getResultsCurrent = async (
         const { userGuid }: any = request.auth.credentials;
 
         const results = await Knex('quiz_results')
-            .join('quizzes', 'quiz_results.quiz_owner', 'quizzes.guid')
+            .join('quizzes', 'quiz_results.quiz_guid', 'quizzes.guid')
             .where({
-                user_owner: userGuid,
+                user_guid: userGuid,
             })
             .select('quiz_results.score', 'quizzes.name');
 
@@ -123,8 +123,8 @@ export const postResultsCurrent = async (
         const guid = generate(url, 10);
 
         const insertOperation = await Knex('quiz_results').insert({
-            user_owner: userGuid,
-            quiz_owner: quizGuid,
+            user_guid: userGuid,
+            quiz_guid: quizGuid,
             score: quiz_result.score,
             guid,
         });

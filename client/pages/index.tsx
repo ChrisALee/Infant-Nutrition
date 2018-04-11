@@ -1,5 +1,7 @@
 import fetch from 'isomorphic-unfetch';
 import Grid from 'material-ui/Grid';
+import Button from 'material-ui/Button';
+import Card, { CardContent } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 import withRedux from 'next-redux-wrapper';
 import getConfig from 'next/config';
@@ -29,7 +31,19 @@ export interface Props {
 
 const Title = styled(Typography)`
     && {
-        padding-bottom: 50;
+        text-align: center;
+        font-family: 'Pacifico', cursive;
+        text-decoration: underline;
+        text-decoration-style: solid;
+        color: #000000;
+    }
+`;
+
+const Text = styled(Typography)`
+    && {
+        text-align: left;
+        font-family: 'Arima Madurai', cursive;
+        font-size: 18px;
     }
 `;
 
@@ -43,35 +57,56 @@ const Hero = styled.div`
     display: 'flex';
     justify-content: 'center';
     align-items: 'center';
-    background-color: ${theme.palette.primary.main};
+    /*https://barterhutt.com/baby-boy-backgrounds-baby-boy-desktop-wallpaper/*/
+    background-image: url('https://barterhutt.com/baby-boy-backgrounds-baby-boy-desktop-wallpaper/');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    overflow: scroll;
     color: ${theme.palette.primary.contrastText};
 `;
 
 const Content = styled.div`
-    padding-bottom: 25vh;
-    padding-top: 25vh;
+    padding-bottom: 10vh;
+    padding-top: 10vh;
 `;
 
 const IntroText = styled.div`
     max-width: 500;
     text-align: center;
+    color: #000000;
+    font-family: 'Arima Madurai', cursive;
 `;
 
 const BottomInfo = styled.div`
-    background-color: #ffffff;
+    background-image: url('https://barterhutt.com/baby-boy-backgrounds-baby-boy-desktop-wallpaper/');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    width: 100%;
+    overflow: scroll;
+    content-align: center;
 `;
 
 const SectionInfo = styled.div`
-    padding-bottom: 25vh;
-    padding-top: 25vh;
-    padding-left: 16vh;
-    padding-right: 16vh;
-    max-width: 500;
+    margin-left: 17.5%;
+    margin-bottom: 10%;
+    margin-top: 5%;
+    padding: 2.5%;
+    width: 65%;
+    height: auto;
+    text-align: left;
+    font-family: 'Arima Madurai', cursive;
+    background-color: white;
+    border-radius: 5px;
+    transition: height 0.75s;
 `;
 
 const HorizontalGrid = styled(Grid)`
     && {
         flex-grow: 1;
+        background-color: transparent;
+        margin-left: 12.5%;
+        width: 75%;
+        height: 33.33%;
     }
 `;
 
@@ -137,7 +172,7 @@ class IndexPage extends React.Component<Props, State> {
                         </Title>
 
                         <IntroText>
-                            <Typography component="h2" color="secondary">
+                            <Typography>
                                 Healthy Feeding Guidelines for Infants.
                             </Typography>
                         </IntroText>
@@ -145,7 +180,12 @@ class IndexPage extends React.Component<Props, State> {
                 </Hero>
 
                 <BottomInfo>
-                    <HorizontalGrid container justify="center" id="stages">
+                    <HorizontalGrid
+                        container
+                        justify="space-between"
+                        spacing={16}
+                        id="stages"
+                    >
                         {babySummary ? (
                             Object.keys(babySummary).map(key => (
                                 <BabySummary
@@ -166,7 +206,7 @@ class IndexPage extends React.Component<Props, State> {
                                 content={babyContentToPass}
                             />
                         ) : (
-                            <Typography variant="body1">
+                            <Text>
                                 Your baby will go on an amazing food journey
                                 during the first year of life. At the start of
                                 the journey, breast milk or formula will be all
@@ -183,9 +223,9 @@ class IndexPage extends React.Component<Props, State> {
                                 new foods to try, tips for picky eaters and
                                 advice on how to wean your baby from breast milk
                                 or formula. Not sure where to start? Click the
-                                titles below to explore information for the
+                                titles above to explore information for the
                                 respective developmental stages!
-                            </Typography>
+                            </Text>
                         )}
                     </SectionInfo>
                 </BottomInfo>

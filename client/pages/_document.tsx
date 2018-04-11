@@ -92,7 +92,7 @@ export default class MyDocument extends Document {
                     />
                     <link
                         rel="stylesheet"
-                        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
+                        href="https://fonts.googleapis.com/css?family=Arima+Madurai|Berkshire+Swash|Pacifico"
                     />
                 </Head>
                 <body>

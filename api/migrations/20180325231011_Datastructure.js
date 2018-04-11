@@ -19,7 +19,7 @@ exports.up = function(knex, Promise) {
             profileTable.increments();
 
             // Foreign Key
-            profileTable.string('owner', 36).references('guid').inTable('users');
+            profileTable.string('user_guid', 36).references('guid').inTable('users');
 
             // Data
             profileTable.string('name', 50).notNullable();
@@ -34,7 +34,7 @@ exports.up = function(knex, Promise) {
             babiesTable.increments();
 
             // Foreign Key
-            babiesTable.string('owner', 36).references('guid').inTable('users');
+            babiesTable.string('user_guid', 36).references('guid').inTable('users');
 
             // Data
             babiesTable.string('name', 250).notNullable();
@@ -61,7 +61,7 @@ exports.up = function(knex, Promise) {
             questionsTable.increments();
 
             // Foreign Key
-            questionsTable.string('owner', 36).references('guid').inTable('quizzes');
+            questionsTable.string('quiz_guid', 36).references('guid').inTable('quizzes');
 
             // Data
             questionsTable.string('question').notNullable();
@@ -75,7 +75,7 @@ exports.up = function(knex, Promise) {
             answersTable.increments();
 
             // Foreign Key
-            answersTable.string('owner', 36).references('guid').inTable('questions');
+            answersTable.string('question_guid', 36).references('guid').inTable('questions');
 
             // Data
             answersTable.string('answer').notNullable();
@@ -90,8 +90,8 @@ exports.up = function(knex, Promise) {
             quizResultsTable.increments();
 
             // Foreign Key
-            quizResultsTable.string('quiz_owner', 36).references('guid').inTable('quizzes');
-            quizResultsTable.string('user_owner', 36).references('guid').inTable('users');
+            quizResultsTable.string('quiz_guid', 36).references('guid').inTable('quizzes');
+            quizResultsTable.string('user_guid', 36).references('guid').inTable('users');
 
             // Data
             quizResultsTable.integer('score').notNullable();

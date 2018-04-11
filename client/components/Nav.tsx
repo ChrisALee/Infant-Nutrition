@@ -70,6 +70,11 @@ class Nav extends React.Component<NavProps, {}> {
                         </LeftSide>
                         {user && user.isLoggedIn ? (
                             <AuthContainer>
+                                <Link prefetch href="/profile">
+                                    <Button color="inherit">
+                                        <a>Profile</a>
+                                    </Button>
+                                </Link>
                                 <Button
                                     onClick={this.handleLogout}
                                     color="inherit"

@@ -15,6 +15,8 @@ import { initStore } from '../store';
 import theme from '../utils//styles/mui-theme';
 import withAuth, { PUBLIC } from '../utils/auth/withAuth';
 import withRoot from '../utils/material-ui/withRoot';
+import Button from 'material-ui/Button';
+import { withStyles } from 'material-ui/styles';
 
 export interface State {
     babyStageClicked: string;
@@ -145,6 +147,7 @@ class IndexPage extends React.Component<Props, State> {
                 </Hero>
 
                 <BottomInfo>
+                <Button variant="raised" color="primary">Generate Quiz</Button>
                     <HorizontalGrid container justify="center" id="stages">
                         {babySummary ? (
                             Object.keys(babySummary).map(key => (

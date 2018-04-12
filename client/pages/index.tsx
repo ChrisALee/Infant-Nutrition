@@ -1,7 +1,5 @@
 import fetch from 'isomorphic-unfetch';
 import Grid from 'material-ui/Grid';
-import Button from 'material-ui/Button';
-import Card, { CardContent } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 import withRedux from 'next-redux-wrapper';
 import getConfig from 'next/config';
@@ -83,7 +81,6 @@ const BottomInfo = styled.div`
     background-attachment: fixed;
     width: 100%;
     overflow: scroll;
-    content-align: center;
 `;
 
 const SectionInfo = styled.div`

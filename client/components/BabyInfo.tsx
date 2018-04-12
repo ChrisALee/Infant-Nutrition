@@ -10,12 +10,12 @@ export interface BabyInfoState {
 }
 
 export interface BabyInfoProps {
-    key: string;
+    key: any;
     content: any;
-    babyInfo: {
+    babyInfo?: {
         text: any;
     };
-    editable: boolean;
+    editable?: boolean;
 }
 
 class BabyInfo extends React.Component<BabyInfoProps, BabyInfoState> {

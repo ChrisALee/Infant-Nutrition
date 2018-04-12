@@ -6,74 +6,62 @@ import withRoot from '../utils/material-ui/withRoot';
 import Nav from '../components/Nav';
 import { initStore } from '../store';
 import withRedux from 'next-redux-wrapper';
+import Question from '../components/Question';
 
+import { compose } from 'redux';
 
-
-class QuizPage extends React.Component {
-	static async getInitialProps(): Promise:<any>{
-			try{
-				const quizzes: any = await fetch
-				(`http://localhost:3001/api/quizzes/${json.guid}`,
-				{
-					method: 'GET',
-					headers: {
-						Accept: 'application/json'
-					}
-				});
-				const json: any = await quizzes.json();
-				return {json};
-			}
-			const questions: any = await fetch
-				('http://localhost:3001/api/questions',
-				{
-					method: 'GET',
-					headers: {
-						Accept: 'application/json'
-					}
-				});
-				const json: any = await questions.json()[0];
-				return {json};
-			}
-			catch(err{
-				console.log(err)
-			}
-	}
-
-	render(){
-		const {json} = this.props;
-		return	(
-		<head>Test your Knowledge!	</head>
-		<div>
-			<div>
-				<div>Question 1:  </div>
-					{Object.keys{this.props.result}.map{key=> return(<div>{key}</div>
-					<button>answer</button>)}}
-			</div>
-			<div>
-				<div>Question 2:  </div>
-					{Object.keys{this.props.result}.map{key=><div>{key}</div}}
-				</div>
-			<div>
-				<div>Question 3:  </div>
-					{Object.keys{this.props.result}.map{key=><div>{key}</div}}
-				</div>
-			<div>
-				<div>Question 4:  </div>
-					{Object.keys{this.props.result}.map{key=><div>{key}</div}}
-				</div>
-			<div>
-				<div>Question 5:  </div>
-					{Object.keys{this.props.result}.map{key=><div>{key}</div}}
-			</div>
-			<Button type="submit"> Submit Quiz Here </Button>
-		</div>
-		)
-		
-	}
-
+export interface QuizProps {
+    questions: any;
 }
+
+class Quiz extends React.Component<QuizProps, {}> {
+    static async getInitialProps(): Promise<object> {
+        try {
+            const quizzes = await fetch(
+                `http://localhost:3001/api/full-quizzes`,
+                {
+                    method: 'GET',
+                    headers: {
+                        Accept: 'application/json',
+                    },
+                },
+            );
+
+            // TODO: Come up with cleaner way of getting the questions
+            const json: object[] = await quizzes.json();
+            const generalQuiz: any = { ...json }[0];
+            const questions = generalQuiz.questions;
+
+            return { questions };
+        } catch (err) {
+            // tslint:disable-next-line:no-console
+            console.log(err);
+        }
+    }
+
+    render() {
+        const { questions } = this.props;
+        return (
+            <div>
+                <Nav />
+                {questions.map(question => (
+                    <div key={question.guid}>
+                        <Question
+                            question={question.question}
+                            answers={question.answers}
+                        />
+                    </div>
+                ))}
+                <Button type="submit" color="primary">
+                    Submit Quiz Here
+                </Button>
+            </div>
+        );
+    }
+}
+
 export default compose<any>(
     withRoot(),
     withRedux(initStore),
     withAuth([PUBLIC]),
-)(QuizPage);
+)(Quiz);

@@ -56,6 +56,11 @@ class Nav extends React.Component<NavProps, {}> {
                                     <a>Home</a>
                                 </Button>
                             </Link>
+                            <Link prefetch href="/quiz">
+                                <Button color="inherit">
+                                    <a>Quiz</a>
+                                </Button>
+                            </Link>
                             {user &&
                             user.groups &&
                             user.groups.includes('admin') ? (

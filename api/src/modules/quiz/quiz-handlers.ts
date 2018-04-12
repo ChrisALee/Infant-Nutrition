@@ -1,5 +1,6 @@
 import * as Boom from 'boom';
 import * as Hapi from 'hapi';
+import knexnest = require('knexnest');
 import generate = require('nanoid/generate');
 import url = require('nanoid/url');
 
@@ -15,6 +16,42 @@ export const getQuizzes = async (
             'num_questions',
             'guid',
         );
+
+        if (!results || results.length === 0) {
+            return {
+                error: true,
+                errMessage: 'no quizzes found',
+            };
+        }
+
+        return results;
+    } catch (err) {
+        request.log('api', err);
+        throw Boom.internal('Internal database error');
+    }
+};
+
+// Used to get the quizzes with their questions and answers in one go
+export const getFullQuizzes = async (
+    request: Hapi.Request,
+    h: Hapi.ResponseToolkit,
+) => {
+    // TODO: Support queries
+    try {
+        const sql = Knex('quizzes AS qz')
+            .innerJoin('questions AS qst', 'qst.quiz_guid', 'qz.guid')
+            .innerJoin('answers AS a', 'a.question_guid', 'qst.guid')
+            .select(
+                'qz.guid AS _guid',
+                'qz.name AS _quiz',
+                'qst.guid AS _questions__guid',
+                'qst.question AS _questions__question',
+                'a.guid AS _questions__answers__guid',
+                'a.answer AS _questions__answers__answer',
+                'a.is_correct AS _questions__answers__isCorrect',
+            );
+
+        const results = await knexnest(sql);
 
         if (!results || results.length === 0) {
             return {

@@ -15,6 +15,18 @@ exports.register = (server, options) => {
     });
 
     server.route({
+        path: '/full-quizzes',
+        method: 'GET',
+        config: {
+            auth: false,
+            description: 'Get quizzes with questions and answers',
+            notes: 'Returns all quiz items and items related to quizzes',
+            tags: ['api', 'quizzes'],
+        },
+        handler: quizHandlers.getFullQuizzes,
+    });
+
+    server.route({
         path: '/quizzes/{quizGuid}/questions',
         method: 'GET',
         config: {

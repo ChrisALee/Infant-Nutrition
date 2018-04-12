@@ -9,7 +9,8 @@
         "postinstall": "tsc -p tsconfig.production.json",
         "start": "node dist/server.js",
         "pretest": "tsc",
-        "test": "jest --forceExit --coverage --verbose --env=./dist/utils/test-environment.js",
+        "test":
+            "jest --forceExit --coverage --verbose --env=./dist/utils/test-environment.js",
         "tslint-check": "tslint-config-prettier-check ./tslint.json",
         "tslint": "tslint -c tslint.json -p tsconfig.json --fix",
         "prettier": "prettier  --write **/*.ts*",
@@ -17,13 +18,20 @@
         "precommit": "lint-staged"
     },
     "lint-staged": {
-        "*.{ts,tsx}": [
-            "tslint --fix",
-            "prettier --write",
-            "git add"
-        ]
+        "*.{ts,tsx}": ["tslint --fix", "prettier --write", "git add"]
     },
     "dependencies": {
+        "@types/bcrypt": "^1.0.0",
+        "@types/boom": "^7.2.0",
+        "@types/hapi": "^17.0.9",
+        "@types/hapi-auth-jwt2": "^8.0.0",
+        "@types/ioredis": "^3.2.7",
+        "@types/joi": "^13.0.7",
+        "@types/jsonwebtoken": "^7.2.6",
+        "@types/knex": "^0.14.9",
+        "@types/nanoid": "^1.0.0",
+        "@types/node": "^9.6.4",
+        "@types/pg": "^7.4.5",
         "bcrypt": "^1.0.3",
         "blipp": "^3.0.0",
         "boom": "^7.2.0",
@@ -52,17 +60,6 @@
     },
     "devDependencies": {
         "@types/jest": "^22.2.3",
-        "@types/bcrypt": "^1.0.0",
-        "@types/boom": "^7.2.0",
-        "@types/hapi": "^17.0.9",
-        "@types/hapi-auth-jwt2": "^8.0.0",
-        "@types/ioredis": "^3.2.7",
-        "@types/joi": "^13.0.7",
-        "@types/jsonwebtoken": "^7.2.6",
-        "@types/knex": "^0.14.9",
-        "@types/nanoid": "^1.0.0",
-        "@types/node": "^9.6.4",
-        "@types/pg": "^7.4.5",
         "jest": "^22.4.3",
         "lint-staged": "^7.0.4",
         "nodemon": "^1.17.3",

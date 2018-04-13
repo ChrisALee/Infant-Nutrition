@@ -1,4 +1,5 @@
 {
+    "compileOnSave": false,
     "compilerOptions": {
         "typeRoots": ["node_modules/@types"],
         "target": "esnext",
@@ -14,8 +15,6 @@
         "sourceMap": true,
         "skipLibCheck": true,
         "baseUrl": ".",
-        "lib": ["dom", "es2015", "es2016"],
-        "outDir": ".next/"
-    },
-    "exclude": ["node_modules", "out", ".next"]
+        "lib": ["dom", "es2015", "es2016"]
+    }
 }

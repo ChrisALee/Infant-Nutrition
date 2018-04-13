@@ -1,7 +1,6 @@
 {
     "compileOnSave": false,
     "compilerOptions": {
-        "typeRoots": ["node_modules/@types"],
         "target": "esnext",
         "module": "esnext",
         "jsx": "preserve",

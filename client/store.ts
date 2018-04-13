@@ -9,7 +9,7 @@ import {
     actionStorageMiddleware,
     createStorageListener,
 } from 'redux-state-sync';
-import { convertFromRaw, convertToRaw, EditorState } from 'draft-js';
+import { EditorState } from 'draft-js';
 
 const { publicRuntimeConfig } = getConfig();
 

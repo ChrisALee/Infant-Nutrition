@@ -61,7 +61,7 @@ class BabyInfo extends React.Component<BabyInfoProps, BabyInfoState> {
         });
     };
 
-    toggleEditor = e => {
+    toggleEditor = () => {
         if (!this.state.shouldReadOnly) {
             this.saveContent(this.state.editorState);
         }

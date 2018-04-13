@@ -20,7 +20,7 @@ class Register extends Component<Props, {}> {
         });
     };
 
-    handleRegisterSubmit = (e, state) => {
+    handleRegisterSubmit = (_e, state) => {
         const { dispatch }: any = this.props;
         const payload = {
             user: {

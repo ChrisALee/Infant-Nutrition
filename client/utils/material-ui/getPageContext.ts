@@ -3,6 +3,9 @@ import createGenerateClassName from 'material-ui/styles/createGenerateClassName'
 
 import theme from '../styles/mui-theme';
 
+declare var global: any;
+declare var process: any;
+
 const createPageContext = () => ({
     theme,
     // This is needed in order to deduplicate the injection of CSS in the page.

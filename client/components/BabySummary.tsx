@@ -4,7 +4,6 @@ import { CardActions, CardContent } from 'material-ui/Card';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 import * as React from 'react';
-import { Editor } from 'react-draft-wysiwyg';
 import styled from 'styled-components';
 
 import theme from '../utils//styles/mui-theme';

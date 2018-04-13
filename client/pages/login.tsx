@@ -20,7 +20,7 @@ class Login extends Component<Props, {}> {
         });
     };
 
-    handleLoginSubmit = (e, state) => {
+    handleLoginSubmit = (_e, state) => {
         const { dispatch }: any = this.props;
         const payload = {
             user: {

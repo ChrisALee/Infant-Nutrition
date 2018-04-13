@@ -7,6 +7,7 @@ import Nav from '../components/Nav';
 import { initStore } from '../store';
 import withRedux from 'next-redux-wrapper';
 import Question from '../components/Question';
+import getConfig from 'next/config';
 
 import { compose } from 'redux';
 
@@ -14,11 +15,13 @@ export interface QuizProps {
     questions: any;
 }
 
+const { publicRuntimeConfig } = getConfig();
+
 class Quiz extends React.Component<QuizProps, {}> {
     static async getInitialProps(): Promise<object> {
         try {
             const quizzes = await fetch(
-                `http://localhost:3001/api/full-quizzes`,
+                `${publicRuntimeConfig.API_HOST}/full-quizzes`,
                 {
                     method: 'GET',
                     headers: {

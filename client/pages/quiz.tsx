@@ -1,15 +1,15 @@
-import * as React from 'react';
-import Button from 'material-ui/Button';
 import fetch from 'isomorphic-unfetch';
+import Button from 'material-ui/Button';
+import withRedux from 'next-redux-wrapper';
+import getConfig from 'next/config';
+import * as React from 'react';
+import { compose } from 'redux';
+
+import Layout from '../components/Layout';
+import Question from '../components/Question';
+import { initStore } from '../store';
 import withAuth, { PUBLIC } from '../utils/auth/withAuth';
 import withRoot from '../utils/material-ui/withRoot';
-import Nav from '../components/Nav';
-import { initStore } from '../store';
-import withRedux from 'next-redux-wrapper';
-import Question from '../components/Question';
-import getConfig from 'next/config';
-
-import { compose } from 'redux';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -45,8 +45,7 @@ class Quiz extends React.Component<QuizProps, {}> {
     render() {
         const { questions } = this.props;
         return (
-            <div>
-                <Nav />
+            <Layout title="Quiz">
                 {questions.map(question => (
                     <div key={question.guid}>
                         <Question
@@ -58,7 +57,7 @@ class Quiz extends React.Component<QuizProps, {}> {
                 <Button type="submit" color="primary">
                     Submit Quiz Here
                 </Button>
-            </div>
+            </Layout>
         );
     }
 }

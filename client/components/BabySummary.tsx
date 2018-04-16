@@ -1,102 +1,69 @@
-import { convertFromRaw, EditorState } from 'draft-js';
+import AppBar from 'material-ui/AppBar';
 import Button from 'material-ui/Button';
-import { CardActions, CardContent } from 'material-ui/Card';
-import Grid from 'material-ui/Grid';
+import Tabs, { Tab } from 'material-ui/Tabs';
 import Typography from 'material-ui/Typography';
 import * as React from 'react';
-import styled from 'styled-components';
-
-import theme from '../utils//styles/mui-theme';
-
-const BabyPanel = styled.div`
-    border: 1.2px solid ${theme.palette.common.white};
-    background-color: #fafafa;
-    padding: 3px 2px;
-    width: 100%;
-`;
-
-export interface BabySummaryState {
-    babyInfo: {
-        text: any;
-    };
-    spacing: string;
-}
 
 export interface BabySummaryProps {
-    key: string;
-    content: any;
+    stage: number;
     handleClick: (e: any) => void;
 }
 
-class BabySummary extends React.Component<BabySummaryProps, BabySummaryState> {
-    state = {
-        babyInfo: {
-            text: EditorState.createEmpty(),
-        },
-        spacing: '16',
+class BabySummary extends React.PureComponent<BabySummaryProps, {}> {
+    handleChange = (_e, value) => {
+        this.props.handleClick(value);
     };
 
-    componentDidMount() {
-        try {
-            const content = this.props.content.text;
-            let contentToUse;
-
-            // We only want to try to parse the content if it exists
-            try {
-                contentToUse = EditorState.createWithContent(
-                    convertFromRaw(JSON.parse(content)),
-                );
-            } catch (err) {
-                contentToUse = EditorState.createEmpty();
-            }
-
-            this.setState({
-                babyInfo: {
-                    text: contentToUse,
-                },
-            });
-        } catch (err) {
-            // tslint:disable-next-line:no-console
-            console.log(err);
-        }
-    }
-
     render() {
-        const { handleClick, content } = this.props;
+        const { stage } = this.props;
+
         return (
             <div>
-                {this.state && this.state.babyInfo ? (
-                    <Grid item xs={12}>
-                        <BabyPanel>
-                            <CardContent>
-                                <Typography component="h2" gutterBottom>
-                                    {/* <Editor
-                                        editorState={this.state.babyInfo.text}
-                                        readOnly={true}
-                                        toolbarHidden
-                                    /> */}
-                                    {content.contentType}
-                                </Typography>
-                                <Typography color="textSecondary" gutterBottom>
-                                    0-1 month
-                                </Typography>
-                            </CardContent>
-                            <CardActions>
-                                <Button
-                                    size="small"
-                                    id={content.contentType}
-                                    onClick={handleClick}
-                                    color="primary"
-                                >
-                                    Learn More
-                                </Button>
-                            </CardActions>
-                        </BabyPanel>
-                    </Grid>
-                ) : (
-                    // Component hasn't mounted yet so show loading
-                    <div>Loading...</div>
-                )}
+                <AppBar position="static" color="default">
+                    <Tabs
+                        value={stage}
+                        onChange={this.handleChange}
+                        indicatorColor="primary"
+                        textColor="primary"
+                        centered
+                    >
+                        <Tab label="Newborn" />
+                        <Tab label="Pushing up" />
+                        <Tab label="Learning to sit" />
+                        <Tab label="Learning to crawl" />
+                        <Tab label="Learning to walk" />
+                    </Tabs>
+                </AppBar>
+                {
+                    {
+                        0: (
+                            <div id="0">
+                                <Typography>Newborn</Typography>
+                            </div>
+                        ),
+                        1: (
+                            <div id="1">
+                                <Typography>Pushing up</Typography>
+                            </div>
+                        ),
+                        2: (
+                            <div id="2">
+                                <Typography>Learning to sit</Typography>
+                            </div>
+                        ),
+                        3: (
+                            <div id="3">
+                                <Typography>Learning to crawl</Typography>
+                            </div>
+                        ),
+                        4: (
+                            <div id="4">
+                                <Typography>Learning to walk</Typography>
+                            </div>
+                        ),
+                    }[stage]
+                }
+                <Button>Take our quiz</Button>
             </div>
         );
     }

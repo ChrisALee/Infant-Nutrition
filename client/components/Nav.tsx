@@ -10,6 +10,8 @@ import { logout } from '../store';
 
 const TopBar = styled.div`
     flex-grow: 1;
+    z-index: 100;
+    width: 100%;
 `;
 
 const AuthContainer = styled.div`
@@ -25,7 +27,7 @@ export interface NavProps {
     user: { isLoggedIn: string; groups: string[] };
 }
 
-class Nav extends React.Component<NavProps, {}> {
+class Nav extends React.PureComponent<NavProps, {}> {
     handleLogout = e => {
         e.preventDefault();
         const { dispatch }: any = this.props;
@@ -36,7 +38,7 @@ class Nav extends React.Component<NavProps, {}> {
         const { user } = this.props;
         return (
             <TopBar>
-                <AppBar position="static">
+                <AppBar position="fixed" elevation={0}>
                     <Toolbar>
                         <LeftSide>
                             <Link prefetch href="/">
@@ -49,17 +51,6 @@ class Nav extends React.Component<NavProps, {}> {
                                     <a>Quiz</a>
                                 </Button>
                             </Link>
-                            {user &&
-                            user.groups &&
-                            user.groups.includes('admin') ? (
-                                <Link prefetch href="/private">
-                                    <Button color="inherit">
-                                        <a>Private</a>
-                                    </Button>
-                                </Link>
-                            ) : (
-                                <div />
-                            )}
                         </LeftSide>
                         {user && user.isLoggedIn ? (
                             <AuthContainer>

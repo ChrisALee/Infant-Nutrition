@@ -15,45 +15,64 @@ import { initStore } from '../store';
 import theme from '../utils//styles/mui-theme';
 import withAuth, { PUBLIC } from '../utils/auth/withAuth';
 import withRoot from '../utils/material-ui/withRoot';
+import { FormGroup, FormControlLabel } from 'material-ui/Form';
 import Checkbox from 'material-ui/Checkbox';
+import green from 'material-ui/colors/green';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import Favorite from '@material-ui/icons/Favorite';
+import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 
 
 const IndexContainer = styled.div`
     flex: 1 0 100%;
 `;
 const styles = {
-    block: {
-        maxWidth: 250,
+    root: {
+        color: green[600],
+        '&$checked': {
+            color: green[500],
+        },
     },
-    checkbox: {
-        marginBottom: 16,
+    checked: {},
+    size: {
+        width: 40,
+        height: 40,
+    },
+    sizeIcon: {
+        fontSize: 20,
     },
 };
+
 class Profile extends React.Component<{}, {}>
 {
     state = {
-        checked: false,
-    }
+        checkedA: true,
+    };
 
-    updateCheck() {
-        this.setState((oldState) => {
-            return {
-                checked: !oldState.checked,
-            };
-        });
-    }
+    handleChange = name => event => {
+        this.setState({ [name]: event.target.checked });
+        //update database for email listserv!!!!
+    };
     render() {
+        const { classes } = this.props;
         return (
             <IndexContainer>
                 <Head title="Profile" />
                 <Nav />
-                <div style={styles.block}>
-                    <Checkbox
+                <FormGroup row>
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                checked={this.state.checkedA}
+                                onChange={this.handleChange('checkedA')}
+                                value="checkedA"
+                                color="primary"
+                            />
+                        }
                         label="Keep me notified"
-                        labelPosition="right"
-                        style={styles.checkbox}
                     />
-                </div>
+                </FormGroup>
             </IndexContainer>
 
 

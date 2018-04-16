@@ -16,16 +16,7 @@ import theme from '../utils//styles/mui-theme';
 import withAuth, { PUBLIC } from '../utils/auth/withAuth';
 import withRoot from '../utils/material-ui/withRoot';
 
-export interface State {
-    babyStageClicked: string;
-    babyContentToPass: any;
-}
-
-export interface Props {
-    name: string;
-    user: { isLoggedIn: string; groups: string[] };
-    content: any;
-}
+const { publicRuntimeConfig } = getConfig();
 
 const Title = styled(Typography)`
     && {
@@ -107,10 +98,19 @@ const HorizontalGrid = styled(Grid)`
     }
 `;
 
-const { publicRuntimeConfig } = getConfig();
+export interface IndexState {
+    babyStageClicked: string;
+    babyContentToPass: any;
+}
 
-class IndexPage extends React.Component<Props, State> {
-    static async getInitialProps(): Promise<any> {
+export interface IndexProps {
+    name: string;
+    user: { isLoggedIn: string; groups: string[] };
+    content: any;
+}
+
+class Index extends React.Component<IndexProps, IndexState> {
+    static async getInitialProps(): Promise<object> {
         try {
             const babyInfo: any = await fetch(
                 `${publicRuntimeConfig.API_HOST}/content?outerLocation=index`,
@@ -235,4 +235,4 @@ export default compose<any>(
     withRoot(),
     withRedux(initStore),
     withAuth([PUBLIC]),
-)(IndexPage);
+)(Index);

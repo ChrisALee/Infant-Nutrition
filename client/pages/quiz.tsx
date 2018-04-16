@@ -11,11 +11,11 @@ import getConfig from 'next/config';
 
 import { compose } from 'redux';
 
+const { publicRuntimeConfig } = getConfig();
+
 export interface QuizProps {
     questions: any;
 }
-
-const { publicRuntimeConfig } = getConfig();
 
 class Quiz extends React.Component<QuizProps, {}> {
     static async getInitialProps(): Promise<object> {

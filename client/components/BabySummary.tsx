@@ -8,10 +8,18 @@ import styled from 'styled-components';
 
 import theme from '../utils//styles/mui-theme';
 
+const BabyPanel = styled.div`
+    border: 1.2px solid ${theme.palette.common.white};
+    background-color: #fafafa;
+    padding: 3px 2px;
+    width: 100%;
+`;
+
 export interface BabySummaryState {
     babyInfo: {
         text: any;
     };
+    spacing: string;
 }
 
 export interface BabySummaryProps {
@@ -19,13 +27,6 @@ export interface BabySummaryProps {
     content: any;
     handleClick: (e: any) => void;
 }
-
-const BabyPanel = styled.div`
-    border: 1.2px solid ${theme.palette.common.white};
-    background-color: #fafafa;
-    padding: 3px 2px;
-    width: 100%;
-`;
 
 class BabySummary extends React.Component<BabySummaryProps, BabySummaryState> {
     state = {

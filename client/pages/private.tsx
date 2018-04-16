@@ -16,17 +16,7 @@ import theme from '../utils//styles/mui-theme';
 import withAuth, { ADMIN } from '../utils/auth/withAuth';
 import withRoot from '../utils/material-ui/withRoot';
 
-export interface PrivatePageState {
-    babyStageClicked: string;
-    babyContentToPass: any;
-    shouldReadOnly: boolean;
-}
-
-export interface PrivatePageProps {
-    name: string;
-    user: { isLoggedIn: string; groups: string[] };
-    content: any;
-}
+const { publicRuntimeConfig } = getConfig();
 
 const Title = styled(Typography)`
     && {
@@ -76,12 +66,22 @@ const HorizontalGrid = styled(Grid)`
     }
 `;
 
-const { publicRuntimeConfig } = getConfig();
+export interface PrivateState {
+    babyStageClicked: string;
+    babyContentToPass: any;
+    shouldReadOnly: boolean;
+}
 
-class PrivatePage extends React.Component<PrivatePageProps, PrivatePageState> {
-    static async getInitialProps(): Promise<any> {
+export interface PrivateProps {
+    name: string;
+    user: { isLoggedIn: string; groups: string[] };
+    content: any;
+}
+
+class Private extends React.Component<PrivateProps, PrivateState> {
+    static async getInitialProps(): Promise<object> {
         try {
-            const babyInfo: any = await fetch(
+            const babyInfo = await fetch(
                 `${publicRuntimeConfig.API_HOST}/content?outerLocation=index`,
                 {
                     method: 'GET',
@@ -90,7 +90,7 @@ class PrivatePage extends React.Component<PrivatePageProps, PrivatePageState> {
                     },
                 },
             );
-            const json: any = await babyInfo.json();
+            const json = await babyInfo.json();
             const content = json.data.index;
 
             return { content };
@@ -201,4 +201,4 @@ export default compose<any>(
     withRoot(),
     withRedux(initStore),
     withAuth([ADMIN]),
-)(PrivatePage);
+)(Private);

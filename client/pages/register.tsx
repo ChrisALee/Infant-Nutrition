@@ -9,11 +9,11 @@ import { initStore, register } from '../store';
 import withAuth, { PUBLIC } from '../utils/auth/withAuth';
 import withRoot from '../utils/material-ui/withRoot';
 
-export interface Props {
+export interface RegisterProps {
     user: { isLoggedIn: string; groups: string[] };
 }
 
-class Register extends Component<Props, {}> {
+class Register extends Component<RegisterProps, {}> {
     handleOnChange = e => {
         this.setState({
             [e.target.name]: e.target.value,

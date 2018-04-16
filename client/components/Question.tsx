@@ -1,13 +1,17 @@
-import * as React from 'react';
+import { FormControl, FormControlLabel, FormLabel } from 'material-ui/Form';
 import Radio, { RadioGroup } from 'material-ui/Radio';
-import { FormLabel, FormControl, FormControlLabel } from 'material-ui/Form';
+import * as React from 'react';
+
+export interface QuestionState {
+    value: string;
+}
 
 export interface QuestionProps {
     answers?: any;
     question?: object;
 }
 
-class Question extends React.Component<QuestionProps, {}> {
+class Question extends React.Component<QuestionProps, QuestionState> {
     // Initial state is the first answer of each question
     state = {
         value: this.props.answers[0].answer,

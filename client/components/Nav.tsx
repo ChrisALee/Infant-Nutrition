@@ -1,7 +1,5 @@
-import MenuIcon from '@material-ui/icons/Menu';
 import AppBar from 'material-ui/AppBar';
 import Button from 'material-ui/Button';
-import IconButton from 'material-ui/IconButton';
 import Toolbar from 'material-ui/Toolbar';
 import Link from 'next/link';
 import * as React from 'react';
@@ -9,17 +7,6 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import { logout } from '../store';
-
-export interface NavProps {
-    user: { isLoggedIn: string; groups: string[] };
-}
-
-const MenuButton = styled(IconButton)`
-    && {
-        margin-left: -12;
-        margin-right: 20;
-    }
-`;
 
 const TopBar = styled.div`
     flex-grow: 1;
@@ -33,6 +20,10 @@ const AuthContainer = styled.div`
 const LeftSide = styled.div`
     flex-basis: 100%;
 `;
+
+export interface NavProps {
+    user: { isLoggedIn: string; groups: string[] };
+}
 
 class Nav extends React.Component<NavProps, {}> {
     handleLogout = e => {
@@ -48,9 +39,6 @@ class Nav extends React.Component<NavProps, {}> {
                 <AppBar position="static">
                     <Toolbar>
                         <LeftSide>
-                            <MenuButton color="inherit" aria-label="Menu">
-                                <MenuIcon />
-                            </MenuButton>
                             <Link prefetch href="/">
                                 <Button color="inherit">
                                     <a>Home</a>

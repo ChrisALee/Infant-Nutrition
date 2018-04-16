@@ -1,8 +1,8 @@
 import NextHead from 'next/head';
 
-const defaultDescription: any = '';
-const defaultOGURL: any = '';
-const defaultOGImage: any = '';
+const defaultDescription: string = '';
+const defaultOGURL: string = '';
+const defaultOGImage: string = '';
 
 const Head: any = props => (
     <NextHead>

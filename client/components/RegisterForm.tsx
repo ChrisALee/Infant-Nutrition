@@ -11,7 +11,18 @@ const StyledForm = styled.form`
     }
 `;
 
-class LoginForm extends React.Component<any, any> {
+export interface LoginFormState {
+    username: string;
+    password: string;
+    email: string;
+    errorMessage: string;
+}
+
+export interface LoginFormProps {
+    handleRegisterSubmit: (_e: any, state: any) => void;
+}
+
+class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
     state = {
         username: '',
         password: '',

@@ -15,11 +15,6 @@ export const postProfile = {
 };
 
 export const putProfile = {
-    params: {
-        profileGuid: Joi.string()
-            .required()
-            .description('the guid for the profile'),
-    },
     payload: {
         profile: Joi.object()
             .keys({

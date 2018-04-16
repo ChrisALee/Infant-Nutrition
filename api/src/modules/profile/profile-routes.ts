@@ -27,7 +27,7 @@ exports.register = (server, options) => {
         handler: profileHandlers.postProfile,
     });
     server.route({
-        path: '/users/current/profile/{profileGuid}',
+        path: '/users/current/profile',
         method: 'PUT',
         config: {
             auth: 'jwt',

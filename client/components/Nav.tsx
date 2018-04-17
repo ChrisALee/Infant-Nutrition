@@ -51,6 +51,11 @@ class Nav extends React.PureComponent<NavProps, {}> {
                                     <a>Quiz</a>
                                 </Button>
                             </Link>
+                            <Link prefetch href="/submit">
+                                <Button color="inherit">
+                                    <a>Ask</a>
+                                </Button>
+                            </Link>
                         </LeftSide>
                         {user && user.isLoggedIn ? (
                             <AuthContainer>

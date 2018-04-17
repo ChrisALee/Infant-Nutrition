@@ -1,97 +1,146 @@
-import * as React from 'react';
 import fetch from 'isomorphic-unfetch';
-import Grid from 'material-ui/Grid';
-import Typography from 'material-ui/Typography';
+import Button from 'material-ui/Button';
+import Checkbox from 'material-ui/Checkbox';
+import { FormControlLabel, FormGroup } from 'material-ui/Form';
 import withRedux from 'next-redux-wrapper';
 import getConfig from 'next/config';
+import * as React from 'react';
 import { compose } from 'redux';
 import styled from 'styled-components';
 
-import BabyInfo from '../components/BabyInfo';
-import BabySummary from '../components/BabySummary';
-import Head from '../components/Head';
-import Nav from '../components/Nav';
-import Table from '../components/Table';
+import Layout from '../components/Layout';
 import { initStore } from '../store';
-import theme from '../utils//styles/mui-theme';
-import withAuth, { PUBLIC } from '../utils/auth/withAuth';
+import withAuth from '../utils/auth/withAuth';
 import withRoot from '../utils/material-ui/withRoot';
-import { FormGroup, FormControlLabel } from 'material-ui/Form';
-import Checkbox from 'material-ui/Checkbox';
-import green from 'material-ui/colors/green';
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
-import Favorite from '@material-ui/icons/Favorite';
-import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
-import Table, { TableBody, TableCell, TableHead, TablePagination, TableRow, TableSortLabel } from 'material-ui/Table';
-import Toolbar from 'material-ui/Toolbar';
-import Paper from 'material-ui/Paper';
-import IconButton from 'material-ui/IconButton';
-import Tooltip from 'material-ui/Tooltip';
-import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
-import { lighten } from 'material-ui/styles/colorManipulator';
+import Table from '../components/Table';
 
-const IndexContainer = styled.div`flex: 1 0 100%;`;
-const styles = {
-	root: {
-		color: green[600],
-		'&$checked': {
-			color: green[500]
-		}
-	},
-	checked: {},
-	size: {
-		width: 40,
-		height: 40
-	},
-	sizeIcon: {
-		fontSize: 20
-	}
-};
+const { publicRuntimeConfig } = getConfig();
+
+const Container = styled.div`
+    flex: 1 0 100%;
+`;
 
 const columnData = [
-	{ id: 'name', numeric: false, disablePadding: true, label: 'Dessert (100g serving)' },
-	{ id: 'number of times eaten ', numeric: true, disablePadding: false, label: 'Food Group' },
-	{ id: 'calories', numeric: true, disablePadding: false, label: 'Fat (g)' },
-	{ id: 'carbs', numeric: true, disablePadding: false, label: 'Carbs (g)' },
-	{ id: 'protein', numeric: true, disablePadding: false, label: 'Protein (g)' }
+    {
+        id: 'name',
+        numeric: false,
+        disablePadding: true,
+        label: 'Dessert (100g serving)',
+    },
+    {
+        id: 'number of times eaten ',
+        numeric: true,
+        disablePadding: false,
+        label: 'Food Group',
+    },
+    { id: 'calories', numeric: true, disablePadding: false, label: 'Fat (g)' },
+    { id: 'carbs', numeric: true, disablePadding: false, label: 'Carbs (g)' },
+    {
+        id: 'protein',
+        numeric: true,
+        disablePadding: false,
+        label: 'Protein (g)',
+    },
 ];
 
-class Profile extends React.Component<{}, {}> {
-	state = {
-		checkedA: true
-	};
-
-	handleChange = (name) => (event) => {
-		this.setState({ [name]: event.target.checked });
-		// update database for email listserv!!!!
-	};
-	createSortHandler = (property) => (event) => {
-		this.props.onRequestSort(event, property);
-	};
-	render() {
-		const { classes } = this.props;
-		return (
-			<IndexContainer>
-				<Head title="Profile" />
-				<Nav />
-				<Table />
-				<FormGroup row>
-					<FormControlLabel
-						control={
-							<Checkbox
-								checked={this.state.checkedA}
-								onChange={this.handleChange('checkedA')}
-								value="checkedA"
-								color="primary"
-							/>
-						}
-						label="Keep me notified"
-					/>
-				</FormGroup>
-			</IndexContainer>
-		);
-	}
+export interface ProfileState {
+    profileSettings: object;
 }
-export default compose<any>(withRoot(), withRedux(initStore), withAuth([ PUBLIC ]))(Profile);
+
+export interface ProfileProps {
+    profileSettings: any;
+    onRequestSort: any;
+}
+
+class Profile extends React.Component<ProfileProps, ProfileState> {
+    static async getInitialProps({ req }): Promise<object> {
+        try {
+            const response = await fetch(
+                `${publicRuntimeConfig.API_HOST}/users/current/profile`,
+                {
+                    method: 'GET',
+                    headers: {
+                        Accept: 'application/json',
+                        Cookie: req ? req.headers.cookie : undefined,
+                    },
+                    credentials: 'include',
+                },
+            );
+
+            const body: object[] = await response.json();
+            const profileSettings = body[0];
+
+            return { profileSettings };
+        } catch (err) {
+            // tslint:disable-next-line:no-console
+            console.log(err);
+        }
+    }
+
+    state = this.props.profileSettings;
+
+    handleChange = name => event => {
+        this.setState({ [name]: event.target.checked });
+    };
+
+    handleSave = async () => {
+        const payload = {
+            profile: {
+                // TODO: Have the ability to change names dynamically
+                name: 'test',
+                should_email: this.state.should_email,
+            },
+        };
+
+        try {
+            const response = await fetch(
+                `${publicRuntimeConfig.API_HOST}/users/current/profile`,
+                {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Accept: 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify(payload),
+                },
+            );
+        } catch (err) {
+            // tslint:disable-next-line:no-console
+            console.log('Failed to save profile settings: ', err);
+        }
+    };
+
+    createSortHandler = property => event => {
+        this.props.onRequestSort(event, property);
+    };
+
+    render() {
+        return (
+            <Layout title="Profile">
+                <Container>
+                    <Table />
+                    <FormGroup row>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={this.state.should_email}
+                                    onChange={this.handleChange('should_email')}
+                                    value="should_email"
+                                    color="primary"
+                                />
+                            }
+                            label="Keep me notified"
+                        />
+                    </FormGroup>
+                    <p>Real Name: {this.state.name}</p>
+                    <Button onClick={this.handleSave}>Save</Button>
+                </Container>
+            </Layout>
+        );
+    }
+}
+
+export default compose<any>(withRoot(), withRedux(initStore), withAuth([]))(
+    Profile,
+);

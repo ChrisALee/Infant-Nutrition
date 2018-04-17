@@ -14,7 +14,7 @@ export const getProfile = async (
 
         const results = await Knex('profile')
             .where({
-                owner: userGuid,
+                user_guid: userGuid,
             })
             .select('should_email', 'name');
 
@@ -43,7 +43,7 @@ export const postProfile = async (
         const guid = generate(url, 10);
 
         const insertOperation = await Knex('profile').insert({
-            owner: userGuid,
+            user_guid: userGuid,
             name: profile.name,
             should_email: profile.should_email,
             guid,
@@ -64,13 +64,12 @@ export const putProfile = async (
     h: Hapi.ResponseToolkit,
 ) => {
     try {
-        const { profileGuid }: any = request.params;
         const { profile }: any = request.payload;
         const { userGuid }: any = request.auth.credentials;
 
         const insertOperation = await Knex('profile')
             .where({
-                guid: profileGuid,
+                user_guid: userGuid,
             })
             .update({
                 name: profile.name,
@@ -79,6 +78,10 @@ export const putProfile = async (
 
         return {
             message: 'successfully updated profile',
+            profile: {
+                name: profile.name,
+                should_email: profile.should_email,
+            },
         };
     } catch (err) {
         request.log('api', err);
@@ -91,16 +94,18 @@ export const prePutProfile = async (
     h: Hapi.ResponseToolkit,
 ) => {
     try {
-        const { profileGuid } = request.params;
+        const { userGuid }: any = request.auth.credentials;
 
         const results = await Knex('profile')
             .where({
-                guid: profileGuid,
+                user_guid: userGuid,
             })
-            .select('owner');
+            .select('user_guid');
 
         if (!results) {
-            throw new Error(`the profile with id ${profileGuid} was not found`);
+            throw new Error(
+                `the profile with user id ${userGuid} was not found`,
+            );
         }
 
         return 'success';

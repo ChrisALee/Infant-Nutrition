@@ -9,18 +9,18 @@ import { initStore, login } from '../store';
 import withAuth, { PUBLIC } from '../utils/auth/withAuth';
 import withRoot from '../utils/material-ui/withRoot';
 
-export interface Props {
+export interface LoginProps {
     user: { isLoggedIn: string; groups: string[] };
 }
 
-class Login extends Component<Props, {}> {
+class Login extends Component<LoginProps, {}> {
     handleOnChange = e => {
         this.setState({
             [e.target.name]: e.target.value,
         });
     };
 
-    handleLoginSubmit = (e, state) => {
+    handleLoginSubmit = (_e, state) => {
         const { dispatch }: any = this.props;
         const payload = {
             user: {

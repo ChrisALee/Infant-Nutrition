@@ -1,5 +1,6 @@
 import * as Boom from 'boom';
 import * as Hapi from 'hapi';
+import knexnest = require('knexnest');
 import generate = require('nanoid/generate');
 import url = require('nanoid/url');
 
@@ -30,6 +31,42 @@ export const getQuizzes = async (
     }
 };
 
+// Used to get the quizzes with their questions and answers in one go
+export const getFullQuizzes = async (
+    request: Hapi.Request,
+    h: Hapi.ResponseToolkit,
+) => {
+    // TODO: Support queries
+    try {
+        const sql = Knex('quizzes AS qz')
+            .innerJoin('questions AS qst', 'qst.quiz_guid', 'qz.guid')
+            .innerJoin('answers AS a', 'a.question_guid', 'qst.guid')
+            .select(
+                'qz.guid AS _guid',
+                'qz.name AS _quiz',
+                'qst.guid AS _questions__guid',
+                'qst.question AS _questions__question',
+                'a.guid AS _questions__answers__guid',
+                'a.answer AS _questions__answers__answer',
+                'a.is_correct AS _questions__answers__isCorrect',
+            );
+
+        const results = await knexnest(sql);
+
+        if (!results || results.length === 0) {
+            return {
+                error: true,
+                errMessage: 'no quizzes found',
+            };
+        }
+
+        return results;
+    } catch (err) {
+        request.log('api', err);
+        throw Boom.internal('Internal database error');
+    }
+};
+
 export const getQuestions = async (
     request: Hapi.Request,
     h: Hapi.ResponseToolkit,
@@ -39,7 +76,7 @@ export const getQuestions = async (
 
         const results = await Knex('questions')
             .where({
-                owner: quizGuid,
+                quiz_guid: quizGuid,
             })
             .select('question', 'guid');
 
@@ -66,7 +103,7 @@ export const getAnswers = async (
 
         const results = await Knex('answers')
             .where({
-                owner: questionGuid,
+                question_guid: questionGuid,
             })
             .select('answer', 'is_correct');
 
@@ -92,9 +129,9 @@ export const getResultsCurrent = async (
         const { userGuid }: any = request.auth.credentials;
 
         const results = await Knex('quiz_results')
-            .join('quizzes', 'quiz_results.quiz_owner', 'quizzes.guid')
+            .join('quizzes', 'quiz_results.quiz_guid', 'quizzes.guid')
             .where({
-                user_owner: userGuid,
+                user_guid: userGuid,
             })
             .select('quiz_results.score', 'quizzes.name');
 
@@ -123,8 +160,8 @@ export const postResultsCurrent = async (
         const guid = generate(url, 10);
 
         const insertOperation = await Knex('quiz_results').insert({
-            user_owner: userGuid,
-            quiz_owner: quizGuid,
+            user_guid: userGuid,
+            quiz_guid: quizGuid,
             score: quiz_result.score,
             guid,
         });

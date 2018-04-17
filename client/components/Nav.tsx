@@ -1,7 +1,5 @@
-import MenuIcon from '@material-ui/icons/Menu';
 import AppBar from 'material-ui/AppBar';
 import Button from 'material-ui/Button';
-import IconButton from 'material-ui/IconButton';
 import Toolbar from 'material-ui/Toolbar';
 import Link from 'next/link';
 import * as React from 'react';
@@ -10,19 +8,10 @@ import styled from 'styled-components';
 
 import { logout } from '../store';
 
-export interface NavProps {
-    user: { isLoggedIn: string; groups: string[] };
-}
-
-const MenuButton = styled(IconButton)`
-    && {
-        margin-left: -12;
-        margin-right: 20;
-    }
-`;
-
 const TopBar = styled.div`
     flex-grow: 1;
+    z-index: 100;
+    width: 100%;
 `;
 
 const AuthContainer = styled.div`
@@ -34,7 +23,11 @@ const LeftSide = styled.div`
     flex-basis: 100%;
 `;
 
-class Nav extends React.Component<NavProps, {}> {
+export interface NavProps {
+    user: { isLoggedIn: string; groups: string[] };
+}
+
+class Nav extends React.PureComponent<NavProps, {}> {
     handleLogout = e => {
         e.preventDefault();
         const { dispatch }: any = this.props;
@@ -45,28 +38,19 @@ class Nav extends React.Component<NavProps, {}> {
         const { user } = this.props;
         return (
             <TopBar>
-                <AppBar position="static">
+                <AppBar position="fixed" elevation={0}>
                     <Toolbar>
                         <LeftSide>
-                            <MenuButton color="inherit" aria-label="Menu">
-                                <MenuIcon />
-                            </MenuButton>
                             <Link prefetch href="/">
                                 <Button color="inherit">
                                     <a>Home</a>
                                 </Button>
                             </Link>
-                            {user &&
-                            user.groups &&
-                            user.groups.includes('admin') ? (
-                                <Link prefetch href="/private">
-                                    <Button color="inherit">
-                                        <a>Private</a>
-                                    </Button>
-                                </Link>
-                            ) : (
-                                <div />
-                            )}
+                            <Link prefetch href="/quiz">
+                                <Button color="inherit">
+                                    <a>Quiz</a>
+                                </Button>
+                            </Link>
                         </LeftSide>
                         {user && user.isLoggedIn ? (
                             <AuthContainer>

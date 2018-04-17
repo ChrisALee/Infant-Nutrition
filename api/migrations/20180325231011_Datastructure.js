@@ -99,20 +99,6 @@ exports.up = function(knex, Promise) {
 
             quizResultsTable.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'));
         })
-
-        .createTable('content', contentTable => {
-            // Primary Key
-            contentTable.increments();
-
-            // Data
-            contentTable.string('content_type', 36);
-            contentTable.string('outer_location', 36).notNullable();
-            contentTable.string('inner_location', 36).notNullable();
-            contentTable.string('text', 50000);
-            contentTable.string('guid', 36).notNullable().unique();
-
-            contentTable.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'));
-        })
 };
 
 exports.down = function(knex, Promise) {

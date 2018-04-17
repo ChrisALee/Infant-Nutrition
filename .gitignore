@@ -45,3 +45,6 @@ production-server
 .DS_Store
 Thumbs.db
 api/.env.prod
+
+# rest client
+*.http

@@ -13,6 +13,8 @@ import { initStore } from '../store';
 import withAuth from '../utils/auth/withAuth';
 import withRoot from '../utils/material-ui/withRoot';
 import Table from '../components/Table';
+import Snackbar from 'material-ui/Snackbar';
+import Slide from 'material-ui/transitions/Slide';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -77,7 +79,10 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
         }
     }
 
-    state = this.props.profileSettings;
+    state = {
+        open: false,
+        ...this.props.profileSettings,
+    };
 
     handleChange = name => event => {
         this.setState({ [name]: event.target.checked });
@@ -105,10 +110,18 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
                     body: JSON.stringify(payload),
                 },
             );
+
+            if (response.status === 200) {
+                this.setState({ ...this.state, open: true });
+            }
         } catch (err) {
             // tslint:disable-next-line:no-console
             console.log('Failed to save profile settings: ', err);
         }
+    };
+
+    handleClose = () => {
+        this.setState({ ...this.state, open: false });
     };
 
     createSortHandler = property => event => {
@@ -133,8 +146,20 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
                             label="Keep me notified"
                         />
                     </FormGroup>
+
                     <p>Real Name: {this.state.name}</p>
                     <Button onClick={this.handleSave}>Save</Button>
+
+                    <Snackbar
+                        open={this.state.open}
+                        autoHideDuration={3000}
+                        onClose={this.handleClose}
+                        transition={Slide}
+                        SnackbarContentProps={{
+                            'aria-describedby': 'message-id',
+                        }}
+                        message={<span id="message-id">Settings saved</span>}
+                    />
                 </Container>
             </Layout>
         );

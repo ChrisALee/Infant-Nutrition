@@ -104,10 +104,6 @@ const manifest = {
                 plugin: './modules/user/user-routes',
                 routes: { prefix: '/api' },
             },
-            {
-                plugin: './modules/content/content-routes',
-                routes: { prefix: '/api' },
-            },
         ],
     },
 };

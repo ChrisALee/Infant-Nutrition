@@ -22,20 +22,6 @@ const Divider = styled.div`
     background-color: rgb(218, 225, 233);
 `;
 
-const Footer = styled.div`
-    padding-top: 30px;
-    padding-bottom: 30px;
-    background-color: #13294b;
-    color: white;
-`;
-
-const InnerFooter = styled.div`
-    max-width: 1180px;
-    width: 100%;
-    margin: 0px auto;
-    padding: 30px;
-`;
-
 export interface LayoutProps {
     title?: string;
     children?: any;
@@ -50,10 +36,6 @@ class Layout extends React.PureComponent<LayoutProps, {}> {
                 <Head title={title} />
                 <Nav />
                 {children}
-                <Divider />
-                <Footer>
-                    <InnerFooter>Footer</InnerFooter>
-                </Footer>
             </Container>
         );
     }

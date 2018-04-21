@@ -87,6 +87,20 @@ const LinkText = styled.a`
     color: #007fae;
 `;
 
+const Footer = styled.div`
+    padding-top: 30px;
+    padding-bottom: 30px;
+    background-color: #13294b;
+    color: white;
+`;
+
+const InnerFooter = styled.div`
+    max-width: 1180px;
+    width: 100%;
+    margin: 0px auto;
+    padding: 30px;
+`;
+
 export interface IndexProps {
     name: string;
     user: { isLoggedIn: string; groups: string[] };
@@ -173,6 +187,11 @@ class Index extends React.Component<IndexProps, {}> {
                 <BabySummaryContainer>
                     <BabySummary stage={stage} handleClick={this.handleClick} />
                 </BabySummaryContainer>
+
+                <Divider />
+                <Footer>
+                    <InnerFooter>Footer</InnerFooter>
+                </Footer>
             </Layout>
         );
     }

@@ -16,17 +16,19 @@ const Container = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 `;
-const TextField = styled.div`
-	width: 48px;
+const StyledTextField = styled(TextField)`
+	&&{
+		width: 48px;
 	height: 48px;
-	borderRadius: 4;
-	backgroundColor: theme.palette.common.white;
-	border: '1px solid #ced4da';
-	fontSize: 16;
-	padding: '10px 12px';
-	width: 'calc(100% - 24px)';
-	borderColor: '#80bdff';
-	boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)';
+	border-radius: 4;
+	background-color: theme.palette.common.white;
+	border: 1px solid #ced4da;
+	font-size: 16;
+	padding: 10px 12px;
+	width: calc(100% - 24px);
+	border-color: #80bdff;
+	box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+	}	
 `;
 
 class Submit extends React.Component<{}, {}> {
@@ -34,7 +36,7 @@ class Submit extends React.Component<{}, {}> {
 		return (
 			<Layout title="Submit">
 				<Container>
-					<TextField
+					<StyledTextField
 						defaultValue="Ask a question!"
 						label="Submit Questions Here"
 						id="submit-questions"

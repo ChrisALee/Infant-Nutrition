@@ -1,5 +1,4 @@
 import Button from 'material-ui/Button';
-import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 import withRedux from 'next-redux-wrapper';
 import Link from 'next/link';
@@ -7,7 +6,6 @@ import * as React from 'react';
 import { compose } from 'redux';
 import styled from 'styled-components';
 
-import BabyPreview from '../components/BabyPreview';
 import BabySummary from '../components/BabySummary';
 import Layout from '../components/Layout';
 import { initStore } from '../store';
@@ -33,7 +31,7 @@ const Hero = styled.div`
     align-items: center;
     color: ${theme.palette.primary.contrastText};
     background-color: ${theme.palette.primary.main};
-    background-image: url('../static/bg-baby.png');
+    /* background-image: url('../static/bg-baby.png'); */
 `;
 
 const Content = styled.div`
@@ -51,12 +49,6 @@ const IntroText = styled(Typography)`
     && {
         color: #000000;
         font-family: 'Arima Madurai', cursive;
-    }
-`;
-
-const HomeSteps = styled(Grid)`
-    && {
-        flex-grow: 1;
     }
 `;
 
@@ -107,17 +99,13 @@ class Index extends React.Component<IndexProps, {}> {
                             Healthy Feeding Guidelines for Infants.
                         </IntroText>
 
-                        <Link prefetch href="/quiz">
+                        <Link prefetch href="/register">
                             <Button variant="raised">
-                                <a>Get started with a quiz</a>
+                                <a>Get Started</a>
                             </Button>
                         </Link>
                     </Content>
                 </Hero>
-
-                <HomeSteps container id="stages">
-                    <BabyPreview handleClick={this.handleClick} />
-                </HomeSteps>
 
                 <Text paragraph>
                     Your baby will go on an amazing food journey during the

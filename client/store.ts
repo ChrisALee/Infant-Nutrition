@@ -158,7 +158,7 @@ export const register = payload => {
     };
 };
 
-export const initStore = (initialState = exampleInitialState) => {
+export const initStore = (initialState: object = exampleInitialState) => {
     if (typeof window === 'undefined') {
         // Server render so we cannot use Window to sync tabs
         // Shouldn't matter since the client does a request to cookies on server render

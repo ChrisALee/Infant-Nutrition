@@ -9,10 +9,31 @@ const Container = styled.div`
     height: 100%;
     overflow: hidden;
     background-color: #ffffff;
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    box-sizing: border-box;
+    line-height: 1.15px;
 `;
 
-const PaddedDiv = styled.div`
-    padding-bottom: 60px;
+const Divider = styled.div`
+    width: 100%;
+    height: 1px;
+    background-color: rgb(218, 225, 233);
+`;
+
+const Footer = styled.div`
+    padding-top: 30px;
+    padding-bottom: 30px;
+    background-color: #13294b;
+    color: white;
+`;
+
+const InnerFooter = styled.div`
+    max-width: 1180px;
+    width: 100%;
+    margin: 0px auto;
+    padding: 30px;
 `;
 
 export interface LayoutProps {
@@ -28,9 +49,11 @@ class Layout extends React.PureComponent<LayoutProps, {}> {
             <Container>
                 <Head title={title} />
                 <Nav />
-                <PaddedDiv />
                 {children}
-                <footer>Footer</footer>
+                <Divider />
+                <Footer>
+                    <InnerFooter>Footer</InnerFooter>
+                </Footer>
             </Container>
         );
     }

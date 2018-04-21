@@ -6,8 +6,14 @@ import styled from 'styled-components';
 
 const StyledForm = styled.form`
     && {
-        margin-left: 15vh;
-        margin-top: 5vh;
+        margin: 0px auto;
+        max-width: 1180px;
+        margin-top: 100px;
+    }
+`;
+
+const Login = styled(Grid)`
+    && {
     }
 `;
 

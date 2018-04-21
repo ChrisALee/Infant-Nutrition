@@ -2,16 +2,24 @@ import withRedux from 'next-redux-wrapper';
 import React, { Component } from 'react';
 import { compose } from 'redux';
 
-import Head from '../components/Head';
 import LoginForm from '../components/LoginForm';
-import Nav from '../components/Nav';
+import Layout from '../components/Layout';
 import { initStore, login } from '../store';
 import withAuth, { PUBLIC } from '../utils/auth/withAuth';
 import withRoot from '../utils/material-ui/withRoot';
+import styled from 'styled-components';
 
 export interface LoginProps {
     user: { isLoggedIn: string; groups: string[] };
 }
+
+const Container = styled.div`
+    margin: 0px auto;
+    max-width: 1180px;
+    min-height: 60vh;
+    width: 100%;
+    heigth: 100%;
+`;
 
 class Login extends Component<LoginProps, {}> {
     handleOnChange = e => {
@@ -35,11 +43,11 @@ class Login extends Component<LoginProps, {}> {
 
     render() {
         return (
-            <div>
-                <Head title="Login" />
-                <Nav />
-                <LoginForm handleLoginSubmit={this.handleLoginSubmit} />
-            </div>
+            <Layout title="login">
+                <Container>
+                    <LoginForm handleLoginSubmit={this.handleLoginSubmit} />
+                </Container>
+            </Layout>
         );
     }
 }

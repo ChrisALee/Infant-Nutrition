@@ -2,8 +2,8 @@ import withRedux from 'next-redux-wrapper';
 import React, { Component } from 'react';
 import { compose } from 'redux';
 
-import Head from '../components/Head';
-import Nav from '../components/Nav';
+import Layout from '../components/Layout';
+import styled from 'styled-components';
 import RegisterForm from '../components/RegisterForm';
 import { initStore, register } from '../store';
 import withAuth, { PUBLIC } from '../utils/auth/withAuth';
@@ -12,6 +12,14 @@ import withRoot from '../utils/material-ui/withRoot';
 export interface RegisterProps {
     user: { isLoggedIn: string; groups: string[] };
 }
+
+const Container = styled.div`
+    margin: 0px auto;
+    max-width: 1180px;
+    min-height: 60vh;
+    width: 100%;
+    heigth: 100%;
+`;
 
 class Register extends Component<RegisterProps, {}> {
     handleOnChange = e => {
@@ -36,13 +44,13 @@ class Register extends Component<RegisterProps, {}> {
 
     render() {
         return (
-            <div>
-                <Head title="Register" />
-                <Nav />
-                <RegisterForm
-                    handleRegisterSubmit={this.handleRegisterSubmit}
-                />
-            </div>
+            <Layout title="register">
+                <Container>
+                    <RegisterForm
+                        handleRegisterSubmit={this.handleRegisterSubmit}
+                    />
+                </Container>
+            </Layout>
         );
     }
 }

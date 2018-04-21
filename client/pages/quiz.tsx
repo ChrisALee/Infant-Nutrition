@@ -51,6 +51,7 @@ class Quiz extends React.Component<QuizProps, {}> {
                         <Question
                             question={question.question}
                             answers={question.answers}
+                            showCorrect={true}
                         />
                     </div>
                 ))}

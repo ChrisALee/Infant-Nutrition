@@ -2,7 +2,22 @@ import AppBar from 'material-ui/AppBar';
 import Button from 'material-ui/Button';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import Typography from 'material-ui/Typography';
+import Link from 'next/link';
 import * as React from 'react';
+import styled from 'styled-components';
+
+const StyledText = styled(Typography)`
+    && {
+        color: #525f7f;
+    }
+`;
+
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+`;
 
 export interface BabySummaryProps {
     stage: number;
@@ -18,7 +33,7 @@ class BabySummary extends React.PureComponent<BabySummaryProps, {}> {
         const { stage } = this.props;
 
         return (
-            <div>
+            <Container>
                 <AppBar position="static" color="default">
                     <Tabs
                         value={stage}
@@ -38,33 +53,37 @@ class BabySummary extends React.PureComponent<BabySummaryProps, {}> {
                     {
                         0: (
                             <div id="0">
-                                <Typography>Newborn</Typography>
+                                <StyledText>Newborn</StyledText>
                             </div>
                         ),
                         1: (
                             <div id="1">
-                                <Typography>Pushing up</Typography>
+                                <StyledText>Pushing up</StyledText>
                             </div>
                         ),
                         2: (
                             <div id="2">
-                                <Typography>Learning to sit</Typography>
+                                <StyledText>Learning to sit</StyledText>
                             </div>
                         ),
                         3: (
                             <div id="3">
-                                <Typography>Learning to crawl</Typography>
+                                <StyledText>Learning to crawl</StyledText>
                             </div>
                         ),
                         4: (
                             <div id="4">
-                                <Typography>Learning to walk</Typography>
+                                <StyledText>Learning to walk</StyledText>
                             </div>
                         ),
                     }[stage]
                 }
-                <Button>Take our quiz</Button>
-            </div>
+                <Link prefetch href="/quiz">
+                    <Button color="primary" variant="raised">
+                        <a>Practice with a quiz</a>
+                    </Button>
+                </Link>
+            </Container>
         );
     }
 }

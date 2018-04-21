@@ -23,6 +23,14 @@ const LeftSide = styled.div`
     flex-basis: 100%;
 `;
 
+const StyledToolbar = styled(Toolbar)`
+    && {
+        max-width: 1180px;
+        width: 100%;
+        margin: 0 auto;
+    }
+`;
+
 export interface NavProps {
     user: { isLoggedIn: string; groups: string[] };
 }
@@ -38,8 +46,8 @@ class Nav extends React.PureComponent<NavProps, {}> {
         const { user } = this.props;
         return (
             <TopBar>
-                <AppBar position="fixed" elevation={0}>
-                    <Toolbar>
+                <AppBar position="static" elevation={0}>
+                    <StyledToolbar>
                         <LeftSide>
                             <Link prefetch href="/">
                                 <Button color="inherit">
@@ -85,7 +93,7 @@ class Nav extends React.PureComponent<NavProps, {}> {
                                 </Link>
                             </AuthContainer>
                         )}
-                    </Toolbar>
+                    </StyledToolbar>
                 </AppBar>
             </TopBar>
         );

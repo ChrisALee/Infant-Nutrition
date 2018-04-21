@@ -16,29 +16,21 @@ import withRoot from '../utils/material-ui/withRoot';
 const Title = styled(Typography)`
     && {
         text-align: center;
-        font-family: 'Pacifico', cursive;
-        text-decoration: underline;
-        text-decoration-style: solid;
-        color: #000000;
     }
 `;
 
 const Hero = styled.div`
-    min-height: 80vh;
+    min-height: 70vh;
     flex: 0 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
     color: ${theme.palette.primary.contrastText};
     background-color: ${theme.palette.primary.main};
-    /* background-image: url('../static/bg-baby.png'); */
 `;
 
 const Content = styled.div`
-    padding-bottom: 10vh;
-    padding-top: 10vh;
-    padding-left: 10vh;
-    padding-right: 10vh;
+    padding: 10vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -47,17 +39,52 @@ const Content = styled.div`
 
 const IntroText = styled(Typography)`
     && {
-        color: #000000;
-        font-family: 'Arima Madurai', cursive;
     }
 `;
 
 const Text = styled(Typography)`
     && {
-        text-align: left;
-        font-family: 'Arima Madurai', cursive;
-        font-size: 18px;
+        text-align: right;
+        color: #525f7f;
     }
+`;
+
+const ParagraphContainer = styled.div`
+    min-height: 60vh;
+    display: flex;
+    flex-direction: row;
+    padding: 30px;
+    margin: 0px auto;
+    max-width: 1180px;
+    width: 100%;
+`;
+
+const BabySummaryContainer = styled.div`
+    min-height: 60vh;
+    padding: 30px;
+    margin: 0px auto;
+    max-width: 1180px;
+    width: 100%;
+`;
+
+const Divider = styled.div`
+    width: 100%;
+    height: 1px;
+    background-color: rgb(218, 225, 233);
+`;
+
+const ResizedImage = styled.img`
+    width: 950px;
+    padding-left: 20px;
+    height auto;
+`;
+
+const HeroLink = styled.div`
+    margin-top: 80px;
+`;
+
+const LinkText = styled.a`
+    color: #007fae;
 `;
 
 export interface IndexProps {
@@ -86,6 +113,7 @@ class Index extends React.Component<IndexProps, {}> {
                             variant="display2"
                             component="h1"
                             align="center"
+                            color="secondary"
                             gutterBottom
                         >
                             Infant Feeding
@@ -94,38 +122,57 @@ class Index extends React.Component<IndexProps, {}> {
                         <IntroText
                             variant="headline"
                             component="h2"
+                            color="secondary"
                             gutterBottom
                         >
-                            Healthy Feeding Guidelines for Infants.
+                            Infant Feeding is the place to go to find healthy
+                            feeding guidelines for infants.
                         </IntroText>
 
-                        <Link prefetch href="/register">
-                            <Button variant="raised">
-                                <a>Get Started</a>
-                            </Button>
-                        </Link>
+                        <HeroLink>
+                            <Link prefetch href="/register">
+                                <Button variant="raised" color="secondary">
+                                    <LinkText>Create account</LinkText>
+                                </Button>
+                            </Link>
+                        </HeroLink>
                     </Content>
                 </Hero>
 
-                <Text paragraph>
-                    Your baby will go on an amazing food journey during the
-                    first year of life. At the start of the journey, breast milk
-                    or formula will be all that your baby will need. Along the
-                    way, your baby will pass by several “developmental
-                    milestones” — common stages at which babies can do new
-                    things, including trying new foods and textures. Like most
-                    parents, you will have lots of questions about what to feed
-                    your baby and when to begin. Look inside the “Great Eating
-                    Adventure” to see what’s ahead for your baby. As your baby
-                    approaches each stage, we’ll send you more detailed
-                    information, including ideas for new foods to try, tips for
-                    picky eaters and advice on how to wean your baby from breast
-                    milk or formula. Not sure where to start? Click the titles
-                    above to explore information for the respective
-                    developmental stages!
-                </Text>
+                <Divider />
 
-                <BabySummary stage={stage} handleClick={this.handleClick} />
+                <ParagraphContainer>
+                    <Text paragraph>
+                        Your baby will go on an amazing food journey during the
+                        first year of life. At the start of the journey, breast
+                        milk or formula will be all that your baby will need.
+                        Along the way, your baby will pass by several
+                        “developmental milestones” — common stages at which
+                        babies can do new things, including trying new foods and
+                        textures. Like most parents, you will have lots of
+                        questions about what to feed your baby and when to
+                        begin. Look inside the “Great Eating Adventure” to see
+                        what’s ahead for your baby. As your baby approaches each
+                        stage, we’ll send you more detailed information,
+                        including ideas for new foods to try, tips for picky
+                        eaters and advice on how to wean your baby from breast
+                        milk or formula. Not sure where to start? Click the
+                        titles above to explore information for the respective
+                        developmental stages!
+                    </Text>
+                    <ResizedImage
+                        src={
+                            '../static/Human-Male-White-Newborn-Baby-Crying.jpg'
+                        }
+                        alt={'Baby'}
+                    />
+                </ParagraphContainer>
+
+                <Divider />
+
+                <BabySummaryContainer>
+                    <BabySummary stage={stage} handleClick={this.handleClick} />
+                </BabySummaryContainer>
             </Layout>
         );
     }

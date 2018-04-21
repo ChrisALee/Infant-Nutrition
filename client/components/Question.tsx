@@ -10,7 +10,7 @@ export interface QuestionState {
 export interface QuestionProps {
     answers?: any;
     question?: object;
-    showCorrect: boolean;
+    showCorrectAnswers: boolean;
 }
 
 class Question extends React.Component<QuestionProps, QuestionState> {
@@ -29,7 +29,7 @@ class Question extends React.Component<QuestionProps, QuestionState> {
     };
 
     render() {
-        const { answers, question, showCorrect } = this.props;
+        const { answers, question, showCorrectAnswers } = this.props;
         return (
             <FormControl component="fieldset" required>
                 <FormLabel component="legend">{question}</FormLabel>
@@ -47,7 +47,7 @@ class Question extends React.Component<QuestionProps, QuestionState> {
                                 control={<Radio color="primary" />}
                                 label={answer.answer}
                             />
-                            {showCorrect ? (
+                            {showCorrectAnswers ? (
                                 // Currently selected answer
                                 this.state.value === answer.answer ? (
                                     answer.isCorrect ? (

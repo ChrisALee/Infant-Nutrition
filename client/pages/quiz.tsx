@@ -35,7 +35,21 @@ class Quiz extends React.Component<QuizProps, {}> {
             const generalQuiz: any = { ...json }[0];
             const questions = generalQuiz.questions;
 
-            return { questions };
+            // We need 3 random multiple choice and 2 random true false
+            let selected = questions.slice(0, 10);
+            const randomTrueFalse = selected
+                .sort(() => 0.5 - Math.random())
+                .slice(0, 2);
+            selected = questions.slice(10, 20);
+            const randomMultipleChoice = selected
+                .sort(() => 0.5 - Math.random())
+                .slice(0, 3);
+            const mergedarray = [].concat(
+                ...randomMultipleChoice,
+                ...randomTrueFalse,
+            );
+
+            return { questions: mergedarray };
         } catch (err) {
             // tslint:disable-next-line:no-console
             console.log(err);
@@ -51,7 +65,7 @@ class Quiz extends React.Component<QuizProps, {}> {
                         <Question
                             question={question.question}
                             answers={question.answers}
-                            showCorrect={true}
+                            showCorrectAnswers={true}
                         />
                     </div>
                 ))}

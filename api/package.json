@@ -31,11 +31,11 @@
         "@types/ioredis": "^3.2.7",
         "@types/joi": "^13.0.7",
         "@types/jsonwebtoken": "^7.2.6",
-        "@types/knex": "^0.14.11",
+        "@types/knex": "^0.14.12",
         "@types/nanoid": "^1.0.0",
-        "@types/node": "^9.6.5",
-        "@types/pg": "^7.4.5",
-        "bcrypt": "^1.0.3",
+        "@types/node": "^9.6.6",
+        "@types/pg": "^7.4.6",
+        "bcrypt": "^2.0.1",
         "blipp": "^3.0.0",
         "boom": "^7.2.0",
         "disinfect": "^1.0.0",
@@ -58,7 +58,7 @@
         "mock-knex": "^0.4.0",
         "nanoid": "^1.0.2",
         "pg": "^7.4.1",
-        "typescript": "^2.8.1",
+        "typescript": "^2.8.3",
         "vision": "^5.3.2"
     },
     "devDependencies": {
@@ -67,10 +67,10 @@
         "lint-staged": "^7.0.4",
         "nodemon": "^1.17.3",
         "prettier": "^1.12.1",
-        "ts-jest": "^22.4.3",
+        "ts-jest": "^22.4.4",
         "ts-node": "^6.0.0",
         "tslint": "^5.9.1",
-        "tslint-config-prettier": "^1.10.0",
+        "tslint-config-prettier": "^1.12.0",
         "tslint-eslint-rules": "^5.1.0"
     }
 }

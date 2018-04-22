@@ -10,7 +10,6 @@ import { initStore } from '../store';
 import withAuth, { PUBLIC } from '../utils/auth/withAuth';
 import withRoot from '../utils/material-ui/withRoot';
 import styled from 'styled-components';
-import consola from 'consola';
 
 const Container = styled.div`
     flex: 1 0 100%;
@@ -68,12 +67,14 @@ class Quiz extends React.Component<QuizProps, QuizState> {
 
             return { questions: mergedarray };
         } catch (err) {
-            consola.error(err);
+            // tslint:disable-next-line:no-console
+            console.error(err);
         }
     }
     handleSubmitQuiz = async () => {
         this.setState({ showCorrectAnswers: true });
-        consola.log('should have shown answers');
+        // tslint:disable-next-line:no-console
+        console.log('should have shown answers');
     };
     state = {
         showCorrectAnswers: false,
@@ -95,7 +96,7 @@ class Quiz extends React.Component<QuizProps, QuizState> {
                             />
                         </QuestionContainer>
                     ))}
-                    <Button type="submit" color="primary">
+                    <Button type="submit" color="primary" variant="raised">
                         Submit Quiz Here
                     </Button>
                 </Container>

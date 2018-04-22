@@ -6,9 +6,7 @@
     "scripts": {
         "dev": "next",
         "build": "next build",
-        "postinstall-production": "echo \"production, so running next build...\" && next build",
-        "postinstall-dev": "echo \"Installed as dev so skipping...\"",
-        "postinstall": "if-env NODE_ENV=production && npm run postinstall-production || npm run postinstall-dev",
+        "prestart": "next build",
         "start": "next start -p 8080",
         "analyze": "cross-env ANALYZE=1 next build",
         "tslint-check": "tslint-config-prettier-check ./tslint.json",
@@ -18,11 +16,7 @@
         "precommit": "lint-staged"
     },
     "lint-staged": {
-        "*.{ts,tsx}": [
-            "tslint --fix",
-            "prettier --write",
-            "git add"
-        ]
+        "*.{ts,tsx}": ["tslint --fix", "prettier --write", "git add"]
     },
     "files": [
         ".babelrc",

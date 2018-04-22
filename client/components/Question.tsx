@@ -1,6 +1,28 @@
+import Done from '@material-ui/icons/Done';
+import Clear from '@material-ui/icons/Clear';
 import { FormControl, FormControlLabel, FormLabel } from 'material-ui/Form';
 import Radio, { RadioGroup } from 'material-ui/Radio';
 import * as React from 'react';
+import styled from 'styled-components';
+
+const GreenDone = styled(Done)`
+    && {
+        color: green;
+    }
+`;
+
+const RedClear = styled(Clear)`
+    && {
+        color: red;
+    }
+`;
+
+const StyledRadioGroup = styled(RadioGroup)`
+    && {
+        display: flex;
+        flex-direction: row;
+    }
+`;
 
 export interface QuestionState {
     value: string;
@@ -19,6 +41,7 @@ class Question extends React.Component<QuestionProps, QuestionState> {
         value: null,
         isCorrect: false,
     };
+
     handleChange = event => {
         const answer = JSON.parse(event.target.value);
         this.setState({
@@ -33,13 +56,14 @@ class Question extends React.Component<QuestionProps, QuestionState> {
             <FormControl component="fieldset" required>
                 <FormLabel component="legend">{question}</FormLabel>
                 {answers
-                    .map(answer => (
-                        <RadioGroup
+                    .map((answer, i) => (
+                        <StyledRadioGroup
                             aria-label="question"
                             name="question"
                             value={this.state.value}
                             onChange={this.handleChange}
                         >
+                            <p>{answers.length - i}.</p>
                             <FormControlLabel
                                 key={answer.guid}
                                 value={JSON.stringify(answer)}
@@ -52,20 +76,16 @@ class Question extends React.Component<QuestionProps, QuestionState> {
                                 JSON.parse(this.state.value).answer ===
                                     answer.answer ? (
                                     answer.isCorrect ? (
-                                        <div>Correct Answer</div>
+                                        <GreenDone />
                                     ) : (
-                                        <div>Incorrect Answer</div>
+                                        <RedClear />
                                     )
                                 ) : // Not currently selected answer
                                 answer.isCorrect ? (
-                                    <div>Correct Answer</div>
-                                ) : (
-                                    <div />
-                                )
-                            ) : (
-                                <div />
-                            )}
-                        </RadioGroup>
+                                    <GreenDone />
+                                ) : null
+                            ) : null}
+                        </StyledRadioGroup>
                     ))
                     .reverse()}
             </FormControl>

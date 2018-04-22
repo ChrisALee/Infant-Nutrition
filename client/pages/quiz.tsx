@@ -9,6 +9,20 @@ import Question from '../components/Question';
 import { initStore } from '../store';
 import withAuth, { PUBLIC } from '../utils/auth/withAuth';
 import withRoot from '../utils/material-ui/withRoot';
+import styled from 'styled-components';
+import consola from 'consola';
+
+const Container = styled.div`
+    flex: 1 0 100%;
+    max-width: 1280px;
+    width: 100%;
+    margin: 5vh auto;
+`;
+
+const QuestionContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+`;
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -54,13 +68,12 @@ class Quiz extends React.Component<QuizProps, QuizState> {
 
             return { questions: mergedarray };
         } catch (err) {
-            // tslint:disable-next-line:no-console
-            console.log(err);
+            consola.error(err);
         }
     }
     handleSubmitQuiz = async () => {
         this.setState({ showCorrectAnswers: true });
-        // console.log("should have shown answers")
+        consola.log('should have shown answers');
     };
     state = {
         showCorrectAnswers: false,
@@ -71,22 +84,21 @@ class Quiz extends React.Component<QuizProps, QuizState> {
         const { showCorrectAnswers } = this.state;
         return (
             <Layout title="Quiz">
-                {questions.map(question => (
-                    <div key={question.guid}>
-                        <Question
-                            question={question.question}
-                            answers={question.answers}
-                            showCorrectAnswers={showCorrectAnswers}
-                        />
-                    </div>
-                ))}
-                <Button
-                    type="submit"
-                    color="primary"
-                    onClick={this.handleSubmitQuiz}
-                >
-                    Submit Quiz Here
-                </Button>
+                <Container>
+                    {questions.map((question, index) => (
+                        <QuestionContainer key={question.guid}>
+                            {index}.
+                            <Question
+                                question={question.question}
+                                answers={question.answers}
+                                showCorrectAnswers={showCorrectAnswers}
+                            />
+                        </QuestionContainer>
+                    ))}
+                    <Button type="submit" color="primary">
+                        Submit Quiz Here
+                    </Button>
+                </Container>
             </Layout>
         );
     }

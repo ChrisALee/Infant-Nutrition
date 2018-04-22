@@ -9,14 +9,14 @@ import { initStore, login } from '../store';
 import withAuth, { PUBLIC } from '../utils/auth/withAuth';
 import withRoot from '../utils/material-ui/withRoot';
 
+const Container = styled.div`
+    margin: 0 auto 50vh auto;
+    max-width: 1180px;
+`;
+
 export interface LoginProps {
     user: { isLoggedIn: string; groups: string[] };
 }
-
-const Container = styled.div`
-    margin: 0px auto;
-    max-width: 1180px;
-`;
 
 class Login extends Component<LoginProps, {}> {
     handleOnChange = e => {
@@ -40,7 +40,7 @@ class Login extends Component<LoginProps, {}> {
 
     render() {
         return (
-            <Layout title="login">
+            <Layout primary={true} title="Login">
                 <Container>
                     <LoginForm handleLoginSubmit={this.handleLoginSubmit} />
                 </Container>

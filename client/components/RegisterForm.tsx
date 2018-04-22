@@ -3,12 +3,21 @@ import Grid from 'material-ui/Grid';
 import TextField from 'material-ui/TextField';
 import React from 'react';
 import styled from 'styled-components';
+import Paper from 'material-ui/Paper';
 
 const StyledForm = styled.form`
     && {
-        margin: 0px auto;
-        max-width: 1180px;
-        margin-top: 100px;
+    }
+`;
+
+const ContainerGrid = styled(Grid)`
+    && {
+        padding: 10px 15px;
+    }
+`;
+
+const StyledPaper = styled(Paper)`
+    && {
     }
 `;
 
@@ -44,46 +53,59 @@ class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
 
     render() {
         return (
-            <Grid container spacing={24}>
+            <StyledPaper>
                 <StyledForm
                     noValidate
                     autoComplete="on"
                     onSubmit={this.handleSubmit}
                 >
-                    <Grid item xs={12}>
-                        <TextField
-                            id="username"
-                            label="Username"
-                            value={this.state.username}
-                            onChange={this.handleChange('username')}
-                            margin="normal"
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            id="password"
-                            label="Password"
-                            value={this.state.password}
-                            type="password"
-                            onChange={this.handleChange('password')}
-                            margin="normal"
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            id="email"
-                            label="Email"
-                            value={this.state.email}
-                            type="email"
-                            onChange={this.handleChange('email')}
-                            margin="normal"
-                        />
-                    </Grid>
-                    <Grid>
-                        <Button type="submit">Click</Button>
-                    </Grid>
+                    <ContainerGrid
+                        container
+                        spacing={24}
+                        justify="center"
+                        alignItems="center"
+                    >
+                        <Grid item xs={12}>
+                            <TextField
+                                id="username"
+                                label="Username"
+                                value={this.state.username}
+                                onChange={this.handleChange('username')}
+                                margin="normal"
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                id="password"
+                                label="Password"
+                                value={this.state.password}
+                                type="password"
+                                onChange={this.handleChange('password')}
+                                margin="normal"
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                id="email"
+                                label="Email"
+                                value={this.state.email}
+                                type="email"
+                                onChange={this.handleChange('email')}
+                                margin="normal"
+                            />
+                        </Grid>
+                        <Grid>
+                            <Button
+                                type="submit"
+                                color="primary"
+                                variant="raised"
+                            >
+                                Click
+                            </Button>
+                        </Grid>
+                    </ContainerGrid>
                 </StyledForm>
-            </Grid>
+            </StyledPaper>
         );
     }
 }

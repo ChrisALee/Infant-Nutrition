@@ -14,11 +14,8 @@ export interface RegisterProps {
 }
 
 const Container = styled.div`
-    margin: 0px auto;
+    margin: 0 auto 50vh auto;
     max-width: 1180px;
-    min-height: 60vh;
-    width: 100%;
-    heigth: 100%;
 `;
 
 class Register extends Component<RegisterProps, {}> {
@@ -44,7 +41,7 @@ class Register extends Component<RegisterProps, {}> {
 
     render() {
         return (
-            <Layout title="register">
+            <Layout primary={true} title="Register">
                 <Container>
                     <RegisterForm
                         handleRegisterSubmit={this.handleRegisterSubmit}

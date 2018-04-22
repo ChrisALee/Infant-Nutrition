@@ -1,3 +1,4 @@
+import Save from '@material-ui/icons/Save';
 import fetch from 'isomorphic-unfetch';
 import Button from 'material-ui/Button';
 import Checkbox from 'material-ui/Checkbox';
@@ -10,7 +11,6 @@ import * as React from 'react';
 import { compose } from 'redux';
 import styled from 'styled-components';
 
-import Table from '../components/EnhancedTable/EnhancedTable';
 import Layout from '../components/Layout';
 import { initStore } from '../store';
 import withAuth from '../utils/auth/withAuth';
@@ -32,7 +32,6 @@ export interface ProfileState {
 
 export interface ProfileProps {
     profileSettings: any;
-    onRequestSort: any;
 }
 
 class Profile extends React.Component<ProfileProps, ProfileState> {
@@ -105,15 +104,10 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
         this.setState({ ...this.state, open: false });
     };
 
-    createSortHandler = property => event => {
-        this.props.onRequestSort(event, property);
-    };
-
     render() {
         return (
             <Layout title="Profile">
                 <Container>
-                    <Table />
                     <FormGroup row>
                         <FormControlLabel
                             control={
@@ -129,7 +123,9 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
                     </FormGroup>
 
                     <p>Real Name: {this.state.name}</p>
-                    <Button onClick={this.handleSave}>Save</Button>
+                    <Button onClick={this.handleSave} variant="raised">
+                        <Save />Save
+                    </Button>
 
                     <Snackbar
                         open={this.state.open}

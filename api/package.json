@@ -6,10 +6,11 @@
     "scripts": {
         "dev": "nodemon",
         "build": "tsc -p tsconfig.json",
-        "postinstall": "tsc -p tsconfig.production.json",
+        "prestart": "tsc -p tsconfig.production.json",
         "start": "node dist/server.js",
         "pretest": "tsc",
-        "test": "jest --forceExit --coverage --verbose --env=./dist/utils/test-environment.js",
+        "test":
+            "jest --forceExit --coverage --verbose --env=./dist/utils/test-environment.js",
         "tslint-check": "tslint-config-prettier-check ./tslint.json",
         "tslint": "tslint -c tslint.json -p tsconfig.json --fix",
         "prettier": "prettier  --write **/*.ts*",
@@ -17,11 +18,7 @@
         "precommit": "lint-staged"
     },
     "lint-staged": {
-        "*.{ts,tsx}": [
-            "tslint --fix",
-            "prettier --write",
-            "git add"
-        ]
+        "*.{ts,tsx}": ["tslint --fix", "prettier --write", "git add"]
     },
     "dependencies": {
         "@types/bcrypt": "^1.0.0",

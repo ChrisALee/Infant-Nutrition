@@ -54,6 +54,7 @@ const goodOptions = getGoodOptions();
 
 const devErrorsOptions = {
     // showErrors: process.env.NODE_ENV !== 'production',
+    showErrors: true,
     useYouch: true,
 };
 

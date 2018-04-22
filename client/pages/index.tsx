@@ -76,7 +76,7 @@ const Divider = styled.div`
 const ResizedImage = styled.img`
     width: 950px;
     padding-left: 20px;
-    height auto;
+    height: 450px;
 `;
 
 const HeroLink = styled.div`

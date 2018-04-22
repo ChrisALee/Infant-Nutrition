@@ -1,9 +1,9 @@
 import withRedux from 'next-redux-wrapper';
 import React, { Component } from 'react';
 import { compose } from 'redux';
+import styled from 'styled-components';
 
 import Layout from '../components/Layout';
-import styled from 'styled-components';
 import RegisterForm from '../components/RegisterForm';
 import { initStore, register } from '../store';
 import withAuth, { PUBLIC } from '../utils/auth/withAuth';

@@ -12,11 +12,6 @@ const StyledForm = styled.form`
     }
 `;
 
-const Login = styled(Grid)`
-    && {
-    }
-`;
-
 export interface LoginFormState {
     username: string;
     password: string;

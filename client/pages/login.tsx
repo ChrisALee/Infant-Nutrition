@@ -1,13 +1,13 @@
 import withRedux from 'next-redux-wrapper';
 import React, { Component } from 'react';
 import { compose } from 'redux';
+import styled from 'styled-components';
 
-import LoginForm from '../components/LoginForm';
 import Layout from '../components/Layout';
+import LoginForm from '../components/LoginForm';
 import { initStore, login } from '../store';
 import withAuth, { PUBLIC } from '../utils/auth/withAuth';
 import withRoot from '../utils/material-ui/withRoot';
-import styled from 'styled-components';
 
 export interface LoginProps {
     user: { isLoggedIn: string; groups: string[] };
@@ -16,9 +16,6 @@ export interface LoginProps {
 const Container = styled.div`
     margin: 0px auto;
     max-width: 1180px;
-    min-height: 60vh;
-    width: 100%;
-    heigth: 100%;
 `;
 
 class Login extends Component<LoginProps, {}> {

@@ -2,48 +2,29 @@ import fetch from 'isomorphic-unfetch';
 import Button from 'material-ui/Button';
 import Checkbox from 'material-ui/Checkbox';
 import { FormControlLabel, FormGroup } from 'material-ui/Form';
+import Snackbar from 'material-ui/Snackbar';
+import Slide from 'material-ui/transitions/Slide';
 import withRedux from 'next-redux-wrapper';
 import getConfig from 'next/config';
 import * as React from 'react';
 import { compose } from 'redux';
 import styled from 'styled-components';
 
+import Table from '../components/EnhancedTable/EnhancedTable';
 import Layout from '../components/Layout';
 import { initStore } from '../store';
 import withAuth from '../utils/auth/withAuth';
 import withRoot from '../utils/material-ui/withRoot';
-import Table from '../components/Table';
-import Snackbar from 'material-ui/Snackbar';
-import Slide from 'material-ui/transitions/Slide';
 
 const { publicRuntimeConfig } = getConfig();
 
 const Container = styled.div`
     flex: 1 0 100%;
+    max-width: 1180px;
+    width: 100%;
+    margin: 0px auto;
+    padding: 30px;
 `;
-
-const columnData = [
-    {
-        id: 'name',
-        numeric: false,
-        disablePadding: true,
-        label: 'Dessert (100g serving)',
-    },
-    {
-        id: 'number of times eaten ',
-        numeric: true,
-        disablePadding: false,
-        label: 'Food Group',
-    },
-    { id: 'calories', numeric: true, disablePadding: false, label: 'Fat (g)' },
-    { id: 'carbs', numeric: true, disablePadding: false, label: 'Carbs (g)' },
-    {
-        id: 'protein',
-        numeric: true,
-        disablePadding: false,
-        label: 'Protein (g)',
-    },
-];
 
 export interface ProfileState {
     profileSettings: object;

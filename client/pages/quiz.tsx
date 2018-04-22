@@ -4,7 +4,6 @@ import withRedux from 'next-redux-wrapper';
 import getConfig from 'next/config';
 import * as React from 'react';
 import { compose } from 'redux';
-
 import Layout from '../components/Layout';
 import Question from '../components/Question';
 import { initStore } from '../store';
@@ -17,7 +16,11 @@ export interface QuizProps {
     questions: any;
 }
 
-class Quiz extends React.Component<QuizProps, {}> {
+export interface QuizState {
+    showCorrectAnswers: boolean;
+}
+
+class Quiz extends React.Component<QuizProps, QuizState> {
     static async getInitialProps(): Promise<object> {
         try {
             const quizzes = await fetch(
@@ -55,9 +58,17 @@ class Quiz extends React.Component<QuizProps, {}> {
             console.log(err);
         }
     }
+    handleSubmitQuiz = async () => {
+        this.setState({ showCorrectAnswers: true });
+        // console.log("should have shown answers")
+    };
+    state = {
+        showCorrectAnswers: false,
+    };
 
     render() {
         const { questions } = this.props;
+        const { showCorrectAnswers } = this.state;
         return (
             <Layout title="Quiz">
                 {questions.map(question => (
@@ -65,11 +76,15 @@ class Quiz extends React.Component<QuizProps, {}> {
                         <Question
                             question={question.question}
                             answers={question.answers}
-                            showCorrectAnswers={true}
+                            showCorrectAnswers={showCorrectAnswers}
                         />
                     </div>
                 ))}
-                <Button type="submit" color="primary">
+                <Button
+                    type="submit"
+                    color="primary"
+                    onClick={this.handleSubmitQuiz}
+                >
                     Submit Quiz Here
                 </Button>
             </Layout>

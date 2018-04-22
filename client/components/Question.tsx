@@ -16,10 +16,9 @@ export interface QuestionProps {
 class Question extends React.Component<QuestionProps, QuestionState> {
     // Initial state is the first answer of each question
     state = {
-        value: this.props.answers[0].answer,
+        value: null,
         isCorrect: false,
     };
-
     handleChange = event => {
         const answer = JSON.parse(event.target.value);
         this.setState({
@@ -49,15 +48,17 @@ class Question extends React.Component<QuestionProps, QuestionState> {
                             />
                             {showCorrectAnswers ? (
                                 // Currently selected answer
-                                this.state.value === answer.answer ? (
+                                this.state.value &&
+                                JSON.parse(this.state.value).answer ===
+                                    answer.answer ? (
                                     answer.isCorrect ? (
-                                        <div>CORRECT</div>
+                                        <div>Correct Answer</div>
                                     ) : (
-                                        <div>WRONG</div>
+                                        <div>Incorrect Answer</div>
                                     )
                                 ) : // Not currently selected answer
                                 answer.isCorrect ? (
-                                    <div>ACTUAL ANSWER</div>
+                                    <div>Correct Answer</div>
                                 ) : (
                                     <div />
                                 )

@@ -21,7 +21,7 @@ const swaggerOptions = {
 // Should only report to console during development environment
 const getGoodOptions = () => {
     if (
-        process.env.NODE_ENV === 'production' ||
+        // process.env.NODE_ENV === 'production' ||
         process.env.NODE_ENV === 'test'
     ) {
         return {
@@ -53,7 +53,7 @@ const getGoodOptions = () => {
 const goodOptions = getGoodOptions();
 
 const devErrorsOptions = {
-    showErrors: process.env.NODE_ENV !== 'production',
+    // showErrors: process.env.NODE_ENV !== 'production',
     useYouch: true,
 };
 

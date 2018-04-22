@@ -9,7 +9,7 @@ exports.register = (server, options) => {
         clearInvalid: false, // remove invalid cookies
         strictHeader: true, // don't allow violations of RFC 6265
         path: '/', // set the cookie for all routes
-        domain: prod ? process.env.PROD_DOMAIN : 'localhost',
+        // domain: prod ? process.env.PROD_DOMAIN : 'localhost',
     };
 
     server.state('token', cookieOptions);

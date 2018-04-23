@@ -96,7 +96,12 @@ class Quiz extends React.Component<QuizProps, QuizState> {
                             />
                         </QuestionContainer>
                     ))}
-                    <Button type="submit" color="primary" variant="raised">
+                    <Button
+                        type="submit"
+                        color="primary"
+                        variant="raised"
+                        onClick={this.handleSubmitQuiz}
+                    >
                         Submit Quiz Here
                     </Button>
                 </Container>

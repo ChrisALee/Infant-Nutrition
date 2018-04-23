@@ -49,7 +49,7 @@ class Question extends React.Component<QuestionProps, QuestionState> {
             isCorrect: answer.isCorrect,
         });
     };
-
+    // add above FormControlLabel <p>{answers.length - i}.</p>; currently numbers, needs to be abc
     render() {
         const { answers, question, showCorrectAnswers } = this.props;
         return (
@@ -63,7 +63,6 @@ class Question extends React.Component<QuestionProps, QuestionState> {
                             value={this.state.value}
                             onChange={this.handleChange}
                         >
-                            <p>{answers.length - i}.</p>
                             <FormControlLabel
                                 key={answer.guid}
                                 value={JSON.stringify(answer)}

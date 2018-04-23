@@ -74,10 +74,10 @@ const Divider = styled.div`
 `;
 
 const ResizedImage = styled.img`
-    width: 950px;
     padding-left: 20px;
-    height: 450px;
 `;
+
+const ImageDiv = styled.div``;
 
 const HeroLink = styled.div`
     margin-top: 80px;
@@ -185,12 +185,14 @@ class Index extends React.Component<IndexProps, {}> {
                         titles above to explore information for the respective
                         developmental stages!
                     </Text>
-                    <ResizedImage
-                        src={
-                            '../static/Human-Male-White-Newborn-Baby-Crying.jpg'
-                        }
-                        alt={'Baby'}
-                    />
+                    <ImageDiv>
+                        <ResizedImage
+                            src={
+                                '../static/Human-Male-White-Newborn-Baby-Crying.jpg'
+                            }
+                            alt={'Baby'}
+                        />
+                    </ImageDiv>
                 </ParagraphContainer>
 
                 <Divider />

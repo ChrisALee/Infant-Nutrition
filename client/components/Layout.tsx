@@ -8,6 +8,7 @@ import theme from '../utils//styles/mui-theme';
 const Container = styled.div`
     display: flex;
     flex: 1 1 auto;
+    flex-shrink: 0;
     flex-direction: column;
     background-color: ${(props: any) =>
         props.primary ? theme.palette.primary.main : '#FAFAFA'};

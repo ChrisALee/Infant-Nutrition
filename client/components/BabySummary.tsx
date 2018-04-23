@@ -12,6 +12,12 @@ const StyledText = styled(Typography)`
     }
 `;
 
+const StyledButton = styled(Button)`
+    && {
+        align-self: center;
+    }
+`;
+
 const Container = styled.div`
     display: flex;
     flex-direction: column;
@@ -387,10 +393,11 @@ class BabySummary extends React.PureComponent<BabySummaryProps, {}> {
                         ),
                     }[stage]
                 }
+
                 <Link prefetch href="/quiz">
-                    <Button color="primary" variant="raised">
+                    <StyledButton color="primary" variant="raised">
                         <a>Practice with a quiz</a>
-                    </Button>
+                    </StyledButton>
                 </Link>
             </Container>
         );

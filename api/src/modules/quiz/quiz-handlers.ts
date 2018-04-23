@@ -38,7 +38,6 @@ export const getFullQuizzes = async (
 ) => {
     // TODO: Support queries
     try {
-        request.log('made it to before sql in getFullQuizes');
         const sql = Knex('quizzes AS qz')
             .innerJoin('questions AS qst', 'qst.quiz_guid', 'qz.guid')
             .innerJoin('answers AS a', 'a.question_guid', 'qst.guid')
@@ -52,10 +51,7 @@ export const getFullQuizzes = async (
                 'a.is_correct AS _questions__answers__isCorrect',
             );
 
-        request.log('made it to after sql in getFullQuizzes:', sql);
-
         const results = await knexnest(sql);
-        request.log('made it to right before result check:', results);
 
         if (!results || results.length === 0) {
             return {
@@ -64,7 +60,6 @@ export const getFullQuizzes = async (
             };
         }
 
-        request.log('made it to right before return:', sql);
         return results;
     } catch (err) {
         request.log('api', err);

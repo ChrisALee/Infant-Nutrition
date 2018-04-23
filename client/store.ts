@@ -88,6 +88,7 @@ export const logout = () => {
                     type: actionTypes.SET_USER,
                     user: { isLoggedIn: false, groups: [] },
                 });
+                Router.push('/');
             }
         } catch (err) {
             // tslint:disable-next-line:no-console

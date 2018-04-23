@@ -1,4 +1,6 @@
+import Button from 'material-ui/Button';
 import withRedux from 'next-redux-wrapper';
+import Link from 'next/link';
 import React, { Component } from 'react';
 import { compose } from 'redux';
 import styled from 'styled-components';
@@ -14,8 +16,17 @@ export interface RegisterProps {
 }
 
 const Container = styled.div`
-    margin: 0 auto 50vh auto;
+    margin: 0 auto 30vh auto;
+    padding-top: 50px;
     max-width: 1180px;
+`;
+
+const StyledButton = styled(Button)`
+    && {
+        margin-top: 10px;
+        width: 100%;
+        border: 1px white solid;
+    }
 `;
 
 class Register extends Component<RegisterProps, {}> {
@@ -46,6 +57,11 @@ class Register extends Component<RegisterProps, {}> {
                     <RegisterForm
                         handleRegisterSubmit={this.handleRegisterSubmit}
                     />
+                    <Link prefetch href="/login">
+                        <StyledButton color="secondary">
+                            Already have an account?
+                        </StyledButton>
+                    </Link>
                 </Container>
             </Layout>
         );

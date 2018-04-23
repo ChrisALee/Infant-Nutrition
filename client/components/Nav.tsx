@@ -19,12 +19,15 @@ const AuthContainer = styled.div`
     flex-direction: row;
 `;
 
-const LeftSide = styled.div`
-    flex-basis: 100%;
-`;
+const LeftSide = styled.div``;
+
+const Middle = styled.div``;
 
 const StyledToolbar = styled(Toolbar)`
     && {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
         max-width: 1180px;
         width: 100%;
         margin: 0 auto;
@@ -51,9 +54,11 @@ class Nav extends React.PureComponent<NavProps, {}> {
                         <LeftSide>
                             <Link prefetch href="/">
                                 <Button color="inherit">
-                                    <a>Home</a>
+                                    <a>Infant Feeding</a>
                                 </Button>
                             </Link>
+                        </LeftSide>
+                        <Middle>
                             <Link prefetch href="/quiz">
                                 <Button color="inherit">
                                     <a>Quiz</a>
@@ -66,12 +71,12 @@ class Nav extends React.PureComponent<NavProps, {}> {
                                     </Button>
                                 </Link>
                             ) : null}
-                            <Link prefetch href="/submit">
+                            <Link prefetch href="/contact">
                                 <Button color="inherit">
-                                    <a>Ask</a>
+                                    <a>Contact</a>
                                 </Button>
                             </Link>
-                        </LeftSide>
+                        </Middle>
                         {user && user.isLoggedIn ? (
                             <AuthContainer>
                                 <Link prefetch href="/profile">

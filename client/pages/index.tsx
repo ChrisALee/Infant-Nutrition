@@ -119,6 +119,8 @@ class Index extends React.Component<IndexProps, {}> {
 
     render() {
         const { stage } = this.state;
+        const { user } = this.props;
+
         return (
             <Layout title="Home">
                 <Hero>
@@ -144,11 +146,20 @@ class Index extends React.Component<IndexProps, {}> {
                         </IntroText>
 
                         <HeroLink>
-                            <Link prefetch href="/register">
-                                <Button variant="raised" color="secondary">
-                                    <LinkText>Create account</LinkText>
-                                </Button>
-                            </Link>
+                            {user && user.isLoggedIn ? (
+                                <Typography
+                                    variant="headline"
+                                    color="secondary"
+                                >
+                                    Welcome back!
+                                </Typography>
+                            ) : (
+                                <Link prefetch href="/register">
+                                    <Button variant="raised" color="secondary">
+                                        <LinkText>Create account</LinkText>
+                                    </Button>
+                                </Link>
+                            )}
                         </HeroLink>
                     </Content>
                 </Hero>
@@ -190,15 +201,21 @@ class Index extends React.Component<IndexProps, {}> {
 
                 <Divider />
                 <Footer>
-                    <InnerFooter>Footer</InnerFooter>
+                    <InnerFooter>© 2018 Infant Feeding</InnerFooter>
                 </Footer>
             </Layout>
         );
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        user: state.user,
+    };
+};
+
 export default compose<any>(
     withRoot(),
-    withRedux(initStore),
+    withRedux(initStore, mapStateToProps),
     withAuth([PUBLIC]),
 )(Index);

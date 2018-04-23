@@ -32,7 +32,7 @@ const StyledTextField = styled(TextField)`
     }
 `;
 
-class Submit extends React.Component<{}, {}> {
+class Contact extends React.Component<{}, {}> {
     render() {
         return (
             <Layout title="Submit">
@@ -58,4 +58,4 @@ export default compose<any>(
     withRoot(),
     withRedux(initStore),
     withAuth([PUBLIC]),
-)(Submit);
+)(Contact);

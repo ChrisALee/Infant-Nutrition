@@ -1,4 +1,6 @@
+import Button from 'material-ui/Button';
 import withRedux from 'next-redux-wrapper';
+import Link from 'next/link';
 import React, { Component } from 'react';
 import { compose } from 'redux';
 import styled from 'styled-components';
@@ -10,8 +12,17 @@ import withAuth, { PUBLIC } from '../utils/auth/withAuth';
 import withRoot from '../utils/material-ui/withRoot';
 
 const Container = styled.div`
-    margin: 0 auto 50vh auto;
+    margin: 0 auto 30vh auto;
+    padding-top: 50px;
     max-width: 1180px;
+`;
+
+const StyledButton = styled(Button)`
+    && {
+        margin-top: 10px;
+        width: 100%;
+        border: 1px white solid;
+    }
 `;
 
 export interface LoginProps {
@@ -43,6 +54,11 @@ class Login extends Component<LoginProps, {}> {
             <Layout primary={true} title="Login">
                 <Container>
                     <LoginForm handleLoginSubmit={this.handleLoginSubmit} />
+                    <Link prefetch href="/register">
+                        <StyledButton color="secondary">
+                            Don't have an account?
+                        </StyledButton>
+                    </Link>
                 </Container>
             </Layout>
         );

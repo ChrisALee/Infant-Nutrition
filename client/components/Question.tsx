@@ -7,12 +7,14 @@ import styled from 'styled-components';
 
 const GreenDone = styled(Done)`
     && {
+        margin-top: 12px;
         color: green;
     }
 `;
 
 const RedClear = styled(Clear)`
     && {
+        margin-top: 12px;
         color: red;
     }
 `;
@@ -33,6 +35,7 @@ export interface QuestionProps {
     answers?: any;
     question?: object;
     showCorrectAnswers: boolean;
+    updateNumCorrect: (isCorrect: boolean) => void;
 }
 
 class Question extends React.Component<QuestionProps, QuestionState> {
@@ -48,15 +51,32 @@ class Question extends React.Component<QuestionProps, QuestionState> {
             value: event.target.value,
             isCorrect: answer.isCorrect,
         });
+
+        if (this.state.isCorrect !== answer.isCorrect)
+            this.props.updateNumCorrect(answer.isCorrect);
     };
+
     // add above FormControlLabel <p>{answers.length - i}.</p>; currently numbers, needs to be abc
     render() {
         const { answers, question, showCorrectAnswers } = this.props;
         return (
-            <FormControl component="fieldset" required>
-                <FormLabel component="legend">{question}</FormLabel>
+            <FormControl component="fieldset">
+                {showCorrectAnswers ? (
+                    this.state.value &&
+                    JSON.parse(this.state.value).isCorrect ? (
+                        <FormLabel component="legend" focused>
+                            {question}
+                        </FormLabel>
+                    ) : (
+                        <FormLabel error component="legend">
+                            {question}
+                        </FormLabel>
+                    )
+                ) : (
+                    <FormLabel component="legend"> {question} </FormLabel>
+                )}
                 {answers
-                    .map((answer, i) => (
+                    .map(answer => (
                         <StyledRadioGroup
                             aria-label="question"
                             name="question"

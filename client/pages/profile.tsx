@@ -1,10 +1,13 @@
 import Save from '@material-ui/icons/Save';
 import fetch from 'isomorphic-unfetch';
 import Button from 'material-ui/Button';
+import Card from 'material-ui/Card';
 import Checkbox from 'material-ui/Checkbox';
 import { FormControlLabel, FormGroup } from 'material-ui/Form';
 import Snackbar from 'material-ui/Snackbar';
+import TextField from 'material-ui/TextField';
 import Slide from 'material-ui/transitions/Slide';
+import Typography from 'material-ui/Typography';
 import withRedux from 'next-redux-wrapper';
 import getConfig from 'next/config';
 import * as React from 'react';
@@ -18,12 +21,53 @@ import withRoot from '../utils/material-ui/withRoot';
 
 const { publicRuntimeConfig } = getConfig();
 
-const Container = styled.div`
-    flex: 1 0 100%;
-    max-width: 1180px;
+const Container = styled(Card)`
+    && {
+        flex: 1 0 100%;
+        max-width: 800px;
+        width: 100%;
+        margin: 5vh auto;
+        padding: 30px;
+    }
+`;
+
+const Divider = styled.div`
     width: 100%;
-    margin: 0px auto;
-    padding: 30px;
+    margin: 20px 0;
+    height: 1px;
+    background-color: rgb(218, 225, 233);
+`;
+
+const StyledButton = styled(Button)`
+    && {
+        align-self: right;
+        margin-right: 12px;
+    }
+`;
+
+const ProfileContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 60%;
+`;
+
+const ProfileLabels = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+
+const StyledTypography = styled(Typography)`
+    && {
+        margin-top: 3px;
+        margin-bottom: 26px;
+    }
+`;
+
+const StyledFormControlLabel = styled(FormControlLabel)`
+    && {
+        margin-bottom: 18px;
+    }
 `;
 
 export interface ProfileState {
@@ -68,11 +112,14 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
         this.setState({ [name]: event.target.checked });
     };
 
+    handleNameChange = name => event => {
+        this.setState({ [name]: event.target.value });
+    };
+
     handleSave = async () => {
         const payload = {
             profile: {
-                // TODO: Have the ability to change names dynamically
-                name: 'test',
+                name: this.state.name,
                 should_email: this.state.should_email,
             },
         };
@@ -108,24 +155,63 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
         return (
             <Layout title="Profile">
                 <Container>
-                    <FormGroup row>
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                    checked={this.state.should_email}
-                                    onChange={this.handleChange('should_email')}
-                                    value="should_email"
-                                    color="primary"
-                                />
-                            }
-                            label="Keep me notified"
-                        />
-                    </FormGroup>
+                    <Typography variant="display1" component="h2">
+                        User Profile
+                    </Typography>
+                    <Divider />
+                    <ProfileContainer>
+                        <ProfileLabels>
+                            <StyledTypography gutterBottom variant="title">
+                                Name:
+                            </StyledTypography>
+                            <Typography variant="title">Email:</Typography>
+                        </ProfileLabels>
+                        <FormGroup>
+                            <StyledFormControlLabel
+                                control={
+                                    <TextField
+                                        onChange={this.handleNameChange('name')}
+                                        value={this.state.name}
+                                        color="primary"
+                                    />
+                                }
+                                label=""
+                            />
+                            <FormControlLabel
+                                control={
+                                    <TextField
+                                        onChange={this.handleNameChange(
+                                            'email',
+                                        )}
+                                        value={this.state.email}
+                                        color="primary"
+                                    />
+                                }
+                                label=""
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={this.state.should_email}
+                                        onChange={this.handleChange(
+                                            'should_email',
+                                        )}
+                                        value="should_email"
+                                        color="primary"
+                                    />
+                                }
+                                label="Keep me notified"
+                            />
+                            <StyledButton
+                                onClick={this.handleSave}
+                                variant="raised"
+                            >
+                                <Save />Save
+                            </StyledButton>
+                        </FormGroup>
+                    </ProfileContainer>
 
-                    <p>Real Name: {this.state.name}</p>
-                    <Button onClick={this.handleSave} variant="raised">
-                        <Save />Save
-                    </Button>
+                    <Divider />
 
                     <Snackbar
                         open={this.state.open}

@@ -13,10 +13,16 @@ export const getProfile = async (
         const { userGuid }: any = request.auth.credentials;
 
         const results = await Knex('profile')
+            .join('users', 'profile.user_guid', 'users.guid')
             .where({
                 user_guid: userGuid,
             })
-            .select('should_email', 'name');
+            .select(
+                'profile.should_email',
+                'profile.name',
+                'users.email',
+                'users.username',
+            );
 
         if (!results || results.length === 0) {
             return {

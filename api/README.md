@@ -5,6 +5,8 @@ These instructions will get you a copy of the project up and running on your loc
 ## Prerequisites
 
 *   Node.js - version 8.x or greater
+*   PostgreSQL
+*   Redis
 
 ## Installing
 
@@ -14,7 +16,7 @@ Then:
 
 ```sh
 $ cd PATH/TO/PROJECT/API
-$ yarn
+$ npm install
 ```
 
 Now you must set up environment variables
@@ -53,7 +55,7 @@ $ knex seed:run
 To run locally:
 
 ```sh
-$ npm start:watch
+$ npm run dev
 ```
 
 Then go to `localhost:3001/documentation`

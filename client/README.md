@@ -5,6 +5,7 @@ These instructions will get you a copy of the project up and running on your loc
 ## Prerequisites
 
 *   Node.js - version 8.x or greater
+*   Working API
 
 ## Installing
 
@@ -14,7 +15,7 @@ Then:
 
 ```sh
 $ cd PATH/TO/PROJECT/CLIENT
-$ yarn
+$ npm install
 ```
 
 Now you must set up environment variables
@@ -23,6 +24,12 @@ Create an .env file in the root `API` directory:
 
 ```sh
 $ touch .env
+```
+
+Fill the file with these variables:
+
+```
+API_HOST_DEV=http://localhost:3001/api
 ```
 
 To run locally:
@@ -53,7 +60,7 @@ This will automatically pull an updated NodeJS image and target the source code 
 
 ## Example Project Structure
 
-This will get updated as the project increases in complexity.
+This might not be the latest version but it should give a good example.
 
 ```
 // Clientside files should only be in the client folder
@@ -258,31 +265,9 @@ This is important so that our code format stays consistent among all of us!
 
 TypeScript errors are usually pretty descriptive, so you should be able to Google each one you run into and learn TypeScript as you go.
 
-Note: I use Visual Studio Code (not Visual Studio), so I'm not sure how well this all works on Sublime.
-
-## Learning Resources
-
-If you are super limited in time, I would **at the very least** do Learnnextjs! It should only take roughly 20-30 minutes to go through the whole thing.
-
-That being said, I **strongly** recommend at least doing the book to page 241.
-The pages have a lot of spacing, white-space, and code-samples, so it's not a true, dense 241 pages.
-I've gone through a ton of learning resources when I was learning React, and this was the best one.
-
-Sure it might take a day, but you'll probably save multiples of days from being inefficient otherwise.
-
-**It will clear everything up.**
-
-Just keep in mind that Next.js gets rid of a lot of the boilerplate shown in the normal React in the book and is opinionated about some things.
-That's why if you do decide to do the book, do that first then absolutely do Learnnextjs second.
-
-*   The React book and code linked in Trello - You only need to go up to page 241
-*   [Learnnextjs](https://learnnextjs.com/) - You only need to do sections 1-8
-
-If you get stuck on anything in the project, take a look at the [Next.js examples](https://github.com/zeit/next.js/tree/canary/examples) or Google the issue first.
-
 ## Built With
 
 *   [React](https://github.com/facebook/react) - JavaScript library for building user interfaces
 *   [Next.js](https://github.com/zeit/next.js/) - Web framework for server-rendered React
-*   [Styled-JSX](https://github.com/zeit/styled-jsx) - CSS for JSX
+*   [Styled-Components](https://github.com/styled-components/styled-components) - Use the best bits of ES6 and CSS to style your apps
 *   [TypeScript](https://www.typescriptlang.org/) - Superset of JavaScript that allows for types

@@ -13,6 +13,8 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 
 *   Node.js - version 8.x or greater
+*   PostgreSQL
+*   Redis
 
 ### Installing
 
@@ -22,20 +24,20 @@ Then:
 
 ```sh
 $ cd PATH/TO/PROJECT
-$ yarn
+$ npm install
 ```
 
-This will install the dependencies in the master package, and then it'll also install the dependencies in `API` and `CLIENT`
+Next install the packages for `CLIENT` and `API` in the same fashion.
 
 To run both `API` and `CLIENT` locally:
 
 ```sh
-$ npm start
+$ npm run dev
 ```
 
-Then go to `localhost:8080` to see `CLIENT` or `localhost:3001/documentation` to see `API`
+Then go to `localhost:3000` to see `CLIENT` or `localhost:3001/documentation` to see `API`
 
-NOTE: This requires environment variables to be set up for `API`
+NOTE: This requires environment variables, PostgreSQL, and Redis to be set up for `API` and `Client`
 
 For more information on how to set this up, check out the `API` [README.md](api/README.md)
 
@@ -44,10 +46,6 @@ For more information on how to set this up, check out the `API` [README.md](api/
 To see how to deploy `CLIENT`, check out the [CLIENT README.md](client/README.md)
 
 To see how to deploy `API`, check out [API README.md](api/README.md)
-
-## Contributing
-
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code style, and the process for submitting pull requests to us.
 
 ## Authors
 

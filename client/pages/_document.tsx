@@ -90,10 +90,6 @@ export default class MyDocument extends Document {
                             this.props.pageContext.theme.palette.primary.main
                         }
                     />
-                    <link
-                        rel="stylesheet"
-                        href="https://fonts.googleapis.com/css?family=Arima+Madurai|Berkshire+Swash|Pacifico"
-                    />
                 </Head>
                 <body>
                     <Main />

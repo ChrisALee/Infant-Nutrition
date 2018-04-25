@@ -33,7 +33,6 @@ class Head extends React.PureComponent<HeadProps, {}> {
                     content="width=device-width, initial-scale=1"
                 />
                 <link rel="icon" href="/static/favicon.ico" />
-                <link rel="stylesheet" href="/static/react-draft-wysiwyg.css" />
                 <meta property="og:url" content={url} />
                 <meta property="og:title" content={title} />
                 <meta property="og:description" content={description} />
